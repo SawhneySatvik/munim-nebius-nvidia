@@ -49,10 +49,10 @@ NVIDIA Nemotron, Nebius Token Factory, Supabase, PostgreSQL, FalkorDB, Next.js, 
 ### Try it out
 
 - **Code:** `https://github.com/SawhneySatvik/munim-nebius-nvidia` (make the repository public before submission)
-- **Dedicated Nebius demo:** `[NEBIUS_DEMO_URL]` (replace after deployment and verification)
+- **Dedicated Nebius demo:** `https://munim-nebius-nvidia.vercel.app/`
 - **Existing interactive demo:** `https://munim-cobnut.vercel.app/staff/sign-in` (synthetic data; deployed model provider has not been verified as Token Factory)
 - **Product site:** `https://munim-rho.vercel.app/`
-- **Demo video:** `[YOUTUBE_VIDEO_URL]` (replace after public or unlisted upload)
+- **Demo video:** `https://www.youtube.com/watch?v=eGAfiegcdVw` (2:49)
 
 ## Judge and organizer questions
 
@@ -76,7 +76,7 @@ The repository is pushed to `main` and uses Apache-2.0. Make it public before su
 
 ### Working demo
 
-Use `[NEBIUS_DEMO_URL]` after the dedicated deployment is available and checked. If submitting before then, use the existing interactive demo and state that its deployed model provider has not been verified as Token Factory.
+Use the dedicated Nebius demo URL above. Verify that it opens for judges and that its environment has the intended Token Factory model-role configuration.
 
 ### Which models did you use, and why?
 
@@ -137,4 +137,4 @@ Select **No**. Tavily is documented as optional and is not part of the functioni
 
 ## Submission checklist
 
-Before submitting, make the GitHub repository public, deploy and verify the dedicated Nebius demo, replace `[NEBIUS_DEMO_URL]`, upload `video/munim-launch/renders/munim-nebius-final.mp4` to YouTube or Vimeo, and replace `[YOUTUBE_VIDEO_URL]`. The local final cut is 2:49 and under the three-minute limit.
+Before submitting, make the GitHub repository public and verify judge access to the demo. The current YouTube upload still shows `[DEMO_URL]` on its end card. Upload the corrected local render at `video/munim-launch/renders/munim-nebius-final.mp4` and update the Devpost video URL to that upload. The cut is 2:49 and under the three-minute limit.

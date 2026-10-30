@@ -281,8 +281,8 @@
     // its live URL is a placeholder until the founder sends it.
     cup4: { url: "CLOUD-RUN-URL-PENDING-FROM-FOUNDER", line: "Built with Gemini on Google Cloud" },
     falkor: { url: "LIVE-URL-PENDING", line: "Built on FalkorDB", track: "Agents That Act on Connected Data", repo: "github.com/SawhneySatvik/business-graph" },
-    // The Nebius submission cut: repository destination is set; only the dedicated deployment URL awaits deployment.
-    nebius: { url: "[DEMO_URL]", repo: "github.com/SawhneySatvik/munim-nebius-nvidia", line: "The back office that keeps honest books.", labels: "Synthetic data. Simulated suppliers. NVIDIA Nemotron on Nebius Token Factory." },
+    // The Nebius submission cut: dedicated deployment URL supplied by the project owner.
+    nebius: { url: "munim-nebius-nvidia.vercel.app", repo: "github.com/SawhneySatvik/munim-nebius-nvidia", line: "The back office that keeps honest books.", labels: "Synthetic data. Simulated suppliers. NVIDIA Nemotron on Nebius Token Factory." },
   };
   // The Australia beat: the seeded AU business (tools/worldgen/src/worlds/au_outlet.ts) on the AU pack. Its prices
   // include GST at 10%, so the GST inside a total is 1/11 of it.

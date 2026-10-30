@@ -15,7 +15,7 @@ All business data shown is synthetic. Supplier agents are simulated. Payments ar
 | Human-reviewed purchase order | 1:30–1:54 | Sourced purchase-order draft and named approval control. Keep it proposed; do not imply a completed approval or real money movement. | Munim prepares a purchase-order draft. Its saving against the last price paid has a source. The proposal waits for a person. It cannot spend a rupee. The owner can inspect its evidence. Only a person can approve. Core checks authority and the current records. Nothing changes without a person. |
 | Supply graph | 1:54–2:29 | The graph builds supplier → ingredient → dish → outlet. Trace a butter price rise to the affected menu and outlets; open the supplier map and impact drawer; ask the graph-backed question and show its source. | The graph builds from suppliers to ingredients, dishes and outlets. Each relationship comes from this business's books. Trace a butter price change through seven dishes and both outlets. The supplier map reveals a single source. Open its impact and inspect each dish margin. Then Ask answers from the connected graph, with source chips. |
 | Cannot verify | 2:29–2:42 | Live abstention and a document field held for review. | When the books cannot back a number, Munim does not guess. It says: cannot verify. |
-| Close | 2:42–2:49 | Munim mark, configured repository URL, deployment URL placeholder and synthetic-data disclosure. | Munim. The back office that keeps honest books. |
+| Close | 2:42–2:49 | Munim mark, repository URL, `munim-nebius-nvidia.vercel.app` and synthetic-data disclosure. | Munim. The back office that keeps honest books. |
 
 ## Build notes
 
@@ -23,4 +23,4 @@ All business data shown is synthetic. Supplier agents are simulated. Payments ar
 - The role card uses the model IDs in `scripts/dev/nemotron-roles.ts`: router `nvidia/Nemotron-3_5-Lightning`, reason `nvidia/nemotron-3-super-120b-a12b`, and extract/vision/narrate `nvidia/Nemotron-3.5-Super-VL`.
 - Current captured application images are explicitly attributed as captured runs. Do not present prior NVIDIA-endpoint captures as Token Factory benchmark results.
 - The generated root and captions come from `assets/js/timing-nebius.js`; update voice tracks for changed lines before rendering.
-- Final delivery still needs the public demo URL and public YouTube URL. The code repository URL is supplied in `docs/nebius/SUBMISSION.md`.
+- The project owner supplied the demo URL and YouTube URL. The current upload predates the deployment URL on the end card; upload the corrected local render and update the public video URL before submitting.

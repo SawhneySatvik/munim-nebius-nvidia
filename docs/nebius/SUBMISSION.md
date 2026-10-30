@@ -8,8 +8,8 @@ vision and narration. This confirms the live provider integration, not per-role 
 results below identify their source. Figures attributed to NVIDIA's endpoint are measurements from that separate endpoint, not
 Token Factory benchmarks.
 
-Text that pastes into Devpost starts after each field heading; notes for the submitter are in brackets. Replace only the submission
-links with the actual public repo, working demo and public video URLs.
+Text that pastes into Devpost starts after each field heading; notes for the submitter are in brackets. The project owner has
+provided a dedicated demo URL and a YouTube video URL; confirm both are accessible from a judge's browser before submitting.
 
 ## Internal submission checklist (not Devpost copy)
 
@@ -21,25 +21,23 @@ Checked against the [official rules](https://nebiusglobalaihackathon.devpost.com
   configured Nemotron roles. The source identifies provider-specific model IDs and the repeatable live smoke command. No
   Token Factory latency, quality or cost benchmark is claimed. The owner reports that Token Factory credits are exhausted, and
   this checkout has no test credential, so this verification cannot be freshly repeated here.
-- **Working demo URL:** the existing public product site and Cobnut staff demo were opened successfully on 30 October. Their
-  current deployed model provider has not been verified as Token Factory. The isolated Nebius-hosted deployment described below
-  is not yet published; do not represent it as a live demo until configured and checked.
+- **Working demo URL:** the project owner supplied `https://munim-nebius-nvidia.vercel.app/` as the dedicated deployment.
+  The existing Cobnut staff demo remains at `https://munim-cobnut.vercel.app/staff/sign-in`; its deployed provider is separate.
 - **Source and license:** the intended repository URL is `https://github.com/SawhneySatvik/munim-nebius-nvidia`. The repository
   currently remains private; make it public and confirm Apache-2.0 appears in its GitHub About/license metadata before judging.
   The source tree includes the Apache-2.0 `LICENSE`, setup/model guidance and the website-rendered README source.
-- **Video:** the previous 178-second draft is superseded. The revised 169-second cut includes the AI office, role routing, Nebius
+- **Video:** the revised 169-second cut includes the AI office, role routing, Nebius
   Token Factory model path and a 35-second graph sequence. The 1920×1080 H.264/AAC MP4 was rendered and checked locally at
-  `video/munim-launch/renders/munim-nebius-final.mp4`. Upload it publicly or unlisted without a password, then replace the
-  YouTube URL placeholder.
+  `video/munim-launch/renders/munim-nebius-final.mp4`. The project owner supplied the YouTube URL below. The uploaded cut's end
+  card still shows the old demo placeholder, so upload the corrected local render and use its new YouTube URL before submitting.
 - **Feedback:** `FEEDBACK-DRAFT.md` is supporting material. Submit only observations that retain their source attribution; the
   numeric experiments in that draft are from NVIDIA's separate endpoint.
 - **Project timeline:** rules require a significant-update explanation only if the project existed before 26 August 2026. The
   Git metadata pointer in this checkout is broken, so its start date cannot be re-verified here. Confirm the source history before
   deciding whether the timeline section below is needed or before quoting its commit identifiers.
 
-The hackathon submission deadline shown on Devpost is 30 October 2026 at 10:00 am Pacific Time. The intended repository is
-identified below. The dedicated deployment and YouTube links remain placeholders until their respective release steps are done;
-the repository must be public for judging.
+The hackathon submission deadline shown on Devpost is 30 October 2026 at 10:00 am Pacific Time. The repository must be public
+for judging. The demo and video URLs below were supplied by the project owner; verify access before submitting.
 
 Hard rule 5 applies to everything below: the data is synthetic, the suppliers are simulated, payments are recorded and never
 processed. Only Cobnut Bakehouse and Kosambari Kitchens appear.
@@ -198,11 +196,11 @@ TypeScript, Hono, Next.js, PostgreSQL, Supabase (hosted Postgres only), A2A.
 - Code: https://github.com/SawhneySatvik/munim-nebius-nvidia (Apache-2.0; set repository visibility to public before submission)
 - Product site: https://munim-rho.vercel.app/ (existing public site)
 - Interactive demo: https://munim-cobnut.vercel.app/staff/sign-in (existing Cobnut demo; synthetic data, simulated suppliers and payments are recorded, not processed)
-- Dedicated Nebius-hosted demo: [NEBIUS_DEMO_URL] (deployment pending; see `docs/nebius/DEPLOY.md`)
-- Video: [YOUTUBE_VIDEO_URL] (public or unlisted YouTube upload pending; final cut is 2:49)
+- Dedicated Nebius-hosted demo: https://munim-nebius-nvidia.vercel.app/
+- Video: https://www.youtube.com/watch?v=eGAfiegcdVw (2:49; upload the corrected end-card render before submission)
 
-[Judge access to the current demo: open the interactive demo URL, choose the synthetic owner, Nandini Mehrotra. The dedicated
-Nebius deployment needs a separate live URL and its own model-role verification before it can replace this link.]
+[Judge access to the Cobnut demo: choose the synthetic owner, Nandini Mehrotra. Use the dedicated Nebius deployment URL above
+for the hackathon build.]
 
 ---
 

@@ -24,6 +24,7 @@ Indian cloud kitchen in Bengaluru. Both are synthetic, their suppliers are simul
 
 **Public product site:** <https://munim-rho.vercel.app/>. **Interactive demo:** <https://munim-cobnut.vercel.app/staff/sign-in>.
 **Rendered project README:** <https://munim-rho.vercel.app/readme>. **Nebius and Nemotron overview:** <https://munim-rho.vercel.app/nebius>.
+**Nebius/Nemotron deployment:** <https://munim-nebius-nvidia.vercel.app/>. **Project video:** <https://www.youtube.com/watch?v=eGAfiegcdVw>.
 Choose the synthetic owner, Nandini Mehrotra, to explore the staff experience. The public demo uses synthetic business data;
 suppliers are simulated and payments are recorded rather than processed. For a reproducible local run with live Token Factory
 inference, follow [Run it locally](#run-it-locally) and [Switching to Token Factory](#switching-to-token-factory). The application
@@ -161,14 +162,13 @@ or cost improvement. The hosted deployment still needs its own Token Factory cre
 
 - [Munim product site](https://munim-rho.vercel.app/) — product overview, developer portal and public entry point.
 - [Open Cobnut storefront](https://munim-cobnut.vercel.app/) — browse the synthetic bakery's storefront and order flow.
+- [Open Nebius/Nemotron deployment](https://munim-nebius-nvidia.vercel.app/) — dedicated deployment supplied for the hackathon.
 - [Open staff demo](https://munim-cobnut.vercel.app/staff/sign-in) — select **Nandini Mehrotra (Owner)**. Explore Ask Munim,
   evidence/source chips, inbox findings, stock and supplier/purchase workflows. Other demo personas are available at sign-in.
 
-All three links point to the existing public product/demo deployment. The AI provider used by that hosted deployment is an
-environment/deployment setting. A separate deployment configured with `MUNIM_MODEL_MODE=live`, `NEBIUS_API_KEY`, Token
-Factory model roles and a provisioned database is required to guarantee that public interactive AI calls are routed to
-Nebius. The deployed page is not represented here as Token Factory-backed unless that configuration has been confirmed for
-the target deployment.
+The Cobnut links point to the existing public product/demo deployment. The dedicated Nebius/Nemotron deployment is listed
+separately because provider selection is deployment-specific. The project owner reports that the application was tested with
+live Nebius Token Factory inference; no latency, quality or cost benchmark is claimed here.
 
 ## Two minutes to the point
 
@@ -278,9 +278,9 @@ application's Token Factory AI layer. A live trace and spend row identify the pr
 project owner has verified live inference through Token Factory from the application. No per-role latency or benchmark result
 is inferred from that verification.
 
-The marketing site's Nebius page accepts `NEXT_PUBLIC_MUNIM_DEMO_ORIGIN` at build time. It defaults to the existing Cobnut demo;
-after the isolated Nebius web project is deployed, set this to its origin and redeploy `apps/site` so the public demo links target
-the Nebius deployment.
+The marketing site's Nebius page accepts `NEXT_PUBLIC_MUNIM_DEMO_ORIGIN` at build time. It defaults to the existing Cobnut demo.
+Set it to `https://munim-nebius-nvidia.vercel.app` when rebuilding `apps/site` to point those page links to the dedicated
+Nebius/Nemotron deployment.
 
 **The provider.** `nebius` is one entry in the provider registry,
 [`services/intel/munim_intel/llm/providers.py`](./services/intel/munim_intel/llm/providers.py): Token Factory's
