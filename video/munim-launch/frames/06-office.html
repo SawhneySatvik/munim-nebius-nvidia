@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Style frame 3: the AI back office at about 86 s: eight specialist desks and the Manager's, Stock & Purchasing's
+         watcher lamp lit, two ledger slips on their way to the Manager. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #f6-slip1 {
+          left: 236px;
+          top: 574px;
+        }
+        #f6-slip2 {
+          left: 1190px;
+          top: 574px;
+        }
+        #f6-cap {
+          opacity: 1;
+        }
+      </style>
+      <div data-hf-id="hf-5brr" id="root" data-composition-id="f6" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-aduy" id="f6-office"></div>
+        <div data-hf-id="hf-r6mw" class="cap-band"><p data-hf-id="hf-xu8b" class="cap-line" id="f6-cap">They've spotted the butter, and hazelnuts running short.</p></div>
+      </div>
+      <script>
+        MK.ready(() => {
+          const $ = (id) => document.getElementById(id);
+          const F = FIX;
+          $("f6-office").innerHTML =
+            UI.office(F, "f6-", { lit: ["inventory_purchasing"] }) +
+            UI.slip("f6-slip1", "Stock & Purchasing", "More waste than a usual week", `${F.fmt.inr(F.waste.waste)} vs ${F.fmt.inr(F.waste.median)}`) +
+            UI.slip("f6-slip2", "Stock & Purchasing", "Roasted hazelnuts below minimum", `${F.fmt.qty(F.hazelnuts.onHand * 1000)} g · min ${F.fmt.qty(F.hazelnuts.minimum * 1000)} g`);
+          const tl = gsap.timeline({ paused: true });
+          tl.set($("f6-slip1"), { rotation: -3 }, 0);
+          tl.set($("f6-slip2"), { rotation: 2.5 }, 0);
+          MK.finish(tl, 2);
+          window.__timelines["f6"] = tl;
+        });
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Motion kit check</title>
+    <!-- Loads the whole shared runtime and mounts one sub-composition that runs a few kit helpers. If the kit, the
+         fixture or a clock fails to load, the scene's timeline is never registered and `check` fails. -->
+    <link rel="stylesheet" href="styles/fonts.css" />
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/video.css" />
+    <script src="vendor/gsap.min.js"></script>
+    <script>window.CUT = "cup";</script>
+    <script src="assets/js/fixture.js"></script>
+    <script src="assets/js/timing-cup.js"></script>
+    <script src="assets/js/timing-full.js"></script>
+    <script src="assets/js/motion.js"></script>
+    <script>window.T = TIMING[CUT];</script>
+    <style>
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      [data-composition-id="kit"] > div[data-composition-src] {
+        position: absolute;
+        inset: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-n6vj" id="root" data-composition-id="kit" data-start="0" data-duration="4" data-width="1920" data-height="1080">
+      <div data-hf-id="hf-6ay6" id="kit-scene" data-composition-id="kit-scene" data-composition-src="frames/kit.html" data-start="0" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+    </div>
+    <script>
+      window.__timelines["kit"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

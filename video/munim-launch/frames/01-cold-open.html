@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Style frame 1: the cold open just after the logo lands (scene 1, about 7 s): three ink stamps on the ledger
+         page, the red total line, the Munim mark written on it. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #f1-s1 {
+          left: 250px;
+          top: 92px;
+        }
+        #f1-s2 {
+          left: 330px;
+          top: 268px;
+        }
+        #f1-s3 {
+          left: 232px;
+          top: 446px;
+        }
+        #f1-total {
+          position: absolute;
+          left: 220px;
+          top: 636px;
+          width: 1500px;
+          height: 14px;
+          border-top: 4px solid var(--m-red);
+          border-bottom: 4px solid var(--m-red);
+        }
+        /* The ledger's total: Munim, written in the amount column under the double rule. */
+        #f1-logo {
+          position: absolute;
+          right: 200px;
+          top: 668px;
+        }
+        #f1-logo .logo-word {
+          font-size: 150px;
+        }
+        #f1-cap {
+          opacity: 1;
+        }
+      </style>
+      <div data-hf-id="hf-gkte" id="root" data-composition-id="f1" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-5hhx" class="stamp" id="f1-s1" style="font-size: 92px">Thin margins.</div>
+        <div data-hf-id="hf-q0j9" class="stamp" id="f1-s2" style="font-size: 92px">Late nights.</div>
+        <div data-hf-id="hf-l4yo" class="stamp" id="f1-s3" style="font-size: 92px">Books that don't add up.</div>
+        <div data-hf-id="hf-hoj7" id="f1-total"></div>
+        <div data-hf-id="hf-rhzs" class="logo" id="f1-logo">
+          <svg data-hf-id="hf-v1mh" class="logo-mark" width="150" height="150" viewBox="0 0 32 32" aria-hidden="true">
+            <rect data-hf-id="hf-9rg3" width="32" height="32" rx="8" fill="#b4232a" />
+            <path data-hf-id="hf-54c2" d="M8.5 21.5V10.5L16 18l7.5-7.5v11" fill="none" stroke="#fff8ef" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path data-hf-id="hf-60co" d="M7 25.5h18" stroke="#fff8ef" stroke-opacity="0.55" stroke-width="1.6" stroke-linecap="round" />
+            <circle data-hf-id="hf-y58n" cx="16" cy="25.5" r="1.9" fill="#fff8ef" />
+          </svg>
+          <span data-hf-id="hf-7rnh" class="logo-word">Munim</span>
+        </div>
+        <div data-hf-id="hf-r6mw" class="cap-band"><p data-hf-id="hf-c56a" class="cap-line" id="f1-cap">Munim is the back office that keeps them honest.</p></div>
+      </div>
+      <script>
+        MK.ready(() => {
+          const tl = gsap.timeline({ paused: true });
+          const $ = (id) => document.getElementById(id);
+          // Frozen as the logo lands: the stamps at full ink (the scene ghosts them a moment later).
+          tl.set($("f1-s1"), { opacity: 0.85, rotation: -4 }, 0);
+          tl.set($("f1-s2"), { opacity: 0.85, rotation: 3 }, 0);
+          tl.set($("f1-s3"), { opacity: 0.85, rotation: -2 }, 0);
+          MK.finish(tl, 2);
+          window.__timelines["f1"] = tl;
+        });
+      </script>
+    </template>
+  </body>
+</html>

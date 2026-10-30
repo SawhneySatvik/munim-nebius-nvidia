@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- NB-6's sample supplier invoice: the one item of the hero chain (the hazelnuts the simulated suppliers negotiate). SYNTHETIC:
+     an invented simulated supplier, Cobnut's synthetic hazelnuts, made-up numbers (₹1,560.00/kg, above the ₹1,480.00/kg Cobnut last
+     paid; dated 22 Oct, before Lalbagh's 24 Oct list price). Rendered to lalbagh-hazelnut.png with headless Chrome:
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --window-size=900,560 \
+       --screenshot=lalbagh-hazelnut.png file://$PWD/lalbagh-hazelnut.html -->
+<html><head><meta charset="utf-8"><style>
+  body { margin: 0; background: #5d6a62; font-family: "Courier New", monospace; }
+  .sheet { width: 700px; margin: 46px auto; padding: 34px 40px; background: linear-gradient(172deg, #fbf9f3, #ece6d8);
+           box-shadow: 0 12px 30px rgba(0,0,0,.45); transform: rotate(0.9deg); color: #222; }
+  .stamp { border: 3px solid #b3261e; color: #b3261e; font: bold 20px Arial, sans-serif; padding: 6px 10px; display: inline-block;
+           transform: rotate(3deg); float: right; }
+  h1 { font: bold 26px Georgia, serif; margin: 0 0 4px; }
+  .muted { color: #555; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 22px; font: 16px Verdana, sans-serif; }
+  th, td { border-bottom: 1px solid #bbb; padding: 8px 6px; text-align: left; }
+  td.n, th.n { text-align: right; }
+  .tot td { border: none; font-weight: bold; }
+</style></head><body><div class="sheet">
+  <div class="stamp">SAMPLE - synthetic</div>
+  <h1>Lalbagh Nut &amp; Spice (simulated)</h1>
+  <div class="muted">Simulated supplier for a demo. Not a real business, invoice or tax document.</div>
+  <p>TAX INVOICE<br>Invoice no: LNS-2026-0412<br>Date: 2026-10-22<br>Bill to: Cobnut Bakehouse, Hazratganj</p>
+  <table>
+    <tr><th>Description</th><th class="n">Qty</th><th>Unit</th><th class="n">Rate</th><th class="n">Tax</th></tr>
+    <tr><td>Roasted hazelnuts (synthetic)</td><td class="n">2</td><td>kg</td><td class="n">1560.00</td><td class="n">156.00</td></tr>
+    <tr class="tot"><td colspan="4">Subtotal</td><td class="n">3120.00</td></tr>
+    <tr class="tot"><td colspan="4">Tax</td><td class="n">156.00</td></tr>
+    <tr class="tot"><td colspan="4">Total (INR)</td><td class="n">3276.00</td></tr>
+  </table>
+  <p class="muted">Payment within 15 days. Thank you for your business.</p>
+</div></body></html>

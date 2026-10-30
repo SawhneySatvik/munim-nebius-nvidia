@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 9b (full tour only), also in Munim: the storefront page builder at length (a colour preset, a section
+         dragged up, the preview following, saved as a numbered version and published by the owner), a campaign proposed
+         by the Customers desk and approved by name, and the seeded Australian business on the AU pack. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #s9-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #s9-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #s9-auwrap {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        #s9-st1,
+        #s9-st2,
+        #s9-st3 {
+          left: auto;
+          right: 96px;
+          top: 690px;
+          font-size: 52px;
+        }
+        #s9-st1 {
+          top: 660px;
+        }
+      </style>
+      <div data-hf-id="hf-iwjw" id="root" data-composition-id="also" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-1pec" id="s9-auwrap"></div>
+        <div data-hf-id="hf-do3l" class="cam" id="s9-cam"><div data-hf-id="hf-gal3" id="s9-devwrap"></div><div data-hf-id="hf-l9w3" class="fx" id="s9-fx"></div></div>
+        <div data-hf-id="hf-cfs4" class="sticker sticker-turmeric" id="s9-st1">Saved, then published<br data-hf-id="hf-x5px" />by the owner</div>
+        <div data-hf-id="hf-acq3" class="sticker sticker-red" id="s9-st2">Sent only after approval</div>
+        <div data-hf-id="hf-euo7" class="sticker sticker-ink" id="s9-st3">Same code · its own pack</div>
+        <div data-hf-id="hf-8vvr" id="s9-chips"></div>
+        <div data-hf-id="hf-dequ" id="s9-pages"></div>
+      </div>
+      <script>
+        SC.scene("also", "also", (ctx) => {
+          const { tl, $, E, L, S, F } = ctx;
+          $("s9-devwrap").innerHTML = SC.device("laptop", "s9-dev", [["s9-bld", UI.builder(F, "s9b-")], ["s9-camp", UI.campaigns(F, "s9c-")]]);
+          $("s9b-save").insertAdjacentHTML("afterend", UI.builderVersions(F, "s9b-"));
+          $("s9-auwrap").innerHTML = UI.laneway(F, "s9-");
+          $("s9-pages").innerHTML = SC.pages("s9-");
+          const cam = $("s9-cam");
+          const fx = $("s9-fx");
+          const M = MK.measure($("s9-dev"), () => ({ b: BEATS.measureBuilder(ctx, "s9b-", cam), c: BEATS.measureCampaign(ctx, "s9c-", cam) }));
+          SC.wipes(tl, $, "s9-", S);
+          BEATS.builder(ctx, "s9b-", M.b, { preset: E.preset, scroll: E.scroll, drag: E.drag, save: E.save, publish: E.publish }, fx);
+          MK.sticker(tl, $("s9-st1"), L(E.sticker1[0]), L(E.sticker1[1]), { rot: -2 });
+          SC.swap(tl, $("s9-bld"), $("s9-camp"), L(E.toCampaigns), { dur: 0.4, dx: 120 });
+          BEATS.campaigns(ctx, "s9c-", M.c, { approve: E.approve }, fx);
+          MK.encircle(tl, fx, MK.measure($("s9-dev"), () => MK.rect($("s9c-reach"), cam)), L(E.reachMark), { dur: 0.5, pad: 10, width: 5, until: L(E.toAu) });
+          MK.sticker(tl, $("s9-st2"), L(E.sticker2[0]), L(E.sticker2[1]), { rot: 2 });
+          tl.fromTo($("s9-dev"), { opacity: 1, x: 0 }, { opacity: 0, x: -160, duration: 0.4, ease: "power2.in", immediateRender: false }, L(E.toAu));
+          tl.fromTo($("s9-auwrap"), { opacity: 0, x: 160 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.toAu) + 0.2);
+          $("s9-auwrap").querySelectorAll(".au-pack li").forEach((li, i) => SC.reveal(tl, li, L(E.packRows) + i * 0.45, { dur: 0.3 }));
+          MK.sticker(tl, $("s9-st3"), L(E.sticker3[0]), L(E.sticker3[1]), { rot: -2 });
+          // Scene 9b comes after the 9:20 pm owner home: these are captures from earlier in the day, and say so.
+          const x = F.earlier;
+          BEATS.chips(ctx, $("s9-chips"), [[E.wipeIn + 0.5, E.toCampaigns - 0.15, `Earlier · Fri ${x.saved}`], [E.toCampaigns + 0.2, E.toAu - 0.15, `Earlier · Fri ${x.approved}`], [E.toAu + 0.4, S.end - 0.8, `Melbourne · Fri ${x.melbourne}`]]);
+        });
+      </script>
+    </template>
+  </body>
+</html>

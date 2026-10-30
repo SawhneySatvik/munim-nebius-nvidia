@@ -1,0 +1,40 @@
+{
+  "case": "claims",
+  "role": "extract",
+  "model_id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "response": {
+    "id": "chatcmpl-d8318d96-956b-48e6-bf33-2e1d514cc581",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "content": "{\"claims\": [{\"quote\": \"Butter (synthetic) 1 kg: INR 590.00\", \"predicate\": \"costs\", \"subject\": \"Butter (synthetic) 1 kg\", \"object\": \"INR 590.00\"}, {\"quote\": \"Minimum order 5 kg\", \"predicate\": \"requires_minimum_order\", \"subject\": \"Butter (synthetic)\", \"object\": \"5 kg\"}]}",
+          "role": "assistant",
+          "reasoning_content": null
+        },
+        "finish_reason": "stop",
+        "logprobs": null
+      }
+    ],
+    "created": 1792792896,
+    "model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "service_tier": null,
+    "system_fingerprint": null,
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 181,
+      "completion_tokens": 104,
+      "total_tokens": 285,
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      }
+    }
+  }
+}

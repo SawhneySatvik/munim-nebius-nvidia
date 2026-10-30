@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Style frame 4: the negotiation at about 120 s: the agent-to-agent chat with the three simulated suppliers, all
+         three rounds, and the deal review where the cheapest bid fails the minimum-order rule. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #f7-cap {
+          opacity: 1;
+        }
+      </style>
+      <div data-hf-id="hf-vxys" id="root" data-composition-id="f7" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-iat7" id="f7-ui"></div>
+        <div data-hf-id="hf-r6mw" class="cap-band"><p data-hf-id="hf-hsm4" class="cap-line" id="f7-cap">The cheapest bid needs a bigger order than Cobnut can use. It fails the rules.</p></div>
+      </div>
+      <script>
+        MK.ready(() => {
+          document.getElementById("f7-ui").innerHTML = UI.chat(FIX, "f7-") + UI.review(FIX, "f7-");
+          const root = document.querySelector('[data-composition-id="f7"]');
+          const body = document.getElementById("f7-chat-body");
+          // The thread has scrolled to its newest message, as a chat does. The scroll stops on a message boundary, so no
+          // message is cut by the header, and the messages that left the window are faded out (the scene fades them as
+          // they pass the top edge).
+          const M = MK.measure(root, () => {
+            const over = body.offsetHeight - body.parentElement.clientHeight;
+            const kids = Array.from(body.children).map((k) => ({ k, top: k.offsetTop, bottom: k.offsetTop + k.offsetHeight }));
+            const first = kids.find((c) => c.top >= over) || kids[kids.length - 1];
+            return { scroll: Math.max(0, first.top - 14), gone: kids.filter((c) => c.top < first.top).map((c) => c.k) };
+          });
+          const tl = gsap.timeline({ paused: true });
+          tl.set(body, { y: -M.scroll }, 0);
+          for (const k of M.gone) tl.set(k, { opacity: 0 }, 0);
+          MK.finish(tl, 2);
+          window.__timelines["f7"] = tl;
+        });
+      </script>
+    </template>
+  </body>
+</html>

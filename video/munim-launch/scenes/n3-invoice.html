@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Beats 5 and 6 of the Nebius cut. 5: the synthetic hazelnut invoice from the simulated supplier (LNS-2026-0421,
+         the photo draft 01a17dbd was read from) arrives as a photo; a vision model reads it (model slot: placeholder until
+         N3); on the suppliers screen every figure is marked "Read on the page". 6: the price beside what she paid last time
+         and the market: three real cells (the invoice's 1560.00, the order's last price paid ₹1,480.00 and the recorded
+         market line, ₹1,385.00 from a simulated source). No screen yet sets the invoice price against the other two, and
+         the live search waits for the Tavily key (NB-7), so the beat carries a placeholder. Times: T.scenes.nbInvoice. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #v3-photo {
+          left: 510px;
+          top: 120px;
+        }
+        #v3-dev {
+          left: 820px;
+          top: 120px;
+        }
+        #v3-dev .dev-scale {
+          transform: scale(0.66);
+        }
+        #v3-lbl {
+          left: 560px;
+          top: 700px;
+          font-size: 34px;
+        }
+        #v3-sim {
+          left: 1120px;
+          top: 82px;
+          font-size: 34px;
+        }
+        #v3-vlm {
+          left: 1180px;
+          top: 700px;
+          height: 44px;
+          padding: 0 20px;
+          font-size: 19px;
+          opacity: 0;
+        }
+        #v3-note {
+          left: 200px;
+          top: 708px;
+          font-size: 30px;
+        }
+        .v3-row {
+          position: absolute;
+          left: 230px;
+          width: 1460px;
+          display: grid;
+          grid-template-columns: 380px 1fr;
+          align-items: center;
+          gap: 24px;
+          opacity: 0;
+        }
+        .v3-row .nb-crop {
+          border: 2.5px solid var(--m-ink);
+          border-radius: 10px;
+          box-shadow: var(--m-shadow);
+        }
+        .v3-what {
+          font-family: var(--f-m-display);
+          font-weight: 800;
+          font-size: 36px;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+          margin: 0;
+        }
+        .v3-what small {
+          display: block;
+          margin-top: 6px;
+          font-family: var(--f-m-body);
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0;
+          color: var(--m-muted);
+        }
+        #v3-rA {
+          top: 150px;
+        }
+        #v3-rB {
+          top: 330px;
+        }
+        #v3-rC {
+          top: 530px;
+        }
+        #v3-ph {
+          left: 230px;
+          top: 726px;
+          font-size: 21px;
+        }
+      </style>
+      <div data-hf-id="hf-zoem" id="root" data-composition-id="nbInvoice" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-dicg" class="cam" id="v3-cam">
+          <div data-hf-id="hf-ttsj" class="nb-photo" id="v3-photo"><img data-hf-id="hf-0sd9" id="v3-photo-img" alt="" /><div data-hf-id="hf-9ixp" class="nb-scan" id="v3-scan"></div></div>
+          <div data-hf-id="hf-vak6" id="v3-devwrap"></div>
+          <div data-hf-id="hf-061q" id="v3-rows"></div>
+          <div data-hf-id="hf-tkoc" class="fx" id="v3-fx"></div>
+        </div>
+        <div data-hf-id="hf-ve2w" class="sticker sticker-paper" id="v3-lbl">Invoice photo (synthetic)</div>
+        <div data-hf-id="hf-ub0k" class="sticker sticker-ink" id="v3-sim">Simulated supplier</div>
+        <span data-hf-id="hf-vmu2" class="nb-ph-pill" id="v3-vlm">Nemotron vision · NVIDIA endpoint capture</span>
+        <div data-hf-id="hf-niyo" class="sticker sticker-paper" id="v3-note">Read on the page, not from her books</div>
+        <div data-hf-id="hf-celv" class="nb-ph" id="v3-ph"><span data-hf-id="hf-v9zo" style="display: block">Price comparison and market search</span><b data-hf-id="hf-fc1c">(optional market lookup is shown as a recorded source in this cut)</b></div>
+        <div data-hf-id="hf-ipz3" id="v3-pages"></div>
+      </div>
+      <script>
+        NB.scene("nbInvoice", "nbInvoice", ({ tl, $, E, D, L, S }) => {
+          const photo = NB_SHOTS.photo;
+          $("v3-photo-img").src = NB.dir + photo.file;
+          // The band of the suppliers screen from its invoice upload to the end of the invoice card.
+          $("v3-devwrap").innerHTML = SC.device("laptop", "v3-dev", [["v3-inv", NB.screen("invoice", "v3i", [["qty", undefined, 2], ["price", undefined, 2], ["tax", undefined, 2], ["reads", 2], ["reads", 3], ["reads", 4], ["note"], ["lines"]])]]);
+          $("v3-pages").innerHTML = SC.pages("v3-");
+          // The photo's line (in the photo's own px, read off the image): 4 kg at 1560.00, tax 312.00.
+          const P = { qty: { x: 484, y: 296, w: 22, h: 26 }, rate: { x: 603, y: 298, w: 78, h: 26 }, tax: { x: 733, y: 300, w: 66, h: 26 } };
+          $("v3-photo").insertAdjacentHTML("beforeend", Object.entries(P).map(([k, r]) => NB.hot(`v3p-${k}`, r)).join(""));
+          // Beat 6's three cells, each cropped from a real screen.
+          const price = NB.mark("invoice", "price");
+          const saving = NB.mark("quotes", "saving");
+          const market = NB.shot("quotes").marks.market;
+          const rows = [
+            ["v3-rA", "On the invoice", "read off the photo", NB.crop("invoice", { x: 61, y: price.y - 18, w: 742, h: 60 }, 1.3, "v3-cA")],
+            ["v3-rB", "Last price paid", "from her books, with its source", NB.crop("quotes", { x: 61, y: saving.y - 6, w: 742, h: saving.h + 12 }, 1.3, "v3-cB")],
+            ["v3-rC", "The market today", "a recorded search, simulated source", market ? NB.crop("quotes", { x: 61, y: market.y - 12, w: 742, h: market.h + 24 }, 1.3, "v3-cC") : '<span class="nb-ph-pill" style="position: relative; display: inline-flex; padding: 8px 18px; font-size: 20px">MARKET LINE · PENDING NB-7</span>'],
+          ];
+          $("v3-rows").innerHTML = rows.map(([id, what, how, crop]) => `<div class="v3-row" id="${id}"><p class="v3-what">${what}<small>${how}</small></p>${crop}</div>`).join("");
+          const cam = $("v3-cam");
+          const fx = $("v3-fx");
+          const M = MK.measure($("v3-dev"), () => ({
+            qty: MK.rect($("v3i-qty"), cam), price: MK.rect($("v3i-price"), cam), tax: MK.rect($("v3i-tax"), cam),
+            reads: [2, 3, 4].map((i) => MK.rect($(`v3i-reads${i}`), cam)), note: MK.rect($("v3i-note"), cam), lines: MK.rect($("v3i-lines"), cam),
+          }));
+          // Where the photo's marks land once it has shrunk to the left (its pose at toSplit: x, y, scale).
+          const pose = { x: -330, y: 110, scale: 0.62 };
+          // The crops, measured before their reveals offset them.
+          const R = MK.measure($("v3-rows"), () => ({ A: $("v3-cA") && MK.rect($("v3-cA"), cam), B: $("v3-cB") && MK.rect($("v3-cB"), cam), C: $("v3-cC") && MK.rect($("v3-cC"), cam) }));
+          const P0 = MK.measure($("v3-photo"), () => Object.fromEntries(Object.keys(P).map((k) => [k, MK.rect($(`v3p-${k}`), cam)])));
+          const at = (r) => ({ x: 510 + pose.x + (r.x - 510) * pose.scale, y: 120 + pose.y + (r.y - 120) * pose.scale, w: r.w * pose.scale, h: r.h * pose.scale });
+          const fin = (r) => ({ ...r, cx: r.x + r.w / 2, cy: r.y + r.h / 2 });
+          SC.wipes(tl, $, "v3-", S, { outAt: E.wipeOut });
+
+          // 5 · The photo arrives, labelled; a vision model reads it, line by line.
+          gsap.set($("v3-photo"), { transformOrigin: "0px 0px" });
+          tl.fromTo($("v3-photo"), { opacity: 0, y: -80, rotation: -5 }, { opacity: 1, y: 0, rotation: -1.5, duration: 0.6, ease: "back.out(1.4)", immediateRender: true }, L(E.photoIn));
+          MK.sticker(tl, $("v3-lbl"), L(E.labels[0]), L(E.labels[1]), { rot: -2 });
+          MK.sticker(tl, $("v3-sim"), L(E.labels[0]) + 0.5, L(E.labels[1]), { rot: 2 });
+          tl.fromTo($("v3-scan"), { opacity: 1, y: 0 }, { opacity: 1, y: 540, duration: D.scanDur, ease: "none", immediateRender: false }, L(E.scan));
+          tl.fromTo($("v3-scan"), { opacity: 1 }, { opacity: 0, duration: 0.2, immediateRender: false }, L(E.scan) + D.scanDur);
+          SC.reveal(tl, $("v3-vlm"), L(E.scan) + 0.2, { dur: 0.3 });
+          MK.hide(tl, $("v3-vlm"), L(E.toSplit));
+
+          // ... into a draft: the photo moves left, the suppliers screen comes in; the same figures, marked on both.
+          tl.fromTo($("v3-photo"), { x: 0, y: 0, scale: 1, rotation: -1.5 }, { x: pose.x, y: pose.y, scale: pose.scale, rotation: 0, duration: 0.8, ease: "power3.inOut", immediateRender: false }, L(E.toSplit));
+          tl.fromTo($("v3-dev"), { opacity: 0, x: 220 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out", immediateRender: true }, L(E.toSplit) + 0.3);
+          // The screen is panned so the invoice card fills it.
+          const pan = 250;
+          gsap.set($("v3i-shot"), { y: -pan });
+          const k = M.lines.h / NB.mark("invoice", "lines").h;
+          const up = (r) => fin({ ...r, y: r.y - pan * k });
+          ["qty", "rate", "tax"].forEach((key, i) => MK.highlight(tl, fx, fin(at(P0[key])), L(E.hlPhoto) + i * 0.25, { dur: 0.35, padX: 3, padY: 2, until: L(E.toPrice) }));
+          ["qty", "price", "tax"].forEach((key, i) => MK.highlight(tl, fx, up(M[key]), L(E.hlScreen) + i * 0.25, { dur: 0.35, padX: 3, padY: 2, until: L(E.toPrice) }));
+          MK.camera(tl, cam, { at: L(E.toSplit) + 0.9, zoom: 1.07, x: 950, y: 440, anchor: [960, 440], dur: 0.9 });
+          MK.camera(tl, cam, { at: L(E.toPrice), zoom: 1, dur: 0.5 });
+          M.reads.forEach((r, i) => MK.encircle(tl, fx, up(r), L(E.circleReads) + i * 0.3, { dur: 0.45, pad: 8, width: 4, seed: 5 + i, until: L(E.toPrice) }));
+          MK.sticker(tl, $("v3-note"), L(E.note[0]), L(E.note[1]), { rot: -2 });
+
+          // 6 · Is the price fair? The invoice's price, the last price paid and the market, one under the other.
+          MK.hide(tl, $("v3-photo"), L(E.toPrice), 0.35);
+          MK.hide(tl, $("v3-dev"), L(E.toPrice), 0.35);
+          [["v3-rA", E.rowA], ["v3-rB", E.rowB], ["v3-rC", E.rowC]].forEach(([id, t]) => SC.reveal(tl, $(id), L(t), { dur: 0.4, dy: 24 }));
+          // Each figure inside its crop (1.3×): the invoice's 1560.00, ₹1,480.00, the market's ₹1,385.00.
+          const inCrop = (c, box, m) => fin({ x: c.x + (m.x - box.x) * 1.3, y: c.y + (m.y - box.y) * 1.3, w: m.w * 1.3, h: m.h * 1.3 });
+          MK.highlight(tl, fx, inCrop(R.A, { x: 61, y: price.y - 18 }, price), L(E.hlA), { dur: 0.4, padX: 4, padY: 2 });
+          MK.highlight(tl, fx, inCrop(R.B, { x: 61, y: saving.y - 6 }, NB.mark("quotes", "lastPaidValue")), L(E.hlB), { dur: 0.4, padX: 4, padY: 2 });
+          if (R.C && NB.shot("quotes").marks.marketValue) MK.highlight(tl, fx, inCrop(R.C, { x: 61, y: market.y - 12 }, NB.mark("quotes", "marketValue")), L(E.hlC), { dur: 0.4, padX: 4, padY: 2 });
+          MK.stamp(tl, $("v3-ph"), L(E.ph), { rot: -1 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

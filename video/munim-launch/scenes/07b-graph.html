@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 7b (FalkorDB cut only), the supply graph: the graph Munim rebuilds from Cobnut's books (suppliers →
+         ingredients → dishes → outlets) draws itself; one graph per business. A butter price rise is traced through it to
+         seven dishes at both outlets. Then the product's supplier map (pages/supplier-map.tsx): butter has only one
+         source; "What a price change touches" opens on its dishes and their margins, each with its source. Last, Ask
+         answers "What does a price rise of Butter (synthetic) touch?" from the graph, in the recorded run's own words. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #g7-dev {
+          left: 384px;
+          top: 34px;
+          opacity: 0;
+        }
+        #g7-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #g7-boardwrap {
+          position: absolute;
+          inset: 0;
+        }
+        #g7-st1 {
+          left: auto;
+          right: 60px;
+          top: 690px;
+          font-size: 44px;
+        }
+        #g7-st2 {
+          left: auto;
+          right: 96px;
+          top: 690px;
+        }
+        #g7-count {
+          left: auto;
+          right: 70px;
+          top: 760px;
+          font-size: 30px;
+        }
+        #g7a-turns {
+          position: relative;
+          min-height: 360px;
+        }
+        .g7-turn {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+        }
+        .g7-links {
+          display: flex;
+          gap: 18px;
+          margin-top: 10px;
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--c-primary);
+          text-decoration: underline;
+        }
+      </style>
+      <div data-hf-id="hf-7m1t" id="root" data-composition-id="graph" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-tfib" class="cam" id="g7-cam"><div data-hf-id="hf-fogc" id="g7-boardwrap"></div><div data-hf-id="hf-7885" id="g7-devwrap"></div><div data-hf-id="hf-l9ct" class="fx" id="g7-fx"></div><div data-hf-id="hf-54qe" class="gb-tag" id="g7-tag">Price rise?</div></div>
+        <div data-hf-id="hf-5kgu" class="sticker sticker-turmeric" id="g7-st1">One graph<br data-hf-id="hf-x5px" />per business</div>
+        <div data-hf-id="hf-opnn" class="time-chip beat-chip" id="g7-count"></div>
+        <div data-hf-id="hf-xwv5" class="sticker sticker-ink" id="g7-st2">Answered from the graph</div>
+        <div data-hf-id="hf-j7hk" id="g7-pages"></div>
+      </div>
+      <script>
+        SC.scene("graph", "graph", ({ tl, $, E, D, L, S, F }) => {
+          const g = F.graph;
+          $("g7-boardwrap").innerHTML = UI.graphBoard(F, "g7-");
+          $("g7-devwrap").innerHTML = SC.device("laptop", "g7-dev", [
+            ["g7-map", UI.supplierMap(F, "g7m-")],
+            ["g7-ask", UI.askPage(F, "g7a-", { threads: [{ who: "Kitchen", q: "@Kitchen how are the cake tickets doing this week?", when: "15 Oct, 6:40 pm" }] })],
+          ]);
+          $("g7a-turns").innerHTML = `<div class="g7-turn" id="g7-turn">${UI.askTurn("g7a-b-", F.ask.butter.q)}</div>`;
+          $("g7a-b-a").insertAdjacentHTML("beforeend", '<p class="g7-links" id="g7-links"><span>See the supplier map</span><span>Ask other simulated suppliers to quote</span></p>');
+          $("g7-pages").innerHTML = SC.pages("g7-");
+          const cam = $("g7-cam");
+          const fx = $("g7-fx");
+          const { nodes, edges } = UI.graphLayout(F);
+          const nodeEl = (n) => $(`g7-n-${n.kind}-${n.key}`);
+          const M = MK.measure($("g7-dev"), () => {
+            const r = (id) => MK.rect($(id), cam);
+            return {
+              lens: edges.map((_, i) => $(`g7-e-${i}`).getTotalLength()),
+              butter: MK.rect(nodeEl({ kind: "ingredient", key: "butter" }), cam),
+              solePill: r("g7m-sole-butter"), card: r("g7m-card-dairy"), open: r("g7m-open-butter"),
+              m0: r("g7m-m-0"), cv: r("g7m-cv-1"), drawer: r("g7m-drawer"), conv: r("g7a-conv"), ask: r("g7a-ask"),
+            };
+          });
+          // The drawer's own rects are taken where it ends up (it slides in from off-screen right).
+          SC.wipes(tl, $, "g7-", S);
+
+          // 1 · The graph draws itself: nodes column by column, then the edges between them.
+          const colAt = { supplier: E.nodes[0], ingredient: E.nodes[1], dish: E.nodes[2], outlet: E.nodes[3] };
+          for (const [k, at] of Object.entries(colAt)) SC.reveal(tl, $(`g7-h-${k}`), L(at) - 0.1, { dur: 0.3, dy: 8 });
+          const byKind = {};
+          nodes.forEach((n) => (byKind[n.kind] = byKind[n.kind] || []).push(n));
+          for (const [kind, list] of Object.entries(byKind)) list.forEach((n, i) => SC.reveal(tl, nodeEl(n), L(colAt[kind]) + i * D.nodeStep, { dur: 0.3, dy: 12 }));
+          const edgeAt = { supplies: E.edges[0], quoted: E.edges[0] + 0.3, uses: E.edges[1], sold: E.edges[2] };
+          const count = { supplies: 0, quoted: 0, uses: 0, sold: 0 };
+          edges.forEach((e, i) => {
+            const el = $(`g7-e-${i}`);
+            const at = L(edgeAt[e.kind]) + count[e.kind]++ * D.edgeStep;
+            if (e.kind === "quoted") {
+              tl.fromTo(el, { opacity: 0 }, { opacity: 0.32, duration: 0.4, immediateRender: true }, at);
+            } else {
+              const len = M.lens[i] + 2;
+              el.style.strokeDasharray = `${len}`;
+              tl.fromTo(el, { strokeDashoffset: len }, { strokeDashoffset: 0, duration: 0.5, ease: "power1.inOut", immediateRender: true }, at);
+            }
+          });
+          tl.fromTo($("g7-other"), { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out", immediateRender: true }, L(E.other));
+          MK.sticker(tl, $("g7-st1"), L(E.sticker1[0]), L(E.sticker1[1]), { rot: 2 });
+
+          // 2 · A butter price rise, traced: butter's supplier, its seven dishes, both outlets; the rest dims.
+          const butterDishes = new Set(g.uses.butter);
+          const onPath = (e) =>
+            (e.kind === "supplies" && e.to.key === "butter") || (e.kind === "uses" && e.from.key === "butter") || (e.kind === "sold" && butterDishes.has(e.from.key));
+          const litNodes = new Set(["supplier:dairy", "ingredient:butter", ...g.uses.butter.map((d) => `dish:${d}`), ...g.outlets.map((o) => `outlet:${o}`)]);
+          const hotAt = edges.map((e) => (!onPath(e) ? null : e.kind === "supplies" ? L(E.trace) : e.kind === "uses" ? L(E.trace) + 0.5 + g.uses.butter.indexOf(e.to.key) * 0.12 : L(E.trace) + 1.5));
+          const litAt = (n) => (n.kind === "supplier" || n.kind === "ingredient" ? L(E.trace) : n.kind === "dish" ? L(E.trace) + 0.6 + g.uses.butter.indexOf(n.key) * 0.12 : L(E.trace) + 1.8);
+          MK.drive(tl, (t) => {
+            const traced = t >= L(E.trace) && t < L(E.toMap);
+            edges.forEach((e, i) => {
+              const el = $(`g7-e-${i}`);
+              el.classList.toggle("hot", traced && hotAt[i] !== null && t >= hotAt[i]);
+              el.classList.toggle("dim", traced && hotAt[i] === null);
+            });
+            nodes.forEach((n) => {
+              const on = litNodes.has(`${n.kind}:${n.key}`);
+              nodeEl(n).classList.toggle("lit", traced && on && t >= litAt(n));
+              nodeEl(n).classList.toggle("dim", traced && !on);
+            });
+          });
+          const tag = $("g7-tag");
+          tag.style.left = `${M.butter.x + M.butter.w - 70}px`;
+          tag.style.top = `${M.butter.y - 52}px`;
+          MK.sticker(tl, tag, L(E.tag), L(E.toMap) - 0.2, { rot: -3 });
+          MK.encircle(tl, fx, M.butter, L(E.tag) + 0.2, { dur: 0.5, pad: 14, width: 6, until: L(E.toMap) - 0.2 });
+          $("g7-count").textContent = `${g.uses.butter.length} dishes · ${g.outlets.length} outlets`;
+          MK.sticker(tl, $("g7-count"), L(E.countChip), L(E.toMap) - 0.2, { rot: 2 });
+
+          // 3 · The supplier map: butter has only one source; what a price change touches.
+          tl.fromTo($("g7-boardwrap"), { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, L(E.toMap));
+          tl.fromTo($("g7-dev"), { opacity: 0, y: 140 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, L(E.toMap) + 0.2);
+          MK.highlight(tl, fx, M.solePill, L(E.solePill), { dur: 0.5, padX: 4, padY: 2, until: L(E.camCard) });
+          MK.camera(tl, cam, { at: L(E.camCard), zoom: 1.4, x: M.card.cx, y: M.card.cy, anchor: [900, 480], dur: 0.9 });
+          const cur = MK.cursor(tl, fx, { x: M.open.cx + 200, y: M.open.cy + 140, hidden: true });
+          cur.show(L(E.open) - 1.0);
+          cur.go({ at: L(E.open) - 0.9, to: [M.open.cx, M.open.cy], dur: 0.8, state: "hand" });
+          cur.click(L(E.open), $("g7m-open-butter"));
+          cur.hide(L(E.open) + 0.4);
+          tl.fromTo($("g7m-backdrop"), { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: true }, L(E.open) + 0.15);
+          tl.fromTo($("g7m-drawer"), { x: 460 }, { x: 0, duration: 0.45, ease: "power3.out", immediateRender: true }, L(E.open) + 0.15);
+          // The drawer sits at the screen's right edge: the camera follows it there.
+          MK.camera(tl, cam, { at: L(E.open) + 0.4, zoom: 1.3, x: M.drawer.cx - 60, y: M.drawer.y + 330, anchor: [960, 540], dur: 0.9 });
+          MK.highlight(tl, fx, M.m0, L(E.margin), { dur: 0.5, padX: 6, padY: 3, until: L(E.toAsk) });
+          MK.encircle(tl, fx, M.cv, L(E.margin) + 1.0, { dur: 0.5, pad: 10, width: 5, until: L(E.toAsk) });
+
+          // 4 · Ask, answered from the graph.
+          MK.camera(tl, cam, { at: L(E.toAsk) - 0.3, zoom: 1, dur: 0.5 });
+          SC.swap(tl, $("g7-map"), $("g7-ask"), L(E.toAsk));
+          const a = F.ask.butter;
+          const q = $("g7a-q");
+          MK.drive(tl, (t) => {
+            q.textContent = t >= L(E.typeQ) && t < L(E.ask) + 0.1 ? a.q.slice(0, Math.max(0, Math.floor((t - L(E.typeQ)) * 40))) : "";
+            $("g7a-b-pending").style.display = t < L(E.answer) ? "" : "none";
+            $("g7a-b-a").style.display = t >= L(E.answer) ? "" : "none";
+          });
+          SC.appear(tl, $("g7-turn"), L(E.ask), 0.25);
+          MK.tap(tl, fx, { x: M.ask.cx, y: M.ask.cy }, L(E.ask));
+          $("g7a-b-sig").textContent = `${a.via} · via Manager`;
+          const chip = (text) => {
+            const s = document.createElement("span");
+            s.innerHTML = UI.sourced(text);
+            return s;
+          };
+          const parts = a.parts.map((x) => (typeof x === "string" ? x : chip(F.fmt.inr(x.value))));
+          const st = MK.stream(tl, $("g7a-b-body"), parts, L(E.think), { thinking: L(E.answer) - L(E.think), cps: D.cps, think: $("g7a-b-think") });
+          SC.appear(tl, $("g7-links"), st.end + 0.1, 0.3);
+          MK.camera(tl, cam, { at: L(E.answer) + 0.2, zoom: 1.28, x: M.conv.cx, y: M.conv.y + 150, anchor: [960, 420], dur: 0.8 });
+          MK.sticker(tl, $("g7-st2"), L(E.sticker2[0]), L(E.sticker2[1]), { rot: -2 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "case": "invoice_hazelnut",
+  "role": "vision",
+  "model_id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "response": {
+    "id": "chatcmpl-2cf7dd8b-a4ae-4434-94fb-d29863f3a75d",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "content": "{\"transcript\": \"Lalbagh Nut & Spice (simulated) SAMPLE - synthetic Simulated supplier for a demo. Not a real business, invoice or tax document. TAX INVOICE Invoice no: LNS-2026-0412 Date: 2026-10-22 Bill to: Cobnut Bakehouse, Hazratganj Description Qty Unit Rate Tax Roasted hazelnuts (synthetic) 2 kg 1560.00 156.00 Subtotal 3120.00 Tax 156.00 Total (INR) 3276.00 Payment within 15 days. Thank you for your business.\", \"supplier_name\": \"Lalbagh Nut & Spice (simulated)\", \"invoice_no\": \"LNS-2026-0412\", \"invoice_date\": \"2026-10-22\", \"lines\": [{\"description\": \"Roasted hazelnuts (synthetic)\", \"qty\": \"2\", \"unit\": \"kg\", \"unit_price\": \"1560.00\", \"tax\": \"156.00\"}]}",
+          "role": "assistant",
+          "reasoning_content": null
+        },
+        "finish_reason": "stop",
+        "logprobs": null
+      }
+    ],
+    "created": 1793107872,
+    "model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "service_tier": null,
+    "system_fingerprint": null,
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 662,
+      "completion_tokens": 268,
+      "total_tokens": 930,
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      }
+    }
+  }
+}

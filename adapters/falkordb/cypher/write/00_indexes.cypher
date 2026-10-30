@@ -1,0 +1,7 @@
+CREATE INDEX FOR (n:outlet) ON (n.id)
+CREATE INDEX FOR (n:supplier) ON (n.id)
+CREATE INDEX FOR (n:ingredient) ON (n.id)
+CREATE INDEX FOR (n:recipe) ON (n.id)
+CREATE INDEX FOR (n:item) ON (n.id)
+CREATE INDEX FOR (n:finding) ON (n.id)
+CREATE INDEX FOR (n:draft) ON (n.id)

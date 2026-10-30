@@ -1,0 +1,14 @@
+node_modules/
+.venv/
+__pycache__/
+.next/
+dist/
+*.tsbuildinfo
+apps/web/next-env.d.ts
+.DS_Store
+.env
+.env.*
+!.env.example
+.run/
+.vercel
+deploy/vercel/out/

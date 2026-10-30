@@ -1,0 +1,56 @@
+{
+  "_about": "Hand-kept (11 Oct 2026, lane b-85). Where a plant's finding legitimately differs from `impact_minor` in the key, the accepted impacts typed from the key's own `what` (the pack e2e suites encode the same cases; finance EXPECTED / F5_WEEKS). Nothing here is read from the code under test. `traps` are answer-key problems whose detector must stay silent on the named place (detector-map `expect: no_finding`); each is paired with an accept: the same detector finds something else in that world.",
+  "impact_alternatives": {
+    "RG-F4": [898800],
+    "RG-F7": [898800],
+    "RG-G4": [1075200],
+    "CK-G4": [812000],
+    "ST-G4": [291200],
+    "AU-G4": [31065]
+  },
+  "impact_alternatives_why": {
+    "RG-F4": "key F7: finance.missing_payouts 898,800 = ZM-C-H1's 722,400 + RG-F4's 176,400 while ZM-C-H1 is held: one finding covers both plants",
+    "RG-F7": "same finding as RG-F4",
+    "RG-G4": "pack customers-growth.md section 10 G4: the impact column at_risk_spend_minor = the prior-90-day spend / 3 (section 3: a per-customer monthly_spend_minor cell, the Sigma row sums them). The key's `what` is the window spend, 6 x 8 x 67,200 = 3,225,600; all eight orders lie 35 to 84 days back, inside 90, so the pack's value is 6 x (8 x 67,200 / 3) = 6 x 179,200 = 1,075,200. Stays red today: the Sigma also holds two unplanted customers the template's segment rule marks at risk (fx-packs, 11 Oct)",
+    "CK-G4": "as RG-G4: 5 x (8 x 60,900 / 3) = 5 x 162,400 = 812,000. Stays red today: the Sigma also holds one unplanted at-risk customer",
+    "ST-G4": "as RG-G4: 4 x (8 x 27,300 / 3) = 4 x 72,800 = 291,200",
+    "AU-G4": "as RG-G4, rounded per customer (section 3: each customer's monthly cell is rounded, the Sigma row sums the cells; the customers e2e encodes the same rule): 5 x round(8 x 2,330 / 3) = 5 x round(6,213.3) = 5 x 6,213 = 31,065"
+  },
+  "all_of": {
+    "RG-F5": [246000, 419400, 273600]
+  },
+  "all_of_why": {
+    "RG-F5": "key: the weekly sums 246,000 + 419,400 + 273,600 are what finance.tender_gap can find (three findings), 939,000 in all"
+  },
+  "sum_of_findings": {"RG-K2": null, "CK-K2": null, "AU-K2": null, "RG-P2": 408000},
+  "sum_of_findings_why": {
+    "RG-K2": "key `what`: the remake write-offs are planted over four ISO weeks and the detector finds each week (RG 113,400 + 151,200 + 113,400 + 113,400 = 491,400; CK 4 x 117,600 = 470,400; AU 4 x 7,400 = 29,600): the plant's impact (null = the key's impact_minor) is the sum of its detector's weekly findings at the outlet",
+    "CK-K2": "as RG-K2",
+    "AU-K2": "as RG-K2",
+    "RG-P2": "pack people.md section 4 dedupes per <outlet>:<weekday>:<slot>, so the helpers' six Tue/Wed 15:00-17:00 slots at North are six findings, each on its own Sigma cell of labour_vs_demand v2 (0026, R47 D6). Hand value from the m0026 world check (db/tests/templates-worlds.ts): 540 / 480 / 540 / 480 / 540 / 480 surplus minutes at the helpers' 8,000 an hour = 72,000 + 64,000 + 72,000 + 64,000 + 72,000 + 64,000 = 408,000. The key's 480,000 (3,600 minutes) counts every planted helper minute; the world also has a baseline bill on three slot-days (8 Sep 16:00, 30 Sep 15:00, 7 Oct 17:00) and the rolling 8-week norm absorbs the plant in its fifth week: a worldgen/key gap (db/README.md 0026 'RG-P2 vs its key'), kept open, not tuned away here"
+  },
+  "abs": ["RG-M1b"],
+  "abs_why": {"RG-M1b": "key: |744,622 x -3,545 / 10,000| = 263,968 (over-prep risk): the cell is signed"},
+  "date_window": {
+    "RG-M1": {"on": "2026-10-16", "ahead_days": 7},
+    "RG-M1b": {"on": "2026-10-17", "ahead_days": 7}
+  },
+  "date_window_why": "market.upcoming reads the real date (pack section 3): the key dates (Fri 16 Oct, Sat 17 Oct) count only while they lie within 7 days of today; outside, the plant is a counted skip, never found or missed",
+  "traps": [
+    {
+      "id": "RG-F8", "specialist": "finance", "world": "restaurant_group", "detector": "finance.unapproved_ad_fee",
+      "keys": ["outlet:2", "aggregator:zomato"], "suffix": "2026-08",
+      "why": "key: August ad fee 30,000 inside the 500,000 cap: max(0, 30,000 - 500,000) = 0"
+    },
+    {
+      "id": "RG-C6", "specialist": "catalogue", "world": "restaurant_group", "detector": "catalogue.cost_drift",
+      "keys": ["outlet:3"], "any_item_using": "ing:mushroom", "suffix": null,
+      "why": "key: mushroom risotto repriced with the cost: drift 0 at South (outlet:3) on the dishes whose recipe uses mushroom; RG-C1's drift at Central is the paired accept"
+    },
+    {
+      "id": "RG-C6", "specialist": "inventory_purchasing", "world": "restaurant_group", "detector": "purchasing.price_creep",
+      "keys": ["ing:mushroom"], "suffix": null,
+      "why": "key: mushroom invoiced +9% once then held: one observation is not a creep; paneer's creep is the paired accept"
+    }
+  ]
+}

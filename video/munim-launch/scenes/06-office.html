@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 6, the AI back office: the product's office page (pages/office.tsx) replays the morning's watchers' sweep,
+         one desk lit at a time with its bubble (lib/munim/office.ts words): Stock & Purchasing finds the butter waste
+         and the hazelnut shortfall. Then Ask Munim: the question, the "reading your books" card, the answer streaming
+         with its Source chips; Diwali gets "Cannot verify". The full tour adds the desks named in turn, a finding
+         dismissed with a reason, the labour question, and an investigation that only reads the books. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #a6-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #a6-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #a6-st {
+          left: auto;
+          right: 96px;
+          top: 690px;
+        }
+        .a6-turn {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          opacity: 0;
+        }
+        #a6-turns {
+          position: relative;
+          min-height: 300px;
+        }
+      </style>
+      <div data-hf-id="hf-6oxv" id="root" data-composition-id="office" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-tuls" class="cam" id="a6-cam"><div data-hf-id="hf-p0my" id="a6-devwrap"></div><div data-hf-id="hf-rqog" class="fx" id="a6-fx"></div></div>
+        <div data-hf-id="hf-0njh" class="sticker sticker-ink" id="a6-st">It only reads the books</div>
+        <div data-hf-id="hf-jl8j" id="a6-pages"></div>
+      </div>
+      <script>
+        SC.scene("office", "office", ({ tl, $, E, D, L, S, F, has }) => {
+          const layers = [["a6-officeL", UI.officePage(F, "a6-", "The watchers' sweep · Stock & Purchasing · 16 Oct, 6:55 am")]];
+          if (has("toInbox")) layers.push(["a6-inbox", `<div class="cb-page">${UI.staffBar(F, "owner", "Inbox")}<main class="staff-main"><h1 class="section-title">Inbox</h1>${UI.dismissCard(F, "a6-")}</main></div>`]);
+          layers.push(["a6-ask", UI.askPage(F, "a6-", { threads: [{ who: "Kitchen", q: "@Kitchen how are the cake tickets doing this week?", when: "15 Oct, 6:40 pm" }] })]);
+          if (has("toInv")) layers.push(["a6-inv", UI.investigation(F, "a6-")]);
+          $("a6-devwrap").innerHTML = SC.device("laptop", "a6-dev", layers);
+          $("a6-pages").innerHTML = SC.pages("a6-");
+          // The questions: each a turn in the conversation, shown one at a time.
+          const Q = [["waste", "typeQ1", "ask1", "think1", "answer1"]];
+          if (has("typeQ2")) Q.push(["labour", "typeQ2", "ask2", "think2", "answer2"]);
+          Q.push(["diwali", "typeQ3", "ask3", "think3", "answer3"]);
+          $("a6-turns").innerHTML = Q.map(([k], i) => `<div class="a6-turn" id="a6-turn${i}">${UI.askTurn(`a6-${k}-`, F.ask[k].q)}</div>`).join("");
+          const cam = $("a6-cam");
+          const fx = $("a6-fx");
+          const M = MK.measure($("a6-dev"), () => ({ floor: MK.rect($("a6-officeL").querySelector(".office-floor"), cam), watch: MK.rect($("a6-watch"), cam), ask: MK.rect($("a6-ask"), cam), cv: MK.rect($("a6-turns"), cam), dismiss: has("toInbox") ? MK.rect($("a6-dismiss"), cam) : null }));
+          SC.wipes(tl, $, "a6-", S);
+
+          // The 4:00 Cup cut opens on the office while the narrator introduces it: a slow push-in on the desks, back out
+          // before the cursor goes to "Watch it".
+          if (has("creep")) {
+            MK.camera(tl, cam, { at: L(E.creep), zoom: 1.08, x: M.floor.cx, y: M.floor.cy, anchor: [M.floor.cx, M.floor.cy], dur: L(E.watch) - 1.3 - L(E.creep), ease: "sine.inOut" });
+            MK.camera(tl, cam, { at: L(E.watch) - 1.25, zoom: 1, dur: 0.5 });
+          }
+
+          // The replay: one desk at a time, its bubble in the office's own words.
+          const cur = MK.cursor(tl, fx, { x: M.watch.cx + 220, y: M.watch.cy + 160, hidden: true });
+          cur.show(L(E.watch) - 1.0);
+          cur.go({ at: L(E.watch) - 0.9, to: [M.watch.cx, M.watch.cy], dur: 0.8, state: "hand" });
+          cur.click(L(E.watch), $("a6-watch"));
+          cur.hide(L(E.watch) + 0.6);
+          const spots = [...UI.DESKS, "suppliers", "owner"];
+          const steps = S.steps.map(([at, spot, words, tone]) => [L(at), spot, words, tone]);
+          const tour = has("deskTour") ? UI.DESKS.map((d, i) => [L(E.deskTour) + i * D.deskStep, d]) : [];
+          MK.drive(tl, (t) => {
+            let cur2 = null;
+            for (const s of steps) if (t >= s[0]) cur2 = s;
+            if (cur2 && t > steps[steps.length - 1][0] + 1.6) cur2 = null;
+            let lit = null;
+            for (const [at, d] of tour) if (t >= at && t < at + D.deskStep + 0.05) lit = d;
+            for (const sp of spots) {
+              const on = cur2 && cur2[1] === sp;
+              const desk = $(`a6-desk-${sp}`);
+              const bub = $(`a6-bub-${sp}`);
+              desk.style.borderColor = on || lit === sp ? "var(--c-primary)" : "";
+              desk.style.borderWidth = on || lit === sp ? "2.5px" : "";
+              desk.style.boxShadow = on || lit === sp ? "var(--c-shadow-lift)" : "";
+              bub.style.opacity = on ? "1" : "0";
+              if (on && bub.textContent !== cur2[2]) bub.textContent = cur2[2];
+              if (on) bub.dataset.tone = cur2[3];
+              const lamp = $(`a6-art-${sp}-lamp`);
+              if (lamp) lamp.setAttribute("fill", on || lit === sp ? "#fde7b8" : "#8c6e5a");
+              const person = $(`a6-art-${sp}-person`);
+              if (person) person.setAttribute("transform", on ? `translate(0 ${(-2.5 * Math.abs(Math.sin((t - cur2[0]) * Math.PI / 0.7))).toFixed(2)})` : "");
+            }
+          });
+
+          // The full tour: a finding the owner doesn't need is dismissed, with a reason.
+          if (has("toInbox")) {
+            SC.swap(tl, $("a6-officeL"), $("a6-inbox"), L(E.toInbox));
+            MK.tap(tl, fx, { x: M.dismiss.cx, y: M.dismiss.cy }, L(E.tapDismiss));
+            const why = $("a6-why-row");
+            const row = $("a6-dismiss-row");
+            MK.drive(tl, (t) => {
+              row.style.display = t < L(E.tapDismiss) + 0.1 ? "" : "none";
+              why.style.display = t >= L(E.tapDismiss) + 0.1 ? "" : "none";
+            });
+            MK.states(tl, $("a6-why"), [[0, "Choose a reason"], [L(E.why), "Not now"]]);
+            MK.press(tl, $("a6-confirm"), L(E.confirm));
+            tl.fromTo($("a6-drift"), { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.96, duration: 0.4, ease: "power2.in", immediateRender: false }, L(E.confirm) + 0.3);
+          }
+
+          // Ask Munim: each question typed, asked, read, answered.
+          SC.swap(tl, has("toInbox") ? $("a6-inbox") : $("a6-officeL"), $("a6-ask"), L(E.toAsk));
+          const qbox = $("a6-q");
+          const chip = (text, kind) => {
+            const s = document.createElement("span");
+            s.innerHTML = kind === "cv" ? UI.cannotVerify() : UI.sourced(text);
+            return s;
+          };
+          const valueText = (part) => (part.kind === "rate" ? F.fmt.rate(part.value) : part.kind === "count" ? String(part.value) : F.fmt.inr(part.value));
+          const typing = [];
+          Q.forEach(([k, typeKey, askKey, thinkKey, answerKey], i) => {
+            const q = F.ask[k].q;
+            typing.push([L(E[typeKey]), L(E[askKey]), q]);
+            const turn = $(`a6-turn${i}`);
+            tl.fromTo(turn, { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: false }, L(E[askKey]));
+            if (i + 1 < Q.length) tl.fromTo(turn, { opacity: 1 }, { opacity: 0, duration: 0.25, immediateRender: false }, L(E[Q[i + 1][1]]) - 0.1);
+            MK.tap(tl, fx, { x: M.ask.cx, y: M.ask.cy }, L(E[askKey]));
+            const pending = $(`a6-${k}-pending`);
+            const answer = $(`a6-${k}-a`);
+            MK.drive(tl, (t) => {
+              pending.style.display = t < L(E[answerKey]) ? "" : "none";
+              answer.style.display = t >= L(E[answerKey]) ? "" : "none";
+            });
+            const a = F.ask[k];
+            $(`a6-${k}-sig`).textContent = a.abstain ? "Manager" : `${a.via} · via Manager`;
+            const parts = a.abstain ? [chip("", "cv"), ` ${a.abstain}`] : a.parts.map((x) => (typeof x === "string" ? x : chip(valueText(x))));
+            MK.stream(tl, $(`a6-${k}-body`), parts, L(E[thinkKey]), { thinking: L(E[answerKey]) - L(E[thinkKey]), cps: 46, think: $(`a6-${k}-think`) });
+          });
+          MK.drive(tl, (t) => {
+            let text = "";
+            for (const [from, until, q] of typing) if (t >= from && t < until + 0.1) text = q.slice(0, Math.max(0, Math.min(q.length, Math.floor((t - from) * 32))));
+            qbox.textContent = text;
+          });
+          // The circle goes round the "Cannot verify" chip where it sits once the answer replaces the waiting card.
+          const cvRect = MK.measure($("a6-dev"), () => {
+            const pend = $("a6-diwali-pending");
+            const ans = $("a6-diwali-a");
+            const was = [pend.style.display, ans.style.display];
+            pend.style.display = "none";
+            ans.style.display = "";
+            const r = MK.rect($("a6-diwali-body").querySelector(".cv-chip"), cam);
+            [pend.style.display, ans.style.display] = was;
+            return r;
+          });
+          MK.encircle(tl, fx, cvRect, L(E.encircleCV), { dur: 0.5, pad: 12, width: 5, until: has("toInv") ? L(E.toInv) : undefined });
+          // While the narrator says "cannot verify", the camera eases in on the answer (no still frame), and back out for
+          // the investigation.
+          const settle = has("toInv") ? L(E.toInv) - 0.3 : S.dur - 0.7;
+          MK.camera(tl, cam, { at: L(E.encircleCV) + 0.2, zoom: 1.16, x: cvRect.cx, y: cvRect.cy, anchor: [cvRect.cx, cvRect.cy], dur: settle - L(E.encircleCV) - 0.2, ease: "sine.inOut" });
+          if (has("toInv")) MK.camera(tl, cam, { at: settle, zoom: 1, dur: 0.5 });
+
+          // The full tour's investigation: checked cause by cause, from the books only.
+          if (has("toInv")) {
+            SC.swap(tl, $("a6-ask"), $("a6-inv"), L(E.toInv));
+            F.investigation.items.forEach((_, i) => SC.reveal(tl, $(`a6-inv-${i}`), L(E.toInv) + 0.5 + i * D.invStep));
+            MK.sticker(tl, $("a6-st"), L(E.sticker[0]), L(E.sticker[1]), { rot: -2 });
+          }
+        });
+      </script>
+    </template>
+  </body>
+</html>

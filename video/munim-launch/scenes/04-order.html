@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 4, the 8:30 order: Zoya on Cobnut's own storefront, on her phone. The menu scrolls to the cakes; the
+         Hazelnut Praline Cake's sheet: 1 kg, Eggless (the price moves ₹1,400.00 → ₹1,480.00), a message typed; checkout:
+         FIRST50 is refused with the app's own words, COBNUT10 takes ₹148.00 off, CGST and SGST, total ₹1,398.60; pickup
+         at ten, paid at the counter; "Place order"; the tracker moves to Accepted. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #o4-dev {
+          left: 560px;
+          top: 34px;
+        }
+        #o4-dev .dev-scale {
+          transform: scale(0.9);
+        }
+        #o4-chip {
+          left: 1110px;
+          top: 120px;
+        }
+        #o4-st {
+          left: 1290px;
+          top: 300px;
+          font-size: 44px;
+        }
+      </style>
+      <div data-hf-id="hf-093l" id="root" data-composition-id="order" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-o57c" class="cam" id="o4-cam"><div data-hf-id="hf-h7ay" id="o4-devwrap"></div><div data-hf-id="hf-hjos" class="fx" id="o4-fx"></div></div>
+        <div data-hf-id="hf-9tzu" class="time-chip" id="o4-chip">Fri · 8:31 am</div>
+        <div data-hf-id="hf-jg6q" class="sticker sticker-turmeric" id="o4-st">Prices are worked out<br data-hf-id="hf-x5px" />on the server</div>
+        <div data-hf-id="hf-eubn" id="o4-pages"></div>
+      </div>
+      <script>
+        SC.scene("order", "order", ({ tl, $, E, L, S, F, has }) => {
+          $("o4-devwrap").innerHTML = SC.device("phone", "o4-dev", [
+            ["o4-menu", UI.shopMenu(F, "o4-") + UI.itemSheet(F, "o4-")],
+            ["o4-co", UI.checkout(F, "o4-")],
+            ["o4-tr", UI.tracker(F, "o4-")],
+          ]);
+          $("o4-pages").innerHTML = SC.pages("o4-");
+          const cam = $("o4-cam");
+          const fx = $("o4-fx");
+          const M = MK.measure($("o4-dev"), () => {
+            const r = (id) => MK.rect($(id), cam);
+            const screen = r("o4-dev-screen");
+            return {
+              k: screen.w / 390, screen,
+              cakeTop: $("o4-item-praline_celebration_cake").offsetTop + $("o4-cat-cakes").offsetTop,
+              cakeAdd: r("o4-add-praline_celebration_cake"), one: r("o4-v-one"), eggless: r("o4-o-eggless"), add: r("o4-add-cart"),
+              coupon: r("o4-coupon"), apply: r("o4-apply"), remove: r("o4-remove"), review: r("o4-review"),
+              placeTop: $("o4-place-sec").offsetTop, place: r("o4-place"), cgst: r("o4-totals"),
+            };
+          });
+          const k = M.k;
+          SC.wipes(tl, $, "o4-", S);
+          tl.fromTo($("o4-dev"), { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out", immediateRender: true }, L(E.phoneIn));
+          MK.sticker(tl, $("o4-chip"), L(E.chip[0]), L(E.chip[1]), { rot: 3 });
+
+          // The menu scrolls to the cakes (the full tour lingers on the pastries and the ribbon first).
+          const menuScroll = $("o4-menu-scroll");
+          const cakeScroll = Math.max(0, M.cakeTop - 170);
+          let scrolled = 0;
+          if (has("scroll1")) {
+            MK.move(tl, menuScroll, { y: -420 }, L(E.scroll1), 1.8, "power2.inOut", { y: 0 });
+          }
+          MK.move(tl, menuScroll, { y: -cakeScroll }, L(E.scroll2), 1.4, "power2.inOut", { y: 0 });
+          scrolled = cakeScroll;
+          const tapAt = (rect, at, dy = 0) => MK.tap(tl, fx, { x: rect.cx, y: rect.cy - dy * k }, at);
+          tapAt(M.cakeAdd, L(E.tapCake), scrolled);
+
+          // The item sheet: 1 kg, Eggless, the message.
+          tl.fromTo($("o4-sheet-backdrop"), { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: true }, L(E.sheetIn));
+          tl.fromTo($("o4-sheet"), { y: 760 }, { y: 0, duration: 0.45, ease: "power3.out", immediateRender: true }, L(E.sheetIn));
+          tapAt(M.one, L(E.tapOne));
+          tapAt(M.eggless, L(E.tapEggless));
+          const radio = (id, at) => {
+            const r = $(id).querySelector(".radio");
+            const c = $(id);
+            MK.drive(tl, (t) => {
+              r.classList.toggle("on", t >= at);
+              c.classList.toggle("on", t >= at);
+            });
+          };
+          radio("o4-v-one", L(E.tapOne));
+          radio("o4-o-eggless", L(E.tapEggless));
+          const it = F.items.praline_celebration_cake;
+          MK.states(tl, $("o4-sheet-price"), [[0, F.fmt.inr(it.variants.one_kg.price)], [L(E.tapEggless) + 0.05, F.fmt.inr(it.variants.one_kg.price + it.groups.sponge.options.eggless.delta)]]);
+          MK.type(tl, $("o4-note"), F.cakeOrder.lines[0].note, L(E.typeNote), 30);
+          tapAt(M.add, L(E.tapAdd));
+          MK.press(tl, $("o4-add-cart"), L(E.tapAdd));
+
+          // Checkout: FIRST50 refused, COBNUT10 applied, the server's totals.
+          SC.swap(tl, $("o4-menu"), $("o4-co"), L(E.checkout), { dur: 0.35, dx: 40 });
+          MK.camera(tl, cam, { at: L(E.camCoupon), zoom: 1.45, x: M.coupon.cx, y: M.coupon.cy + 60, anchor: [900, 420], dur: 0.8 });
+          const field = $("o4-coupon");
+          const typed = (text, from, cps) => (t) => text.slice(0, Math.max(0, Math.min(text.length, Math.floor((t - from) * cps))));
+          const first = typed("FIRST50", L(E.typeFirst), 12);
+          const second = typed("COBNUT10", L(E.typeCobnut), 12);
+          MK.drive(tl, (t) => {
+            field.textContent = t < L(E.remove) ? first(t) : second(t);
+          });
+          tapAt(M.apply, L(E.apply1));
+          const refusal = $("o4-refusal");
+          const totals = $("o4-totals");
+          MK.drive(tl, (t) => {
+            refusal.style.opacity = t >= L(E.apply1) + 0.2 && t < L(E.remove) + 0.1 ? "1" : "0";
+            totals.style.opacity = t >= L(E.apply2) + 0.2 ? "1" : "0";
+          });
+          tapAt(M.remove, L(E.remove));
+          tapAt(M.apply, L(E.apply2));
+          MK.sticker(tl, $("o4-st"), L(E.sticker[0]), L(E.sticker[1]), { rot: -2 });
+          if (has("taxHighlight")) MK.highlight(tl, fx, { x: M.cgst.x, y: M.cgst.y + M.cgst.h * 0.38, w: M.cgst.w, h: M.cgst.h * 0.3 }, L(E.taxHighlight), { dur: 0.5, until: L(E.scrollPlace) });
+          MK.camera(tl, cam, { at: L(E.camBack), zoom: 1, dur: 0.8 });
+
+          // Place: the checkout scrolls to its last step; then the tracker.
+          const placeScroll = Math.max(0, M.placeTop - 260);
+          MK.move(tl, $("o4-co-scroll"), { y: -placeScroll }, L(E.scrollPlace), 1.0, "power2.inOut", { y: 0 });
+          tapAt(M.place, L(E.tapPlace), placeScroll);
+          MK.press(tl, $("o4-place"), L(E.tapPlace));
+          SC.swap(tl, $("o4-co"), $("o4-tr"), L(E.tracker), { dur: 0.35, dx: 40 });
+          const steps = [L(E.tracker), L(E.accepted)];
+          MK.states(tl, $("o4-tr-line"), [[0, UI.trackerLines[0]], [steps[1], UI.trackerLines[1]]]);
+          MK.drive(tl, (t) => {
+            const now = t >= steps[1] ? 1 : 0;
+            for (let i = 0; i < 5; i++) {
+              const d = $(`o4-tr-dot-${i}`);
+              d.classList.toggle("done", i < now);
+              d.classList.toggle("now", i === now);
+            }
+          });
+        });
+      </script>
+    </template>
+  </body>
+</html>

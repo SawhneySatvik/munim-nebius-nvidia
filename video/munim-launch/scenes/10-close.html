@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 10, the close: the guarantee written on the ledger page ("Nothing changes your books without your
+         approval." "Every number traces to a row."), then the end card (Munim, the build line, the address) and the
+         film's one disclosure card: "Synthetic business · simulated suppliers and recipients · payments recorded, not
+         processed." The Cup cut's address is a named placeholder until the founder sends the Cloud Run URL
+         (tools/check-cup-url.mjs fails while it is there). -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+      </style>
+      <div data-hf-id="hf-4xhx" id="root" data-composition-id="close" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-h9zp" id="z10-board"></div>
+        <div data-hf-id="hf-cgvt" id="z10-pages"></div>
+      </div>
+      <script>
+        SC.scene("close", "close", ({ tl, $, E, L, S, F }) => {
+          $("z10-board").innerHTML = UI.close("z10-", F, T.cut);
+          $("z10-pages").innerHTML = SC.pages("z10-");
+          SC.wipes(tl, $, "z10-", S, { skipOut: true });
+          for (const [id, at] of [["z10-g1", E.g1], ["z10-g2", E.g2]]) {
+            tl.fromTo($(id), { opacity: 0, y: 24, clipPath: "inset(0px 100% 0px 0px)" }, { opacity: 1, y: 0, clipPath: "inset(0px 0% 0px 0px)", duration: 0.9, ease: "power2.out", immediateRender: true }, L(at));
+          }
+          tl.fromTo($("z10-guarantee"), { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power1.in", immediateRender: false }, L(E.endcard) - 0.4);
+          tl.fromTo($("z10-end"), { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: false }, L(E.endcard));
+          const logo = $("z10-end").querySelector(".endlogo");
+          tl.fromTo(logo, { opacity: 0, y: -90, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.8)", immediateRender: true }, L(E.endcard));
+          for (const [sel, dt] of [[".end-line", 0.35], [".end-track", 0.45], [".end-url", 0.55], [".end-repo", 0.65]]) {
+            const el = $("z10-end").querySelector(sel);
+            if (el) SC.reveal(tl, el, L(E.endcard) + dt, { dur: 0.4 });
+          }
+          SC.reveal(tl, $("z10-disclosure"), L(E.disclosure), { dur: 0.45, dy: 24 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

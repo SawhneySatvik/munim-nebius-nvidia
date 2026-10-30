@@ -1,0 +1,40 @@
+{
+  "case": "invoice",
+  "role": "vision",
+  "model_id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "response": {
+    "id": "chatcmpl-614cbf6c-31d6-4ac2-ab46-ee996cfd45be",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "content": "{\"transcript\": \"Riverbank Dairy (simulated) SAMPLE - synthetic Simulated supplier for a demo. Not a real business, invoice or tax document. TAX INVOICE Invoice no: RBD-2026-1047 Date: 2026-10-22 Bill to: Cobnut Bakehouse, Hazratganj Description Qty Unit Rate Tax Butter (synthetic) 10 kg 610.00 732.00 Fresh cream (synthetic) 6 l 180.00 54.00 Subtotal 7180.00 Tax 786.00 Total (INR) 7966.00 Payment within 15 days. Thank you for your business.\", \"supplier_name\": \"Riverbank Dairy (simulated)\", \"invoice_no\": \"RBD-2026-1047\", \"invoice_date\": \"2026-10-22\", \"lines\": [{\"description\": \"Butter (synthetic)\", \"qty\": \"10\", \"unit\": \"kg\", \"unit_price\": \"610.00\", \"tax\": \"732.00\"}, {\"description\": \"Fresh cream (synthetic)\", \"qty\": \"6\", \"unit\": \"l\", \"unit_price\": \"180.00\", \"tax\": \"54.00\"}]}",
+          "role": "assistant",
+          "reasoning_content": null
+        },
+        "finish_reason": "stop",
+        "logprobs": null
+      }
+    ],
+    "created": 1792792925,
+    "model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "service_tier": null,
+    "system_fingerprint": null,
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 720,
+      "completion_tokens": 321,
+      "total_tokens": 1041,
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      }
+    }
+  }
+}

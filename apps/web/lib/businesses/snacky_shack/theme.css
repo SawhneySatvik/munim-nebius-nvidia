@@ -1,0 +1,19 @@
+/* The Snacky Shack's brand colours on the shared base (app/globals.css; app/layout.tsx sets data-site): the same values as its
+   built-in storefront page, so the staff screens and the shop before its page answers wear them too. The page background and ink
+   stay locked (core judges every theme against them). Ketchup red, toasted bun, melted cheese. White on the red and on the bun, ink
+   on the cheese: each pair ≥ 4.5 : 1 (judged by core when the seed publishes the same colours). Its display face is heavy, so
+   headings drop the extra weight and tracking the base's serif needs. */
+html[data-site="snacky_shack"] {
+  --primary: #c62f12;
+  --secondary: #8a3a00;
+  --accent: #ffcf3f;
+  --focus: #c62f12;
+}
+html[data-site="snacky_shack"] :is(h1, h2, h3, .display) {
+  font-weight: 400;
+  letter-spacing: 0;
+}
+/* The section heading's hand-drawn underline is a fixed colour (an image): ketchup red here. */
+html[data-site="snacky_shack"] .section-title {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10'%3E%3Cpath d='M2 7c18-6 34-6 52-1s36 4 64-3' fill='none' stroke='%23c62f12' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}

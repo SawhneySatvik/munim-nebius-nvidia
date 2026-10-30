@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Style frame 2: the 7 AM brief at about 35 s: Nandini's owner home for Cobnut Hazratganj on a laptop, the ink
+         circle round "Most waste this week", the source drawer open on its row, the turmeric highlighter on the usual
+         week, and the sticker that carries line 3.4 (a line shown as a sticker skips the caption band). -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #f3-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #f3-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #f3-sticker {
+          left: 385px;
+          top: 836px;
+        }
+      </style>
+      <div data-hf-id="hf-s56o" id="root" data-composition-id="f3" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-d43k" class="dev dev-laptop" id="f3-dev">
+          <div data-hf-id="hf-orbo" class="dev-scale">
+            <div data-hf-id="hf-oavq" class="dev-body"><div data-hf-id="hf-lxuc" class="dev-screen cb" id="f3-screen" data-layout-ignore></div></div>
+            <div data-hf-id="hf-21r5" class="dev-base"></div>
+          </div>
+        </div>
+        <div data-hf-id="hf-m14s" class="fx" id="f3-fx"></div>
+        <div data-hf-id="hf-rrpj" class="sticker sticker-turmeric" id="f3-sticker">Every number traces to a row</div>
+      </div>
+      <script>
+        MK.ready(() => {
+          const $ = (id) => document.getElementById(id);
+          const root = document.querySelector('[data-composition-id="f3"]');
+          $("f3-screen").innerHTML = UI.ownerHome(FIX, "f3-", { drawer: true });
+          const fx = $("f3-fx");
+          const M = MK.measure(root, () => ({ waste: MK.rect($("f3-waste"), fx), usual: MK.rect($("f3-cited").nextElementSibling, fx) }));
+          const tl = gsap.timeline({ paused: true });
+          MK.encircle(tl, fx, M.waste, 0, { dur: 0.05, pad: 16, width: 6 });
+          MK.highlight(tl, fx, M.usual, 0, { dur: 0.05, padX: 6, padY: 2 });
+          tl.set($("f3-sticker"), { opacity: 1, rotation: -2 }, 0);
+          MK.finish(tl, 2);
+          window.__timelines["f3"] = tl;
+        });
+      </script>
+    </template>
+  </body>
+</html>

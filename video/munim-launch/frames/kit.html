@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #kit-figure {
+          position: absolute;
+          left: 300px;
+          top: 380px;
+          font-family: var(--f-m-mono);
+          font-weight: 600;
+          font-size: 120px;
+          color: var(--m-ink);
+        }
+        #kit-sticker {
+          left: 300px;
+          top: 180px;
+        }
+      </style>
+      <div data-hf-id="hf-qrxc" id="root" data-composition-id="kit-scene" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-ix52" id="kit-sticker" class="sticker sticker-turmeric">Every number traces to a row</div>
+        <div data-hf-id="hf-oka9" id="kit-figure">₹0.00</div>
+        <div data-hf-id="hf-k45r" id="kit-fx" class="fx"></div>
+      </div>
+      <script>
+        MK.ready(() => {
+          const root = document.querySelector('[data-composition-id="kit-scene"]');
+          const fig = document.getElementById("kit-figure");
+          const fx = document.getElementById("kit-fx");
+          const tl = gsap.timeline({ paused: true });
+          const M = MK.measure(root, () => ({ fig: MK.rect(fig, fx) }));
+          MK.sticker(tl, document.getElementById("kit-sticker"), 0.3, null, { rot: -2 });
+          MK.count(tl, fig, 0, FIX.waste.waste, 0.6, 1.4, (v) => FIX.fmt.inr(Math.round(v)));
+          MK.encircle(tl, fx, M.fig, 2.2);
+          MK.finish(tl, 4);
+          window.__timelines["kit-scene"] = tl;
+        });
+      </script>
+    </template>
+  </body>
+</html>

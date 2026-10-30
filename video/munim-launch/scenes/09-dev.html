@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 9, for developers: the developer portal's Getting started (the SDK download and the client snippet, typed
+         in). The Cup cut then runs "also in Munim" as a quick montage: the storefront page builder, a campaign approved
+         by name, and the Australian outlet on its own country pack (the full tour gives them scene 9b). -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #d9-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #d9-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #d9-auwrap {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        #d9-st1,
+        #d9-st2,
+        #d9-st3 {
+          left: auto;
+          right: 96px;
+          top: 690px;
+        }
+      </style>
+      <div data-hf-id="hf-xrji" id="root" data-composition-id="dev" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-s9cf" id="d9-auwrap"></div>
+        <div data-hf-id="hf-a8pc" class="cam" id="d9-cam"><div data-hf-id="hf-l06u" id="d9-devwrap"></div><div data-hf-id="hf-slkw" class="fx" id="d9-fx"></div></div>
+        <div data-hf-id="hf-mxp0" class="sticker sticker-turmeric" id="d9-st1">Page builder</div>
+        <div data-hf-id="hf-9vke" class="sticker sticker-red" id="d9-st2">Campaigns</div>
+        <div data-hf-id="hf-n14x" class="sticker sticker-ink" id="d9-st3">Australia · AU pack</div>
+        <div data-hf-id="hf-pake" id="d9-chips"></div>
+        <div data-hf-id="hf-9lvj" id="d9-pages"></div>
+      </div>
+      <script>
+        SC.scene("dev", "dev", (ctx) => {
+          const { tl, $, E, L, S, F, has } = ctx;
+          const montage = has("m1");
+          const layers = [["d9-portal", UI.devPortal("d9-")]];
+          if (montage) layers.push(["d9-bld", UI.builder(F, "b9-")], ["d9-camp", UI.campaigns(F, "cp9-")]);
+          $("d9-devwrap").innerHTML = SC.device("laptop", "d9-dev", layers);
+          if (montage) $("d9-auwrap").innerHTML = UI.laneway(F, "d9-");
+          $("d9-pages").innerHTML = SC.pages("d9-");
+          const cam = $("d9-cam");
+          const fx = $("d9-fx");
+          const M = MK.measure($("d9-dev"), () => ({
+            download: MK.rect($("d9-download"), cam), nav: MK.rect($("d9-portal").querySelector(".ms-dev-nav span:nth-child(3)"), cam),
+            b: montage ? BEATS.measureBuilder(ctx, "b9-", cam) : null, c: montage ? BEATS.measureCampaign(ctx, "cp9-", cam) : null,
+          }));
+          SC.wipes(tl, $, "d9-", S);
+          if (has("navMark")) MK.highlight(tl, fx, M.nav, L(E.navMark), { dur: 0.4, padX: 4, padY: 2 });
+          MK.encircle(tl, fx, M.download, L(E.download), { dur: 0.5, pad: 12, width: 6, until: montage ? L(E.m1) : undefined });
+          // The client snippet types in.
+          MK.type(tl, $("d9-client"), UI.SDK_SNIPPET, L(E.typeCode), ctx.D.codeCps);
+          if (has("camOut")) {
+            MK.camera(tl, cam, { at: L(E.camOut), zoom: 1.12, x: 960, y: 440, dur: 3.0, ease: "sine.inOut" });
+            MK.camera(tl, cam, { at: L(E.camOut) + 3.2, zoom: 1, dur: 1.2 });
+          }
+          if (montage) {
+            SC.swap(tl, $("d9-portal"), $("d9-bld"), L(E.m1), { dur: 0.35, dx: 120 });
+            BEATS.builder(ctx, "b9-", M.b, { preset: E.m1 + 0.8 }, fx);
+            MK.sticker(tl, $("d9-st1"), L(E.m1) + 0.2, L(E.m2) - 0.25, { rot: -2 });
+            SC.swap(tl, $("d9-bld"), $("d9-camp"), L(E.m2), { dur: 0.35, dx: 120 });
+            BEATS.campaigns(ctx, "cp9-", M.c, { approve: E.m2 + 1.1 }, fx);
+            MK.sticker(tl, $("d9-st2"), L(E.m2) + 0.2, L(E.m3) - 0.25, { rot: 2 });
+            tl.fromTo($("d9-dev"), { opacity: 1, x: 0 }, { opacity: 0, x: -160, duration: 0.4, ease: "power2.in", immediateRender: false }, L(E.m3));
+            tl.fromTo($("d9-auwrap"), { opacity: 0, x: 160 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.m3) + 0.2);
+            MK.sticker(tl, $("d9-st3"), L(E.m3) + 0.4, S.dur - 0.9, { rot: -2 });
+            // The montage comes after the 9:20 pm owner home: its in-app stamps are earlier captures, and say so.
+            const x = F.earlier;
+            BEATS.chips(ctx, $("d9-chips"), [[E.m1 + 0.1, E.m2 - 0.15, `Earlier · Fri ${x.saved}`], [E.m2 + 0.1, E.m3 - 0.15, `Earlier · Fri ${x.approved}`], [E.m3 + 0.3, S.end - 0.8, `Melbourne · Fri ${x.melbourne}`]]);
+          }
+        });
+      </script>
+    </template>
+  </body>
+</html>

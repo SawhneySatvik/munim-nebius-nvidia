@@ -1,0 +1,14 @@
+/* Kosambari Kitchens' brand colours on the shared base (app/globals.css; app/layout.tsx sets data-site): the same values as its
+   built-in storefront page, so the staff screens and the shop before its page answers wear them too. The page background and ink
+   stay locked (core judges every theme against them). Banana-leaf green, turmeric, steel. White on the leaf and on the turmeric,
+   ink on the pale turmeric: each pair ≥ 4.5 : 1 (judged by core when the seed publishes the same colours). */
+html[data-site="blr_kitchen"] {
+  --primary: #2d6a2e;
+  --secondary: #8f5b00;
+  --accent: #f7dc8f;
+  --focus: #2d6a2e;
+}
+/* The section heading's hand-drawn underline is a fixed colour (an image): turmeric here. */
+html[data-site="blr_kitchen"] .section-title {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10'%3E%3Cpath d='M2 7c18-6 34-6 52-1s36 4 64-3' fill='none' stroke='%238f5b00' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+}

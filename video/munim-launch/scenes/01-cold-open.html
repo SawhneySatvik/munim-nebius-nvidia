@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 1, the cold open: three ink stamps land on the ledger page on the music's hits ("Thin margins." "Late
+         nights." "Books that don't add up."), the red double total line is ruled under them, the stamps fade to ghost
+         ink and Munim is written in the amount column, as the ledger's total. A fresh page turns over at the end. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #c1-s1 {
+          left: 250px;
+          top: 92px;
+        }
+        #c1-s2 {
+          left: 330px;
+          top: 268px;
+        }
+        #c1-s3 {
+          left: 232px;
+          top: 446px;
+        }
+        #c1-s1,
+        #c1-s2,
+        #c1-s3 {
+          font-size: 92px;
+        }
+        #c1-total {
+          position: absolute;
+          left: 220px;
+          top: 636px;
+          width: 1500px;
+          height: 14px;
+          border-top: 4px solid var(--m-red);
+          border-bottom: 4px solid var(--m-red);
+          transform-origin: 0 50%;
+        }
+        #c1-logo {
+          position: absolute;
+          right: 200px;
+          top: 668px;
+          opacity: 0;
+        }
+        #c1-logo .logo-word {
+          font-size: 150px;
+        }
+      </style>
+      <div data-hf-id="hf-yoqd" id="root" data-composition-id="coldOpen" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-doii" class="stamp" id="c1-s1">Thin margins.</div>
+        <div data-hf-id="hf-8wdo" class="stamp" id="c1-s2">Late nights.</div>
+        <div data-hf-id="hf-wc3d" class="stamp" id="c1-s3">Books that don't add up.</div>
+        <div data-hf-id="hf-v9k8" id="c1-total"></div>
+        <div data-hf-id="hf-uxo9" class="logo" id="c1-logo"><span data-hf-id="hf-wn0s" id="c1-mark"></span><span data-hf-id="hf-7rnh" class="logo-word">Munim</span></div>
+        <div data-hf-id="hf-hc51" class="mk-page" id="c1-page-out"></div>
+        <div data-hf-id="hf-pfih" class="mk-page-edge" id="c1-edge-out"></div>
+      </div>
+      <script>
+        SC.scene("coldOpen", "coldOpen", ({ tl, $, E, L, S }) => {
+          $("c1-mark").outerHTML = UI.munimMark(150);
+          MK.stamp(tl, $("c1-s1"), L(E.stamp1), { rot: -4 });
+          MK.stamp(tl, $("c1-s2"), L(E.stamp2), { rot: 3 });
+          MK.stamp(tl, $("c1-s3"), L(E.stamp3), { rot: -2 });
+          tl.fromTo($("c1-total"), { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.inOut", immediateRender: true }, L(E.total));
+          for (const id of ["c1-s1", "c1-s2", "c1-s3"]) tl.fromTo($(id), { opacity: 1 }, { opacity: 0.4, duration: 0.6, ease: "power1.inOut", immediateRender: false }, L(E.ghost));
+          // The logo drops onto the total line on the hit, squashes and settles.
+          const logo = $("c1-logo");
+          tl.fromTo(logo, { opacity: 0, y: -120, scaleX: 0.94, scaleY: 1.08 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.in", immediateRender: true }, L(E.logo) - 0.24);
+          tl.fromTo(logo, { scaleX: 1.06, scaleY: 0.92 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "elastic.out(1, 0.5)", immediateRender: false }, L(E.logo));
+          MK.wipe(tl, $("c1-page-out"), L(E.wipeOut), { mode: "out", dur: 0.7, edge: $("c1-edge-out") });
+        });
+      </script>
+    </template>
+  </body>
+</html>

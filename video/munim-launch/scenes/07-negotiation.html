@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 7, the negotiation: "Request quotes" on the owner home's low stock (suppliers/request-quotes.tsx); behind
+         the scenes, the agent-to-agent chat with the three simulated suppliers round by round (the recorded run) and
+         the deal review, where the cheapest bid fails the minimum-order rule; the purchase order is a draft: Farah, who
+         manages the other outlet, gets the gate line and no buttons; Nandini approves it by name, and the lineage line
+         records who. The full tour adds the suppliers screen and the goods received. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #n7-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #n7-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #n7-board {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        #n7-st {
+          left: 1160px;
+          top: 120px;
+          font-size: 52px;
+        }
+        #n7-st2 {
+          left: 520px;
+          top: 690px;
+        }
+        #n7-note {
+          position: absolute;
+          padding: 8px 16px 10px;
+          font-size: 24px;
+          text-transform: none;
+          letter-spacing: 0;
+          box-shadow: 4px 4px 0 var(--m-ink);
+          border-width: 3px;
+          white-space: nowrap;
+        }
+        .n7-rq {
+          display: grid;
+          gap: 10px;
+          margin-top: 6px;
+          padding: 14px;
+        }
+      </style>
+      <div data-hf-id="hf-wr7g" id="root" data-composition-id="negotiation" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-pm0b" id="n7-board"></div>
+        <div data-hf-id="hf-0eng" class="cam" id="n7-cam"><div data-hf-id="hf-xpvu" id="n7-devwrap"></div><div data-hf-id="hf-ounk" class="fx" id="n7-fx"></div><div data-hf-id="hf-okhz" class="sticker sticker-paper" id="n7-note"></div></div>
+        <div data-hf-id="hf-ajeo" class="sticker sticker-ink" id="n7-st">Simulated suppliers<br data-hf-id="hf-x5px" />agent to agent</div>
+        <div data-hf-id="hf-xxy4" class="sticker sticker-red" id="n7-st2">Approved by Nandini Mehrotra</div>
+        <div data-hf-id="hf-hkgj" id="n7-pages"></div>
+      </div>
+      <script>
+        SC.scene("negotiation", "negotiation", ({ tl, $, E, D, L, S, F, has }) => {
+          const n = F.negotiation;
+          const layers = [["n7-home", UI.ownerHome(F, "n7-")], ["n7-farah", UI.poDraft(F, "n7f-", "manager")], ["n7-nandini", UI.poDraft(F, "n7o-", "owner")]];
+          if (has("toSuppliers")) layers.push(["n7-sup", UI.suppliers(F, "n7s-")]);
+          $("n7-devwrap").innerHTML = SC.device("laptop", "n7-dev", layers);
+          $("n7-board").innerHTML = UI.chat(F, "n7-") + UI.review(F, "n7-");
+          $("n7-pages").innerHTML = SC.pages("n7-");
+          // The request panel opens in the low-stock card where the button was (request-quotes.tsx).
+          const req = $("n7-request");
+          const panel = document.createElement("div");
+          panel.className = "card n7-rq";
+          panel.id = "n7-rq";
+          panel.innerHTML = `<p class="semi">Ask the simulated suppliers to quote ${UI.esc(F.hazelnuts.name)}</p><p class="muted" style="font-size:15px">Munim works out how much is short, and a purchase order comes back as a draft for a person to approve.</p>
+            <p class="semi" style="font-size:15px">For</p><label class="choice on"><span class="radio on" style="border-radius:5px"></span>${UI.esc(F.outlets.hzg.name)}</label>
+            <span class="btn btn-primary" id="n7-send" style="justify-self:start">Send request</span><p class="muted" id="n7-asking" style="font-size:15px">The simulated suppliers are quoting. This can take a minute.</p>`;
+          req.after(panel);
+          // The home opens scrolled to its low-stock card, as the owner would have it: the staff bar is sticky
+          // (staff.css), the page moves under it. This keeps the morning's figures off screen at 11 am.
+          const page = $("n7-page");
+          const bar = page.querySelector(".staff-bar");
+          Object.assign(bar.style, { position: "relative", zIndex: "3" });
+          const main = page.querySelector(".staff-main");
+          MK.measure($("n7-dev"), () => {
+            const top = (el) => el.getBoundingClientRect().top;
+            const k = page.getBoundingClientRect().height / page.offsetHeight;
+            main.style.transform = `translateY(${-Math.max(0, Math.round((top(req.closest(".low")) - top(main)) / k) - 24)}px)`;
+          });
+          const cam = $("n7-cam");
+          const fx = $("n7-fx");
+          const M = MK.measure($("n7-dev"), () => {
+            const r = (id) => MK.rect($(id), cam);
+            // The panel replaces the button, so it is measured with the button gone, as it will be.
+            panel.style.display = "none";
+            const low = r("n7-request");
+            panel.style.display = "";
+            req.style.display = "none";
+            const out = { low, panel: r("n7-rq"), send: r("n7-send"), screen: r("n7-dev-screen") };
+            req.style.display = "";
+            return {
+              ...out, qtyF: r("n7f-qty"), gate: r("n7f-gate"), approve: r("n7o-approve"),
+              receive: has("toSuppliers") ? r("n7s-receive") : null, grnSave: has("toSuppliers") ? r("n7s-grn-save") : null,
+            };
+          });
+          SC.wipes(tl, $, "n7-", S);
+
+          // 1 · The owner home's low stock: Request quotes, Send request.
+          MK.drive(tl, (t) => {
+            req.style.display = t < L(E.clickRequest) + 0.1 ? "" : "none";
+            panel.style.display = t >= L(E.clickRequest) + 0.1 ? "" : "none";
+            $("n7-asking").style.visibility = t >= L(E.clickSend) + 0.1 ? "visible" : "hidden";
+            $("n7-send").textContent = t >= L(E.clickSend) + 0.1 ? "Asking…" : "Send request";
+          });
+          // Wide enough to keep both columns whole: "What needs you" on the left, the low-stock card and its panel on the
+          // right (a tighter zoom left the needs cards as blank white halves).
+          MK.camera(tl, cam, { at: L(E.camLow), zoom: 1.3, x: M.screen.cx, y: M.panel.cy - 40, anchor: [960, 470], dur: 0.9 });
+          const cur = MK.cursor(tl, fx, { x: M.low.cx - 220, y: M.low.cy + 120, hidden: true });
+          cur.show(L(E.clickRequest) - 0.9);
+          cur.go({ at: L(E.clickRequest) - 0.8, to: [M.low.cx, M.low.cy], dur: 0.7, state: "hand" });
+          cur.click(L(E.clickRequest), req);
+          cur.go({ at: L(E.clickSend) - 0.7, to: [M.send.cx, M.send.cy], dur: 0.6, state: "hand" });
+          cur.click(L(E.clickSend), $("n7-send"));
+          cur.hide(L(E.toChat) - 0.2);
+
+          // 2 · Behind the scenes: the agent-to-agent chat, round by round, then the deal review.
+          tl.fromTo($("n7-dev"), { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.9, duration: 0.45, ease: "power2.in", immediateRender: false }, L(E.toChat));
+          MK.camera(tl, cam, { at: L(E.toChat), zoom: 1, dur: 0.45 });
+          tl.fromTo($("n7-board"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.toChat) + 0.35);
+          tl.set($("n7-review"), { opacity: 0 }, 0);
+          const body = $("n7-chat-body");
+          const viewH = MK.measure($("n7-board"), () => body.parentElement.clientHeight);
+          const msgs = Array.from(body.children);
+          const rounds = [E.r1, E.r2, E.r3];
+          const times = [];
+          n.rounds.forEach((round, r) => {
+            const start = L(rounds[r]);
+            times.push([`n7-rl${r + 1}`, start]);
+            round.forEach((b, i) => times.push([`n7-r${r + 1}-${b.s}`, start + 0.4 + i * D.bidStep]));
+            times.push([`n7-m${r + 1}`, start + 0.4 + round.length * D.bidStep + 0.35]);
+          });
+          let scrolled = 0;
+          const bottoms = MK.measure($("n7-board"), () => Object.fromEntries(msgs.map((m) => [m.id, m.offsetTop + m.offsetHeight])));
+          for (const [id, at] of times) {
+            SC.reveal(tl, $(id), at, { dur: 0.3, dy: 16 });
+            const need = Math.max(0, bottoms[id] - viewH + 16);
+            if (need > scrolled) {
+              MK.move(tl, body, { y: -need }, at - 0.05, 0.35, "power2.out", { y: 0 });
+              scrolled = need;
+            }
+          }
+          MK.sticker(tl, $("n7-st"), L(E.sticker[0]), L(E.sticker[1]), { rot: 2 });
+          if (has("codeMark")) {
+            // The last reply's code strip, where it sits once the thread has scrolled.
+            const code = MK.measure($("n7-board"), () => MK.rect($("n7-m3").querySelector(".reply-code"), $("n7-board")));
+            MK.encircle(tl, $("n7-board"), { ...code, y: code.y - scrolled, cy: code.cy - scrolled }, L(E.codeMark), { dur: 0.5, pad: 10, width: 5, color: "var(--m-turmeric)" });
+          }
+          tl.fromTo($("n7-review"), { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.review));
+          ["steady", "premium", "bargain"].forEach((k, i) => SC.reveal(tl, $(`n7-q-${k}`), L(E.review) + 0.4 + i * 0.35, { dur: 0.3 }));
+          const failChip = MK.measure($("n7-board"), () => MK.rect($("n7-q-bargain").querySelector(".rule-fail"), $("n7-board")));
+          MK.encircle(tl, $("n7-board"), failChip, L(E.reviewFail), { dur: 0.5, pad: 10, width: 5 });
+          tl.fromTo($("n7-q-steady").querySelector(".proposed"), { scale: 1.6, opacity: 0, rotation: -8 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.3, ease: "back.out(2.4)", immediateRender: true }, L(E.proposed));
+
+          // 3 · The purchase order is a draft: Farah sees the gate line, Nandini approves.
+          tl.fromTo($("n7-board"), { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, L(E.toPo));
+          tl.set($("n7-home"), { opacity: 0 }, L(E.toPo));
+          tl.fromTo($("n7-farah"), { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: false }, L(E.toPo));
+          tl.fromTo($("n7-dev"), { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.toPo) + 0.3);
+          const note = $("n7-note");
+          note.innerHTML = `<span class="fig">${UI.esc(F.hazelnuts.sum)}</span>`;
+          note.style.left = `${M.qtyF.x + 150}px`;
+          note.style.top = `${M.qtyF.y - 64}px`;
+          MK.sticker(tl, note, L(E.note[0]), L(E.note[1]), { rot: -2 });
+          MK.encircle(tl, fx, M.gate, L(E.gate), { dur: 0.55, pad: 12, width: 6, until: L(E.toNandini) });
+          SC.swap(tl, $("n7-farah"), $("n7-nandini"), L(E.toNandini), { dur: 0.4, dx: 0 });
+          const cur2 = MK.cursor(tl, fx, { x: M.approve.cx + 260, y: M.approve.cy + 140, hidden: true });
+          cur2.show(L(E.approve) - 1.0);
+          cur2.go({ at: L(E.approve) - 0.9, to: [M.approve.cx, M.approve.cy], dur: 0.8, state: "hand" });
+          cur2.click(L(E.approve), $("n7o-approve"));
+          cur2.hide(L(E.approve) + 0.8);
+          const status = $("n7o-status");
+          MK.drive(tl, (t) => {
+            const done = t >= L(E.applied);
+            status.textContent = done ? "Applied" : "Waiting for you";
+            status.className = `badge ${done ? "badge-ready" : "badge-new"}`;
+            $("n7o-decide").style.visibility = done ? "hidden" : "visible";
+          });
+          MK.states(tl, $("n7o-lineage"), [[0, `Proposed by ${n.po.proposedBy} · ${n.po.proposedAt}`], [L(E.applied), n.po.lineage]]);
+          MK.sticker(tl, $("n7-st2"), L(E.sticker2[0]), L(E.sticker2[1]), { rot: -2 });
+
+          // 4 · The full tour: the order on the suppliers screen, and the hazelnuts received.
+          if (has("toSuppliers")) {
+            SC.swap(tl, $("n7-nandini"), $("n7-sup"), L(E.toSuppliers));
+            MK.tap(tl, fx, { x: M.receive.cx, y: M.receive.cy }, L(E.tapReceive));
+            SC.reveal(tl, $("n7s-grn"), L(E.grn));
+            MK.tap(tl, fx, { x: M.grnSave.cx, y: M.grnSave.cy }, L(E.grnSave));
+            SC.appear(tl, $("n7s-grn-ok"), L(E.grnSave) + 0.2);
+            MK.states(tl, $("n7s-po-status"), [[0, "Sent"], [L(E.grnSave) + 0.2, "Received"]]);
+          }
+        });
+      </script>
+    </template>
+  </body>
+</html>

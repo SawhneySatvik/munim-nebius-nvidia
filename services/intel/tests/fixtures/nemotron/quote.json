@@ -1,0 +1,40 @@
+{
+  "case": "quote",
+  "role": "extract",
+  "model_id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+  "response": {
+    "id": "chatcmpl-0fd4ad15-c8cd-4d21-9c5f-f5f4d8fdc31a",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "content": "{\"unit_price_minor\": 57500, \"qty_milli\": 10000, \"min_order_qty_milli\": 5000, \"payment_days\": 15}",
+          "role": "assistant",
+          "reasoning_content": null
+        },
+        "finish_reason": "stop",
+        "logprobs": null
+      }
+    ],
+    "created": 1792792895,
+    "model": "private/nvidia/nemotron-3.5-super-120b-a12b",
+    "service_tier": null,
+    "system_fingerprint": null,
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 200,
+      "completion_tokens": 48,
+      "total_tokens": 248,
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      }
+    }
+  }
+}

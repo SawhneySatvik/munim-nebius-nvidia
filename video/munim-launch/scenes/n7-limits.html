@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Beat 11 of the Nebius cut: what does not work yet, typed on a plain card, line by line. The two measured lines
+         are the 24 Oct figures (docs/plan/EVENTS-STATUS.md, wave A2: expiry answered on 4 of 6 runs; the payout question
+         2 of 4, the rest past the 80 s budget), taken on NVIDIA's endpoint, so the card is a placeholder until they are
+         measured again through Nebius Token Factory on the commit that ships. Times: T.scenes.nbLimits. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #l7-card {
+          left: 230px;
+          top: 120px;
+          width: 1460px;
+          height: 560px;
+          padding: 54px 64px;
+          background: #fff;
+          opacity: 1;
+        }
+        .l7-line {
+          margin: 0 0 30px;
+          min-height: 46px;
+          font-family: var(--f-m-body);
+          font-weight: 700;
+          font-size: 38px;
+          line-height: 1.22;
+          color: var(--m-ink);
+        }
+        #l7-k {
+          font-family: var(--f-m-mono);
+          font-weight: 600;
+          font-size: 30px;
+          color: var(--m-muted);
+          margin-bottom: 40px;
+        }
+        #l7-ph {
+          left: 230px;
+          top: 726px;
+          font-size: 21px;
+        }
+      </style>
+      <div data-hf-id="hf-svjn" id="root" data-composition-id="nbLimits" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-hudh" class="nb-card" id="l7-card">
+          <p data-hf-id="hf-xteu" class="l7-line" id="l7-k"></p>
+          <p data-hf-id="hf-euuc" class="l7-line" id="l7-1"></p>
+          <p data-hf-id="hf-niq7" class="l7-line" id="l7-2"></p>
+          <p data-hf-id="hf-jkm6" class="l7-line" id="l7-3"></p>
+        </div>
+        <div data-hf-id="hf-gcxd" class="nb-ph" id="l7-ph"><span data-hf-id="hf-alsd" style="display: block">Historical benchmark · NVIDIA endpoint:</span><b data-hf-id="hf-f09g">live application inference separately verified through Nebius Token Factory</b></div>
+        <div data-hf-id="hf-5oo5" id="l7-pages"></div>
+      </div>
+      <script>
+        NB.scene("nbLimits", "nbLimits", ({ tl, $, E, D, L, S }) => {
+          $("l7-pages").innerHTML = SC.pages("l7-");
+          SC.wipes(tl, $, "l7-", S, { outAt: E.wipeOut });
+          const lines = [
+            ["l7-k", "Limits, measured on 24 Oct, on synthetic data:", E.k],
+            ["l7-1", "Ask abstains when the books can't back it: the expiry question missed on 2 of 6 runs", E.l1],
+            ["l7-2", "Latency: the Swiggy payout question took more than the 80 s budget on 2 of 4 runs", E.l2],
+            ["l7-3", "No auto-apply. No real suppliers. No real money.", E.l3],
+          ];
+          for (const [id, text, at] of lines) MK.type(tl, $(id), text, L(at), D.cps);
+          MK.stamp(tl, $("l7-ph"), L(E.ph), { rot: -1 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

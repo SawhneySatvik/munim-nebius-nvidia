@@ -1,0 +1,52 @@
+CLAUDE.md hard rule==>project hard rule
+CLAUDE.md rules==>project rules
+CLAUDE.md rule==>project rule
+CLAUDE.md gotcha==>project gotcha
+CLAUDE.md verification==>the project's verification
+CLAUDE.md gate table==>the project's gate table
+CLAUDE.md:==>the project rules:
+(CLAUDE.md)==>(the project rules)
+CLAUDE.md==>the project rules
+CLAUDE rule==>project rule
+CLAUDE gotcha==>project gotcha
+CLAUDE==>PROJECT
+Supabase Auth==>the dev IdP
+Supabase Storage==>the dev blob store
+hosted Supabase project==>hosted dev database
+Supabase-ism==>host-specific construct
+supabase_admin==>db_admin
+.supabase.com==>.example.com
+.supabase.co==>.example.com
+.supabase.test==>.example.test
+Supabase==>the dev host
+supabase==>devhost
+SUPABASE==>DEVHOST
+.vercel.app==>.example.app
+vercel.com==>example.com
+vercel.svg==>logo.svg
+Vercel logomark==>logomark
+Vercel-only==>platform-only
+Vercel==>the deploy platform
+vercel==>deployhost
+VERCEL==>DEPLOYHOST
+Anthropic==>Unlisted
+anthropic==>unlisted
+// `next dev` otherwise writes a managed apps/web/AGENTS.md when it detects a coding agent;==>// `next dev` otherwise writes a managed file into apps/web;
+ FalkorDB lives in adapters/dev/graph-falkordb (F7).==>
+; FalkorDB: the adapter is built for one tenant)==>; a graph-database adapter is built for one tenant)
+FalkorDB only when the==>a graph database only when the
+pytest.skip("FalkorDB: no==>pytest.skip("graph database: no
+from the FalkorDB adapter==>from the graph-database adapter
+graph-falkordb/graph_falkordb.py==>graph-db/graph_db.py
+"graph_falkordb"==>"graph_db"
+MUNIM_FALKORDB_URL==>MUNIM_GRAPHDB_URL
+`falkordb` module==>`graphdb` module
+"falkordb"==>"graphdb"
+FalkorGraph==>GraphDatabase
+falkor()==>graph_database()
+feat: tests, docs, project skills;==>feat: tests and docs;
+regex:(?i)\baws\b==>cloud
+regex:(?i)juspay==>employer
+regex:(?i)snacky==>private
+regex:\n\.claude/skills/ +project skills for Claude Code: storefront-frontend, munim-sdk-integration, mock-backend(?=\n)==>
+regex:\n\n## Claude Code skills in this repo\n\n`\.claude/skills/` holds three project skills that Claude Code loads when the work matches: \*\*storefront-frontend\*\*\n\(design system, Next 16 gotchas, review loop\), \*\*munim-sdk-integration\*\* \(the API layer and its rules\) and\n\*\*mock-backend\*\* \(the stand-in server and its data\)\.\n==>\n

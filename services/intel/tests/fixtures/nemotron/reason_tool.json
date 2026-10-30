@@ -1,0 +1,40 @@
+{
+  "case": "reason_tool",
+  "role": "reason",
+  "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+  "response": {
+    "id": "chatcmpl-22a6ef77-14d8-4e18-9f73-014c07958fe5",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call-7d77ef35-30fc-45ea-a121-b347f047317f",
+              "type": "function",
+              "function": {
+                "name": "sales_for_day",
+                "arguments": "{\"day\":\"2026-10-20\"}"
+              }
+            }
+          ],
+          "role": "assistant",
+          "reasoning_content": "The user is asking for net sales on a specific date: 2026-10-20. I need to use the sales_for_day tool with that date. Let me call the tool."
+        },
+        "finish_reason": "tool_calls",
+        "logprobs": null
+      }
+    ],
+    "created": 1792792907,
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "service_tier": null,
+    "system_fingerprint": null,
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 321,
+      "completion_tokens": 79,
+      "total_tokens": 400
+    }
+  }
+}

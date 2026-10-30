@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- The one caption track: every narration line of the cut, word for word, in the title-safe band, fading 0.15 s in
+         and out. A line a sticker carries word for word (T.capSkip) is left out. The root sets window.CUT_WINDOW
+         ([start, end] in the cut's seconds) when it mounts only part of a cut (the spike); the default is the whole cut. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
+      </style>
+      <div data-hf-id="hf-jn2k" id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-r6mw" class="cap-band"><p data-hf-id="hf-oakd" class="cap-line" id="cap-line"></p></div>
+      </div>
+      <script>
+        MK.ready(() => {
+          const [from, to] = window.CUT_WINDOW || [0, T.duration];
+          const lines = T.vo
+            .filter(([id, a, b]) => !T.capSkip.includes(id) && a >= from && b <= to)
+            .map(([, a, b, caption]) => [+(a - from).toFixed(3), +(b - from).toFixed(3), caption]);
+          const tl = gsap.timeline({ paused: true });
+          MK.captions(tl, document.getElementById("cap-line"), lines);
+          MK.finish(tl, to - from);
+          window.__timelines["captions"] = tl;
+        });
+      </script>
+    </template>
+  </body>
+</html>

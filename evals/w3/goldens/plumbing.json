@@ -1,0 +1,7 @@
+{
+  "_about": "End state of the T-053 / T-054 recorded runs, per category (11 Oct 2026, lane b-85). Runs and abstains are counted by hand from the T-053 lane's labels.json (twenty questions; four abstentions: one certification request on the ask path, three fan-outs) and T-054's gate 3 (a brief is one model call, none with AI off). model_calls are pins taken from the first recorded run, not an independent source: they turn red on any change in how many calls a path makes. Threads is the one in-thread question of the kit.",
+  "ask_paths": {"runs": 3, "abstains": 1, "model_calls": 9, "labelled": 3},
+  "fan_out": {"runs": 17, "abstains": 3, "model_calls": 130, "labelled": 17},
+  "threads": {"runs": 1, "abstains": 0, "model_calls": 9, "labelled": 1},
+  "brief": {"runs": 2, "abstains": 0, "model_calls": 1, "labelled": 2}
+}

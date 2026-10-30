@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 2, meet Munim and Cobnut: the Munim site's hero on a laptop (the full tour also scrolls to the One
+         Guarantee and opens the Cares page), then the laptop pulls away and a map of Lucknow comes up with Cobnut's two
+         outlets pinned. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #m2-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #m2-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #m2-maplayer {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        #m2-st0 {
+          left: auto;
+          right: 96px;
+          top: 650px;
+          font-size: 52px;
+        }
+        #m2-st1 {
+          left: 360px;
+          top: 690px;
+        }
+      </style>
+      <div data-hf-id="hf-jat4" id="root" data-composition-id="meet" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-zmlg" id="m2-maplayer"></div>
+        <div data-hf-id="hf-zeea" id="m2-devwrap"></div>
+        <div data-hf-id="hf-eomn" class="sticker sticker-red" id="m2-st0">Nothing changes<br data-hf-id="hf-x5px" />without your approval</div>
+        <div data-hf-id="hf-jas1" class="sticker sticker-turmeric" id="m2-st1">Cobnut Bakehouse runs on Munim</div>
+        <div data-hf-id="hf-e78r" id="m2-pages"></div>
+      </div>
+      <script>
+        SC.scene("meet", "meet", ({ tl, $, E, L, S, F, has }) => {
+          const layers = [["m2-hero", UI.siteHero("m2-")]];
+          if (has("toGuarantee")) layers.push(["m2-guar", UI.siteGuarantee("m2-")]);
+          if (has("toCares")) layers.push(["m2-cares", UI.siteCares("m2-")]);
+          $("m2-devwrap").innerHTML = SC.device("laptop", "m2-dev", layers);
+          $("m2-maplayer").innerHTML = UI.lucknowMap("m2-", F);
+          $("m2-pages").innerHTML = SC.pages("m2-");
+          SC.wipes(tl, $, "m2-", S);
+          // The site: a slow push on the hero; in the full tour, the guarantee and the Cares page.
+          tl.fromTo($("m2-dev"), { scale: 1 }, { scale: 1.03, duration: L(E.toMap) - 0.2, ease: "none", immediateRender: false }, 0.2);
+          if (has("toGuarantee")) {
+            SC.swap(tl, $("m2-hero"), $("m2-guar"), L(E.toGuarantee));
+            MK.sticker(tl, $("m2-st0"), L(E.sticker0[0]), L(E.sticker0[1]), { rot: 2 });
+          }
+          if (has("toCares")) SC.swap(tl, $("m2-guar"), $("m2-cares"), L(E.toCares));
+          // Pull away to the map; the outlets are pinned.
+          tl.fromTo($("m2-dev"), { opacity: 1, scale: 1.03, y: 0 }, { opacity: 0, scale: 0.45, y: -60, duration: 0.9, ease: "power3.inOut", immediateRender: false }, L(E.toMap));
+          tl.fromTo($("m2-maplayer"), { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 1.0, ease: "power3.out", immediateRender: false }, L(E.toMap) + 0.25);
+          for (const [id, at] of [["m2-pin-hzg", E.pinHzg], ["m2-pin-gmt", E.pinGmt]]) {
+            tl.fromTo($(id), { opacity: 0, y: -50, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(2.4)", immediateRender: true }, L(at));
+          }
+          MK.sticker(tl, $("m2-st1"), L(E.sticker[0]), L(E.sticker[1]), { rot: -2 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

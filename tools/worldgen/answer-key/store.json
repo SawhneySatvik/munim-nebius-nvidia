@@ -1,0 +1,32 @@
+{
+  "world": "store",
+  "seed": "munim-worldgen-v1",
+  "currency": "INR",
+  "note": "Hand-kept. Synthetic data. impact_minor is paise; every figure is typed from the worked arithmetic in `what`, never produced by the generator. A null impact_minor is a non-money problem and carries `metric`. Attempts the books refuse (above-MRP, expired batch) leave no row of their own: they resolve to the batch they concern.",
+  "problems": [
+    { "id": "ST-C4", "pack": "catalogue", "kind": "above_mrp", "what": "Biscuit shelf price 3,000 paise against the new batch's printed MRP of 2,800, 140 units on hand: 200 x 140; a sale of it is refused as price_above_mrp",
+      "where": {"outlet": "outlet:1", "item": "item:biscuit_pack", "ingredient": "ing:biscuit_pack", "batch": "BISC-B2"}, "impact_minor": 28000 },
+    { "id": "ST-X1", "pack": "inventory_purchasing", "kind": "expired_batch", "what": "12 milk packs of a batch that expired two days ago, at 5,200 paise; a sale of it is refused as expired_batch: 12 x 5,200",
+      "where": {"outlet": "outlet:1", "ingredient": "ing:milk_pack", "batch": "MILK-B3"}, "impact_minor": 62400 },
+    { "id": "ST-I4", "pack": "inventory_purchasing", "kind": "expiry_risk", "what": "40 yoghurt cups expiring in 3 days, none sold: 40 x 2,500 paise",
+      "where": {"outlet": "outlet:1", "ingredient": "ing:yoghurt_cup", "batch": "YOG-B7", "within_days": 3}, "impact_minor": 100000 },
+    { "id": "ST-S1", "pack": "inventory_purchasing", "kind": "stock_below_reorder", "what": "Detergent: 10 on hand against a minimum of 24: 14 x 9,000 paise",
+      "where": {"outlet": "outlet:1", "ingredient": "ing:detergent_1kg"}, "impact_minor": 126000 },
+    { "id": "ST-I5", "pack": "inventory_purchasing", "kind": "shrinkage", "what": "Count finds 470 of 500 rice bags (6% short): 30 x 45,000 paise",
+      "where": {"outlet": "outlet:1", "ingredient": "ing:rice_5kg", "batch": "RICE-B1", "pct_bp": 600}, "impact_minor": 1350000 },
+    { "id": "ST-I2", "pack": "inventory_purchasing", "kind": "invoice_overbilled", "what": "Sugar invoiced at 4,300 paise against a PO at 4,000 on 80 packs: 300 x 80",
+      "where": {"invoice": "inv:sugar-over", "po": "po:sugar"}, "impact_minor": 24000 },
+    { "id": "ST-I3", "pack": "inventory_purchasing", "kind": "near_duplicate_invoice", "what": "SC-7781 and SC7781, same supplier and total, two days apart: 50 x 4,000 paise",
+      "where": {"invoices": ["inv:sugar-7781", "inv:sugar-7781b"]}, "impact_minor": 200000 },
+    { "id": "ST-I1", "pack": "inventory_purchasing", "kind": "price_creep", "what": "Atta 21,000 then 23,100 paise per bag (+10%): 3 deliveries x 50 bags x 2,100",
+      "where": {"ingredient": "ing:atta_5kg", "pre_invoices": ["inv:atta-pre1", "inv:atta-pre2", "inv:atta-pre3"], "post_invoices": ["inv:atta-post1", "inv:atta-post2", "inv:atta-post3"]}, "impact_minor": 315000 },
+    { "id": "ST-A5", "pack": "compliance_assets", "kind": "licence_expiring", "what": "Shops & Establishment licence runs out in 12 days (not money)",
+      "where": {"outlet": "outlet:1", "licence": "licence:shops"}, "impact_minor": null, "metric": {"name": "days_left", "value": 12} },
+    { "id": "ST-K7", "pack": "inventory_purchasing", "kind": "waste_value", "what": "20 tea packs written off as damaged over three days (7 + 7 + 6, Mon 31 Aug to Wed 2 Sep: 40 to 38 days back, one ISO week), normally none: 20 x 9,000 paise = 180,000, over the pack's ₹1,500 excess",
+      "where": {"outlet": "outlet:1", "ingredient": "ing:tea_250g", "waste_offsets": [-40, -39, -38]}, "impact_minor": 180000, "min_days": 45 },
+    { "id": "ST-F9", "pack": "finance", "kind": "refund_burst", "what": "Six full cash refunds of a two-tea-pack bill in six days (20 to 15 days back), reason customer_complaint: 6 x 25,200 paise (24,000 + 5% GST)",
+      "where": {"bill_prefix": "ST-F9-", "outlet": "outlet:1"}, "impact_minor": 151200, "min_days": 45 },
+    { "id": "ST-G4", "pack": "customers_growth", "kind": "lapsed_regulars", "what": "Four weekly regulars (phones +919002000001 to +919002000004), eight baskets each from 91 to 35 days back and none since: 4 x 8 x 27,300 paise (12,000 + 14,000 + 5% GST)",
+      "where": {"phones": ["+919002000001", "+919002000002", "+919002000003", "+919002000004"], "from_offset": -91, "to_offset": -35, "silent_since_offset": -28, "outlet": "outlet:1"}, "impact_minor": 873600, "min_days": 92 }
+  ]
+}

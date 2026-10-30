@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Beat 7 of the Nebius cut, on real screens: "Request quotes" on the owner home's low stock (the panel opens; the
+         run behind the film's order is 01a17dba, 27 Oct), then the quotes from the three simulated suppliers as the
+         suppliers screen shows them (a purchasing.quote_compare snapshot), revealed round by round. The owner's rule
+         (target 95% of the last price paid, walk away above 110%) is a sticker; the cheapest bid (Bargain Bulk Traders,
+         smallest order 2.556 against 0.852 needed) fails the deal check (trace review: moq_exceeds_need); Steady
+         Wholesale's third quote is the one proposed. Times: T.scenes.nbQuotes. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #q4-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #q4-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #q4-sim {
+          left: 230px;
+          top: 780px;
+          font-size: 36px;
+        }
+        #q4-rule {
+          left: 230px;
+          top: 780px;
+          font-size: 34px;
+          text-transform: none;
+          letter-spacing: -0.01em;
+        }
+        #q4-chip {
+          left: 1500px;
+          top: 150px;
+          font-size: 26px;
+        }
+        #q4-model {
+          left: 1260px;
+          top: 190px;
+          height: 40px;
+          padding: 0 18px;
+          font-size: 17px;
+          opacity: 0;
+        }
+        #q4-last {
+          position: absolute;
+          padding: 8px 16px 10px;
+          font-size: 24px;
+          text-transform: none;
+          letter-spacing: 0;
+          box-shadow: 4px 4px 0 var(--m-ink);
+          border-width: 3px;
+        }
+        #q4-fail {
+          position: absolute;
+          font-size: 32px;
+          padding: 10px 20px 12px;
+          border-width: 5px;
+          outline-width: 2px;
+          outline-offset: 5px;
+        }
+        .q4-veil {
+          position: absolute;
+          background: #fff;
+        }
+      </style>
+      <div data-hf-id="hf-9l16" id="root" data-composition-id="nbQuotes" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-25vu" class="cam" id="q4-cam">
+          <div data-hf-id="hf-kufk" id="q4-devwrap"></div>
+          <div data-hf-id="hf-aceq" class="fx" id="q4-fx"></div>
+          <div data-hf-id="hf-kgil" class="sticker sticker-paper" id="q4-last"></div>
+          <div data-hf-id="hf-7cz8" class="stamp" id="q4-fail">Fails · smallest order</div>
+        </div>
+        <div data-hf-id="hf-ci7n" class="sticker sticker-ink" id="q4-sim">Simulated suppliers</div>
+        <div data-hf-id="hf-x8dg" class="time-chip" id="q4-chip">A minute or so later</div>
+        <span data-hf-id="hf-m03z" class="nb-ph-pill" id="q4-model">Nemotron reasoner · NVIDIA endpoint capture</span>
+        <div data-hf-id="hf-3d74" class="sticker sticker-turmeric" id="q4-rule">Target 95% · walk away above 110% (set by the owner)</div>
+        <div data-hf-id="hf-k531" id="q4-pages"></div>
+      </div>
+      <script>
+        NB.scene("nbQuotes", "nbQuotes", ({ tl, $, E, L, S }) => {
+          const Q = NB.shot("quotes");
+          const rows = Q.marks.rows;
+          // Each row's cells: 0 supplier, 1 round, 2 price, 3 quantity, 4 smallest order, 5 pay within; a figure's line is
+          // the cell's first 26 px after its padding.
+          const fig = (r, c) => { const m = rows[r].cells[c]; return { x: m.x + 4, y: m.y + 12, w: m.w - 8, h: 26 }; };
+          const steady = rows.map((r, i) => [r, i]).filter(([r]) => r.cells[0].text.startsWith("Steady")).map(([, i]) => i);
+          const bargain = rows.findIndex((r) => r.cells[0].text.startsWith("Bargain"));
+          const proposed = rows.findIndex((r) => r.proposed);
+          const round = (i) => Number(rows[i].cells[1].text);
+          $("q4-devwrap").innerHTML = SC.device("laptop", "q4-dev", [
+            ["q4-home", NB.screen("home", "q4h", [["requestQuotes"], ["lowCard"]])],
+            ["q4-rq", NB.screen("home-rq", "q4r", [["send"]])],
+            ["q4-q", NB.screen("quotes", "q4q", [["table"]])],
+          ]);
+          const shot = $("q4q-shot");
+          shot.insertAdjacentHTML("beforeend", rows.map((r, i) => `<div class="q4-veil" id="q4-veil${i}" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px"></div>`).join("")
+            + steady.map((i) => NB.hot(`q4-price${i}`, fig(i, 2))).join("")
+            + NB.hot("q4-bprice", fig(bargain, 2)) + NB.hot("q4-bmin", fig(bargain, 4)) + NB.hot("q4-bqty", fig(bargain, 3))
+            + NB.hot("q4-brow", rows[bargain]) + NB.hot("q4-prow", rows[proposed]));
+          $("q4-pages").innerHTML = SC.pages("q4-");
+          // The home and the open panel, scrolled to the low-stock card; the quotes, scrolled to the table.
+          const homePan = 500;
+          const tablePan = Math.round(NB.mark("quotes", "table").y - 110);
+          gsap.set([$("q4h-shot"), $("q4r-shot")], { y: -homePan });
+          gsap.set(shot, { y: -tablePan });
+          const cam = $("q4-cam");
+          const fx = $("q4-fx");
+          const M = MK.measure($("q4-dev"), () => {
+            gsap.set([$("q4h-shot"), $("q4r-shot"), shot], { y: 0 });
+            const r = (id, pan) => NB.at($(id), cam, pan);
+            const out = {
+              request: r("q4h-requestQuotes", homePan), low: r("q4h-lowCard", homePan), send: r("q4r-send", homePan), table: r("q4q-table", tablePan),
+              steady: steady.map((i) => r(`q4-price${i}`, tablePan)), bprice: r("q4-bprice", tablePan), bmin: r("q4-bmin", tablePan),
+              bqty: r("q4-bqty", tablePan), brow: r("q4-brow", tablePan), prow: r("q4-prow", tablePan),
+            };
+            gsap.set([$("q4h-shot"), $("q4r-shot")], { y: -homePan });
+            gsap.set(shot, { y: -tablePan });
+            return out;
+          });
+          SC.wipes(tl, $, "q4-", S, { outAt: E.wipeOut });
+
+          // 1 · Request quotes on the low-stock card; the panel; Send request.
+          MK.camera(tl, cam, { at: L(E.camLow), zoom: 1.3, x: M.low.cx - 120, y: M.low.cy + 40, anchor: [960, 440], dur: 0.8 });
+          const cur = MK.cursor(tl, fx, { x: M.request.cx - 200, y: M.request.cy + 140, hidden: true });
+          cur.show(L(E.clickRequest) - 0.8);
+          cur.go({ at: L(E.clickRequest) - 0.7, to: [M.request.cx, M.request.cy], dur: 0.6, state: "hand" });
+          cur.click(L(E.clickRequest));
+          SC.swap(tl, $("q4-home"), $("q4-rq"), L(E.clickRequest) + 0.12, { dur: 0.2, dx: 0 });
+          cur.go({ at: L(E.clickSend) - 0.6, to: [M.send.cx, M.send.cy], dur: 0.5, state: "hand" });
+          cur.click(L(E.clickSend));
+          cur.hide(L(E.clickSend) + 0.3);
+
+          // 2 · The quotes from the three simulated suppliers, round by round.
+          SC.swap(tl, $("q4-rq"), $("q4-q"), L(E.toQuotes), { dur: 0.35, dx: 40 });
+          // The table and the empty column to its right (where the margin note goes) fill the frame.
+          const rowsTop = M.steady.length ? Math.min(...M.steady.map((r) => r.y)) - 12 : M.table.y;
+          MK.camera(tl, cam, { at: L(E.toQuotes) + 0.1, zoom: 1.4, x: M.table.x + 500, y: rowsTop + 200, anchor: [960, 400], dur: 0.8 });
+          MK.sticker(tl, $("q4-chip"), L(E.chip[0]), L(E.chip[1]), { rot: 3 }); // the run took 82 s (intel.run 01a17dba: issued → ended)
+          MK.sticker(tl, $("q4-sim"), L(E.sim[0]), L(E.sim[1]), { rot: 2 });
+          rows.forEach((_, i) => tl.fromTo($(`q4-veil${i}`), { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power1.out", immediateRender: false }, L(E[`r${round(i)}`]) + 0.12 * (i % 3)));
+          SC.reveal(tl, $("q4-model"), L(E.model[0]), { dur: 0.3 });
+          MK.hide(tl, $("q4-model"), L(E.model[1]));
+          MK.sticker(tl, $("q4-rule"), L(E.rule[0]), L(E.rule[1]), { rot: -1.5 });
+          M.steady.forEach((r, i) => MK.highlight(tl, fx, r, L(E.hlSteady) + i * 0.45, { dur: 0.35, padX: 2, padY: 2 }));
+          const note = $("q4-last");
+          // The figure is the screen's own cell (the order's "Last price paid per kg"), cropped, never typed.
+          const lp = NB.mark("quotes", "lastPaidValue");
+          note.innerHTML = `<span style="display: inline-flex; align-items: center; gap: 10px">Last price paid ${NB.crop("quotes", { x: lp.x - 4, y: lp.y - 3, w: lp.w + 8, h: lp.h + 6 }, 1.25)}</span>`;
+          note.style.left = `${M.table.x + M.table.w + 26}px`;
+          note.style.top = `${M.steady[0].y - 8}px`;
+          MK.sticker(tl, note, L(E.last[0]), L(E.last[1]), { rot: -2 });
+
+          // 3 · The cheapest bid wants a bigger order than is needed: it fails the deal check.
+          MK.encircle(tl, fx, M.bprice, L(E.circlePrice), { dur: 0.45, pad: 10, width: 5, seed: 3 });
+          MK.encircle(tl, fx, M.bmin, L(E.circleMin), { dur: 0.45, pad: 10, width: 5, seed: 9 });
+          MK.highlight(tl, fx, M.bqty, L(E.hlQty), { dur: 0.35, padX: 2, padY: 2 });
+          const fail = $("q4-fail");
+          fail.style.left = `${M.brow.x + M.brow.w + 22}px`;
+          fail.style.top = `${M.brow.y - 6}px`;
+          MK.stamp(tl, fail, L(E.fail), { rot: -4 });
+          MK.camera(tl, cam, { at: L(E.toProposed), zoom: 1.5, x: M.table.x + 500, y: M.prow.cy - 60, anchor: [960, 430], dur: 1.0 });
+          MK.highlight(tl, fx, { ...M.prow, x: M.prow.x + 6, w: M.prow.w * 0.36 }, L(E.toProposed) + 0.9, { dur: 0.5, padX: 4, padY: -6 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

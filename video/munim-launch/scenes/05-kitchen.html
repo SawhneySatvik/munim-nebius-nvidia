@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Scene 5, kitchen and counter: the cake order flies from Zoya's phone onto Kavya's kitchen board, into the Later
+         lane (its pickup is ahead). At 9:45 it moves to Now: Start, Ready. Imran's till: two croissants (the morning bake
+         takes 20% off) and a Regular hot chocolate, ₹470.40; the card payment is recorded, never processed (the full tour
+         also shows the GST tax invoice). At ten the cake is handed over. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #k5-phone {
+          left: 70px;
+          top: 150px;
+        }
+        #k5-phone .dev-scale {
+          transform: scale(0.7);
+        }
+        #k5-kds,
+        #k5-till {
+          left: 520px;
+          top: 40px;
+        }
+        #k5-kds .dev-scale,
+        #k5-till .dev-scale {
+          transform: scale(0.84);
+        }
+        #k5-till {
+          opacity: 0;
+        }
+        #k5-flyer {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 300px;
+          padding: 12px 16px;
+          background: #fff;
+          border: 2.5px solid #8c6e5a;
+          border-radius: 18px;
+          box-shadow: 0 12px 24px -12px rgb(42 26 18 / 0.5);
+          font-family: var(--f-c-body);
+          font-weight: 700;
+          font-size: 20px;
+          color: #2a1a12;
+          opacity: 0;
+        }
+        #k5-flyer span {
+          display: block;
+          font-size: 30px;
+          font-weight: 800;
+        }
+        #k5-chip,
+        #k5-chip2 {
+          left: 140px;
+          top: 90px;
+        }
+        #k5-st {
+          left: 90px;
+          top: 660px;
+        }
+      </style>
+      <div data-hf-id="hf-v755" id="root" data-composition-id="kitchen" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-nrb9" class="cam" id="k5-cam"><div data-hf-id="hf-wwh6" id="k5-devs"></div><div data-hf-id="hf-okpb" class="fx" id="k5-fx"></div>
+          <div data-hf-id="hf-xoty" id="k5-flyer"><span data-hf-id="hf-qhqf" class="num">#12</span>Hazelnut Praline Cake · 1 kg</div></div>
+        <div data-hf-id="hf-gggp" class="time-chip" id="k5-chip">Fri · 9:45 am</div>
+        <div data-hf-id="hf-q16c" class="time-chip" id="k5-chip2">Fri · 10:00 am</div>
+        <div data-hf-id="hf-h3b1" class="sticker sticker-turmeric" id="k5-st">Recorded, not processed</div>
+        <div data-hf-id="hf-osbu" id="k5-pages"></div>
+      </div>
+      <script>
+        SC.scene("kitchen", "kitchen", ({ tl, $, E, L, S, F, has }) => {
+          const cake = F.items.praline_celebration_cake;
+          const cakeTicket = (id, status, next, lane) => ({
+            id, no: F.cakeOrder.ticket, kind: "Pickup", channel: "Web", min: lane === "later" ? 1 : 0, due: "10:00 am", status, next, lane,
+            lines: [{ qty: 1, name: cake.name, size: cake.variants.one_kg.name, opts: "Eggless", note: F.cakeOrder.lines[0].note }],
+          });
+          const t = (id, no, kind, min, due, status, next, lines, colour) => ({ id, no, kind, channel: "Counter", min, due, status, next, lines, colour });
+          const nowA = [
+            t("k5-a1", 9, "Takeaway", 4, "8:46 am", "Preparing", "Ready", [{ qty: 2, name: F.items.hazelnut_croissant.name }]),
+            t("k5-a2", 10, "Takeaway", 1, "8:47 am", "Waiting", "Start", [{ qty: 2, name: F.items.cardamom_knot.name }]),
+            t("k5-a3", 11, "Dine in", 6, "8:44 am", "Preparing", "Ready", [{ qty: 3, name: F.items.brown_butter_cookie.name }], "amber"),
+          ];
+          const nowB = [cakeTicket("k5-cake", "Waiting", "Start", "now"), t("k5-b2", F.walkIn.ticket - 1, "Takeaway", 2, "9:58 am", "Preparing", "Ready", [{ qty: 1, name: F.items.gianduja_mousse.name }])];
+          const kdsA = UI.kitchenBoard(F, "k5a-", { now: nowA, later: [cakeTicket("k5-cakeLater", "Waiting", null, "later")], laterHead: "Pickup 10:00 am · on the board from 9:45 am" });
+          const kdsB = UI.kitchenBoard(F, "k5b-", { now: nowB, later: [], laterHead: "" });
+          $("k5-devs").innerHTML =
+            SC.device("phone", "k5-phone", [["k5-tr", UI.tracker(F, "k5-")]]) +
+            SC.device("tablet", "k5-kds", [["k5-kdsA", kdsA], ["k5-kdsB", kdsB]]) +
+            SC.device("tablet", "k5-till", [["k5-pos", UI.till(F, "k5-")], ["k5-pay", UI.payment(F, "k5-")]]);
+          $("k5-pages").innerHTML = SC.pages("k5-");
+          $("k5-tr-line").textContent = UI.trackerLines[1];
+          $("k5-tr-dot-0").classList.add("done");
+          $("k5-tr-dot-1").classList.add("now");
+          const cam = $("k5-cam");
+          const fx = $("k5-fx");
+          const M = MK.measure($("k5-kds"), () => {
+            const r = (id) => MK.rect($(id), cam);
+            return {
+              phone: r("k5-phone-screen"), later: r("k5-cakeLater"), start: r("k5-cake-btn"),
+              croissant: r("k5-t-croissant"), hc: r("k5-t-hc-regular"), place: r("k5-place"), card: r("k5-card"), record: r("k5-record"),
+            };
+          });
+          SC.wipes(tl, $, "k5-", S);
+
+          // The ticket flies from the phone into the Later lane.
+          const flyer = $("k5-flyer");
+          tl.fromTo(flyer, { opacity: 0 }, { opacity: 1, duration: 0.12, immediateRender: false }, L(E.flight));
+          MK.flight(tl, flyer, { x: M.phone.cx - 150, y: M.phone.y + 260 }, { x: M.later.x, y: M.later.y }, L(E.flight), { dur: 1.0, lift: 200, scale: [1, 0.9] });
+          SC.appear(tl, $("k5-cakeLater"), L(E.land), 0.2);
+          tl.fromTo($("k5-phone"), { opacity: 1, x: 0 }, { opacity: 0, x: -120, duration: 0.6, ease: "power2.in", immediateRender: false }, L(E.land) + 0.6);
+
+          // 9:45: the cake ticket moves to Now; Start, then Ready.
+          MK.sticker(tl, $("k5-chip"), L(E.chip[0]), L(E.chip[1]), { rot: 3 });
+          SC.swap(tl, $("k5-kdsA"), $("k5-kdsB"), L(E.skip), { dur: 0.4, dx: 0 });
+          tl.fromTo($("k5-cake"), { scale: 0.92 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, L(E.skip) + 0.3);
+          MK.tap(tl, fx, { x: M.start.cx, y: M.start.cy }, L(E.start));
+          MK.tap(tl, fx, { x: M.start.cx, y: M.start.cy }, L(E.ready));
+          const st = $("k5-cake-status");
+          MK.states(tl, st, [[0, "Waiting"], [L(E.start), "Preparing"], [L(E.ready), "Ready"], [L(E.handed), "Done"]]);
+          MK.states(tl, $("k5-cake-btn"), [[0, "Start"], [L(E.start), "Ready"], [L(E.ready), "Handed over"]]);
+          MK.drive(tl, (tt) => {
+            st.className = `badge ${tt >= L(E.ready) ? "badge-ready" : tt >= L(E.start) ? "badge-work" : "badge-new"}`;
+          });
+
+          // The till: two croissants and a Regular hot chocolate, then the payment recorded.
+          tl.fromTo($("k5-kds"), { opacity: 1, x: 0 }, { opacity: 0, x: -200, duration: 0.45, ease: "power2.in", immediateRender: false }, L(E.toTill));
+          tl.fromTo($("k5-till"), { opacity: 0, x: 200 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.toTill) + 0.25);
+          const tap = (r, at) => MK.tap(tl, fx, { x: r.cx, y: r.cy }, at);
+          tap(M.croissant, L(E.tapCroissant));
+          tap(M.croissant, L(E.tapCroissant2));
+          tap(M.hc, L(E.tapHc));
+          const show = (id, at) => SC.appear(tl, $(id), at, 0.2);
+          MK.drive(tl, (tt) => {
+            $("k5-empty").style.display = tt < L(E.tapCroissant) ? "" : "none";
+          });
+          show("k5-line1", L(E.tapCroissant) + 0.1);
+          MK.states(tl, $("k5-l1-qty"), [[0, "1"], [L(E.tapCroissant2) + 0.1, "2"]]);
+          show("k5-line2", L(E.tapHc) + 0.1);
+          show("k5-totals", L(E.tapHc) + 0.3);
+          tap(M.place, L(E.place));
+          MK.press(tl, $("k5-place"), L(E.place));
+          SC.swap(tl, $("k5-pos"), $("k5-pay"), L(E.payment), { dur: 0.35, dx: 40 });
+          const receipt = $("k5-receipt");
+          if (has("receipt")) {
+            SC.appear(tl, receipt, L(E.receipt), 0.35);
+            MK.highlight(tl, fx, (() => {
+              const rr = MK.measure($("k5-till"), () => MK.rect(receipt.querySelectorAll(".pay-dl dt")[1], cam));
+              return { x: rr.x, y: rr.y, w: 300, h: rr.h * 2.2 };
+            })(), L(E.receiptMark), { dur: 0.5, until: L(E.tapCard) });
+          } else tl.set(receipt, { opacity: 0 }, 0);
+          tap(M.card, L(E.tapCard));
+          tap(M.record, L(E.record));
+          MK.press(tl, $("k5-record"), L(E.record));
+          const rec = $("k5-recorded");
+          const form = $("k5-pay-form");
+          MK.drive(tl, (tt) => {
+            const done = tt >= L(E.record) + 0.15;
+            rec.style.display = done ? "" : "none";
+            form.style.display = done ? "none" : "";
+            $("k5-card").className = `btn ${tt >= L(E.tapCard) ? "btn-primary" : "btn-plain"}`;
+          });
+          MK.states(tl, $("k5-paid"), [[0, F.fmt.inr(0)], [L(E.record) + 0.15, F.fmt.inr(F.walkIn.priced.total)]]);
+          MK.states(tl, $("k5-left"), [[0, F.fmt.inr(F.walkIn.priced.total)], [L(E.record) + 0.15, F.fmt.inr(0)]]);
+          MK.sticker(tl, $("k5-st"), L(E.sticker[0]), L(E.sticker[1]), { rot: -2 });
+
+          // Ten o'clock: back on the kitchen board, the cake is handed over.
+          tl.fromTo($("k5-till"), { opacity: 1, x: 0 }, { opacity: 0, x: 200, duration: 0.45, ease: "power2.in", immediateRender: false }, L(E.toKds));
+          tl.fromTo($("k5-kds"), { opacity: 0, x: -200 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, L(E.toKds) + 0.25);
+          MK.sticker(tl, $("k5-chip2"), L(E.chip2[0]), L(E.chip2[1]), { rot: 3 });
+          MK.tap(tl, fx, { x: M.start.cx, y: M.start.cy }, L(E.handed));
+          tl.fromTo($("k5-cake"), { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.9, duration: 0.4, ease: "power2.in", immediateRender: false }, L(E.handed) + 0.35);
+        });
+      </script>
+    </template>
+  </body>
+</html>

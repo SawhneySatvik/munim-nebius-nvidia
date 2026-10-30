@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+  <!-- The ink-stamp mask: fractal noise turned into alpha with small dropouts (drawn for this film, deterministic). -->
+  <filter id="s"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" seed="3"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 2.05"/></filter>
+  <rect width="300" height="300" filter="url(#s)"/>
+</svg>

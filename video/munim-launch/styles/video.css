@@ -1,0 +1,345 @@
+/* The film's frame: stages, device frames, captions, stickers, stamps and the pieces the motion kit draws. Every motion
+   is a seekable GSAP tween, so the kill switch below turns off any CSS transition or animation a recreated screen
+   carries (the app's own .bob, .ribbon and drawer slide-in are infinite or clock-driven). Written for this film. */
+[data-composition-id] *,
+[data-composition-id] *::before,
+[data-composition-id] *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--m-paper);
+}
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- stages ---------- */
+/* Ledger paper: warm paper, blue-grey rules every 48 px, the red double margin line of a bahi-khata. */
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.stage-ledger {
+  background-color: var(--m-paper);
+  background-image:
+    linear-gradient(to right, transparent 0 158px, var(--m-red) 158px 161px, transparent 161px 167px, var(--m-red) 167px 169px, transparent 169px),
+    repeating-linear-gradient(to bottom, transparent 0 46px, var(--m-rule) 46px 48px);
+}
+/* A grain of paper fibre over any stage (SVG turbulence is deterministic: same pixels every frame). */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("../assets/art/grain.svg");
+}
+/* Cobnut's warm cream, for scenes that sit inside the bakery's world. */
+.stage-cream {
+  background: radial-gradient(1200px 700px at 30% 20%, #fff8ee 0%, var(--c-bg) 55%, var(--c-bg-deep) 100%);
+}
+
+/* The camera rig: an outer wrapper the kit transforms (origin top-left), everything in canvas pixels inside it. */
+.cam {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+}
+.fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------- device frames (no fake OS chrome) ---------- */
+/* .dev is the pose the kit moves; .dev-scale is a fixed scale the kit never touches; .dev-screen is laid out at the
+   device's own CSS width, so the app's layout is the one a person sees on that device. */
+.dev {
+  position: absolute;
+}
+.dev-scale {
+  transform-origin: 0 0;
+}
+.dev-body {
+  position: relative;
+  background: var(--m-ink);
+  border: 4px solid var(--m-ink);
+  box-shadow: 10px 10px 0 rgb(27 22 17 / 0.9);
+}
+.dev-screen {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-bg);
+}
+.dev-laptop .dev-body {
+  padding: 22px 22px 26px;
+  border-radius: 26px 26px 10px 10px;
+}
+.dev-laptop .dev-screen {
+  width: 1280px;
+  height: 800px;
+  border-radius: 6px;
+}
+.dev-laptop .dev-base {
+  position: relative;
+  height: 30px;
+  margin: 0 -70px;
+  background: #2b241d;
+  border: 4px solid var(--m-ink);
+  border-radius: 0 0 22px 22px;
+  box-shadow: 10px 10px 0 rgb(27 22 17 / 0.9);
+}
+.dev-laptop .dev-base::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 180px;
+  height: 10px;
+  margin-left: -90px;
+  background: #4a4037;
+  border-radius: 0 0 10px 10px;
+}
+.dev-tablet .dev-body {
+  padding: 24px;
+  border-radius: 40px;
+}
+.dev-tablet .dev-screen {
+  width: 1180px;
+  height: 820px;
+  border-radius: 16px;
+}
+.dev-phone .dev-body {
+  padding: 16px;
+  border-radius: 56px;
+}
+.dev-phone .dev-screen {
+  width: 390px;
+  height: 844px;
+  border-radius: 40px;
+}
+
+/* ---------- captions (one caption track; title-safe band) ---------- */
+.cap-band {
+  position: absolute;
+  left: 192px;
+  right: 192px;
+  bottom: 112px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.cap-line {
+  max-width: 1536px;
+  padding: 12px 28px 14px;
+  background: var(--m-paper-2);
+  color: var(--m-ink);
+  border: var(--m-stroke) solid var(--m-ink);
+  border-radius: var(--m-radius);
+  box-shadow: var(--m-shadow);
+  font-family: var(--f-m-body);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  opacity: 0;
+}
+
+/* ---------- stickers and stamps (Munim chrome) ---------- */
+.sticker {
+  position: absolute;
+  display: inline-block;
+  padding: 14px 28px 16px;
+  border: 4px solid var(--m-ink);
+  border-radius: 14px;
+  box-shadow: var(--m-shadow-lg);
+  font-family: var(--f-m-display);
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+}
+.sticker-red {
+  background: var(--m-red);
+  color: var(--m-on-red);
+}
+.sticker-turmeric {
+  background: var(--m-turmeric);
+  color: var(--m-on-turmeric);
+}
+.sticker-paper {
+  background: var(--m-paper-2);
+  color: var(--m-ink);
+}
+.sticker-ink {
+  background: var(--m-ink);
+  color: var(--m-paper-2);
+  box-shadow: 8px 8px 0 var(--m-red);
+}
+/* An ink stamp: ledger-red letters in a double-ruled box, roughened by a turbulence mask (deterministic). */
+.stamp {
+  position: absolute;
+  display: inline-block;
+  padding: 18px 34px 20px;
+  color: var(--m-red);
+  border: 7px solid var(--m-red);
+  outline: 3px solid var(--m-red);
+  outline-offset: 7px;
+  border-radius: 10px;
+  font-family: var(--f-m-display);
+  font-weight: 800;
+  font-size: 118px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  -webkit-mask-image: url("../assets/art/ink-mask.svg");
+  mask-image: url("../assets/art/ink-mask.svg");
+}
+.time-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 22px 12px;
+  background: var(--m-ink);
+  color: var(--m-paper-2);
+  border-radius: 999px;
+  font-family: var(--f-m-mono);
+  font-weight: 600;
+  font-size: 34px;
+  opacity: 0;
+}
+/* Scene 9 and 9b: "Earlier · Fri 4:05 pm" is longer than a clock, so it hangs from the right edge. */
+.beat-chip {
+  right: 36px;
+  top: 96px;
+  font-size: 28px;
+}
+
+/* ---------- the Munim mark (apps/site/components/Logo.tsx drawing, restyled at film size) ---------- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 26px;
+}
+.logo-mark {
+  border: 6px solid var(--m-ink);
+  border-radius: 30px;
+  box-shadow: 10px 10px 0 var(--m-ink);
+  background: var(--m-red);
+  display: block;
+}
+.logo-word {
+  font-family: var(--f-m-display);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  color: var(--m-ink);
+}
+
+/* ---------- pieces the motion kit draws ---------- */
+.mk-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+.mk-cursor svg {
+  position: absolute;
+  display: block;
+  opacity: 0;
+  filter: drop-shadow(3px 4px 0 rgb(27 22 17 / 0.35));
+}
+.mk-tap-dot,
+.mk-tap-ring,
+.mk-click-ring {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+}
+.mk-tap-dot {
+  width: 34px;
+  height: 34px;
+  background: rgb(27 22 17 / 0.28);
+  border: 3px solid rgb(27 22 17 / 0.55);
+}
+.mk-tap-ring,
+.mk-click-ring {
+  width: 34px;
+  height: 34px;
+  border: 4px solid var(--m-red);
+}
+.mk-encircle {
+  position: absolute;
+  overflow: visible;
+  opacity: 0;
+}
+.mk-highlight {
+  position: absolute;
+  background: var(--m-turmeric);
+  mix-blend-mode: multiply;
+  border-radius: 3px 14px 5px 16px / 8px 12px 6px 14px;
+  transform-origin: 0 50%;
+  opacity: 0.72;
+}
+.mk-page {
+  position: absolute;
+  inset: 0;
+  background-color: var(--m-paper);
+  background-image:
+    linear-gradient(to right, transparent 0 158px, var(--m-red) 158px 161px, transparent 161px 167px, var(--m-red) 167px 169px, transparent 169px),
+    repeating-linear-gradient(to bottom, transparent 0 46px, var(--m-rule) 46px 48px);
+  clip-path: inset(0 0 0 100%);
+}
+.mk-page-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 46px;
+  background: linear-gradient(to right, rgb(27 22 17 / 0), rgb(27 22 17 / 0.22));
+  opacity: 0;
+}
+.mk-think {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.mk-think i {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.25;
+}
+.mk-pop {
+  display: inline-block;
+}
+
+/* ---------- layered screens inside a device (SC.device) ---------- */
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+.layer.first {
+  opacity: 1;
+}

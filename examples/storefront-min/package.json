@@ -1,0 +1,9 @@
+{
+  "name": "storefront-min",
+  "private": true,
+  "type": "module",
+  "description": "Minimal Munim storefront script. Depends only on the packed @munim/sdk tarball (not a workspace package).",
+  "scripts": {
+    "start": "node scripts/run.mjs"
+  }
+}

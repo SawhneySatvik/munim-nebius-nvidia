@@ -1,0 +1,40 @@
+{
+  "case": "router",
+  "role": "router",
+  "model_id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+  "response": {
+    "id": "chatcmpl-066ce7f7-4af0-40b1-8880-b8dbb4f1f540",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "content": "{\"answer\":\"C\"}",
+          "role": "assistant",
+          "reasoning_content": null
+        },
+        "finish_reason": "stop",
+        "logprobs": null
+      }
+    ],
+    "created": 1792792907,
+    "model": "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "service_tier": null,
+    "system_fingerprint": null,
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 249,
+      "completion_tokens": 6,
+      "total_tokens": 255,
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": null
+      }
+    }
+  }
+}

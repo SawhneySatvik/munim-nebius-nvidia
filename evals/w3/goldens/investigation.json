@@ -1,0 +1,8 @@
+{
+  "_about": "RG-MF1, typed from the hand-kept answer key's `what` (restaurant_group.json): H1 supplier price, H2 waste and H3 deals supported once H0 is; H4 channel fees and H5 labour refuted; H6 volume/mix nets -40 bp (refuted). Item ids are the T-083 playbook's: data_complete (H0), supplier_price, waste, deals, channel_fees, labour, volume_mix.",
+  "plant": "RG-MF1",
+  "supported": ["data_complete", "deals", "supplier_price", "waste"],
+  "refuted": ["channel_fees", "labour", "volume_mix"],
+  "investigation_status": "done",
+  "checks_failed": []
+}

@@ -1,0 +1,13 @@
+{
+  "_about": "Hand-kept (11 Oct 2026, lane b-85). N1 target = the answer-key ratio: every plant found with impact = key, so the default floor is 1 and no floor may exceed 1. PDR section 6 gives N1 no number beyond 'answer key vs findings'. A row below 1 carries an exception whose floor is the ratio measured on 11 Oct 2026 (a ratchet: it can go up, a drop turns the gate red) and says why it is below 1. Exceptions are not accepted tolerance; each is an open gap against the key. The cells listed are the only ones; an exception on a row with no plants or an n/a row turns the gate red.",
+  "n1_floor_exceptions": {
+    "people/restaurant_group": {"floor": "2/3", "why": "RG-P2 (people.overstaffed_slot) abstains row_cap: North's six-week hourly labour_vs_demand v2 window (42 staffed days plus the per-weekday-slot Sigma rows) is over core's 500-row snapshot cap (02-schema minting), which cuts the newest days unannounced, so intel refuses to judge it (R47 merge, lane i-6). Once the window fits, accept.json sums its six weekday-slot findings to the template's 408,000 (the key's 480,000 is a separate, documented worldgen/key gap). Fix owners: the migrator (a weekday filter on labour_vs_demand so the detector mints per weekday) or the orchestrator (a truncation flag or a larger cap for run mints)"},
+    "customers/restaurant_group": {"floor": "1/2", "why": "RG-G4: the six planted regulars are the at-risk rows at the pack's 1,075,200 (accept.json), but the Sigma cell (1,357,440) also holds two unplanted customers the template's segment rule marks at risk. Fix owners: the measure stage (plant share for G4) or worldgen (background customers that do not lapse) (fx-packs, 11 Oct)"},
+    "customers/cloud_kitchen": {"floor": "1/3", "why": "CK-G4: as RG-G4 (812,000 for the planted five; the Sigma adds one unplanted at-risk customer). CK-G3: a seed-day plant of 10 uses, against pack section 4's uses >= 20 (detector-map pack_cases G3 'partial'): it fires only at the planted scale, never at the pack's threshold. Fix owner: worldgen (plant at the pack's scale) (fx-packs, 11 Oct)"}
+  },
+  "false_alarms": {
+    "max_per_world": 2,
+    "excluded_detectors": ["catalogue.recipe_waste_gap"],
+    "why": "the pack gates' bar is at most 2 false alarms a world; catalogue.recipe_waste_gap is excluded as in the catalogue lane's own gate (baseline waste on unplanted pairs, worldgen follow-up)"
+  }
+}

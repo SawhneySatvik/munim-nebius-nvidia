@@ -1,0 +1,10 @@
+{
+  "world": "snacky_shack",
+  "seed": "munim-worldgen-v1",
+  "currency": "AUD",
+  "note": "Hand-kept. The Snacky Shack's real menu with synthetic history: every order, cost, supplier and person here is invented. A demo world, so this key sits apart from the four evaluation keys and their coverage gate; test/snacky_shack.test.ts seeds the world with this seed and recomputes every entry. impact_minor is cents of AUD; every figure is typed from the worked arithmetic in `what`, never produced by the generator.",
+  "problems": [
+    {"id": "SS-F3", "pack": "finance", "kind": "short_commission", "what": "channel aggregator:doordash takes 30% against a contracted 25% on 15 real orders (dated history bills DD-SS-SH-1..15, each two Special Snacky Boxes for 2 at 2,500 cents, GST inside: 5,000; 7 to 2 days back). The merchant collects the GST, so nothing is withheld and core's short per line = expected (5,000 - 1,250) - net (5,000 - 1,500) = 250, over the line rule max(2, ceil(3,750 x 50 / 10,000) = 19): 15 x 250", "where": {"payout_refs": ["DD-SS-SHORT"], "channel": "aggregator:doordash", "outlet": "outlet:1"}, "impact_minor": 3750},
+    {"id": "SS-I1", "pack": "inventory_purchasing", "kind": "price_creep", "what": "Beef smash patties invoiced 140 then 165 cents each (+18%): 3 deliveries x 400 patties x 25", "where": {"ingredient": "ing:beef_patty", "pre_invoices": ["inv:patty-pre1", "inv:patty-pre2", "inv:patty-pre3"], "post_invoices": ["inv:patty-post1", "inv:patty-post2", "inv:patty-post3"]}, "impact_minor": 30000}
+  ]
+}

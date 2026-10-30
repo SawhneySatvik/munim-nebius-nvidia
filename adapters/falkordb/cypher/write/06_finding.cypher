@@ -1,0 +1,1 @@
+UNWIND $rows AS r CREATE (:finding {id: r.id, name: r.type, type: r.type, severity: r.severity, outlet_ids: r.outlet_ids, impact_snapshot_id: r.impact_snapshot_id, impact_row: r.impact_row, impact_column: r.impact_column})

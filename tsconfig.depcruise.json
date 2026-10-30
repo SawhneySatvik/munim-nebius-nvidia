@@ -1,0 +1,10 @@
+{
+  "//": "Path resolution for dependency-cruiser only: apps/web's tsconfig paths (\"@/*\", and \"@munim-dev/*\" with its fallback).",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["apps/web/*"], "@munim-dev/*": ["adapters/dev/env/*", "apps/web/lib/server/no-dev/*"] },
+    "allowJs": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["apps/web/**/*.ts", "apps/web/**/*.tsx"]
+}

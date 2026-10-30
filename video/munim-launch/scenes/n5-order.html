@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Purchase-order review: the captured proposal remains proposed. The scene shows the approval control as a human
+         decision boundary, without fabricating a completed approval or audit record. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #o5-dev {
+          left: 384px;
+          top: 34px;
+        }
+        #o5-dev .dev-scale {
+          transform: scale(0.86);
+        }
+        #o5-draft-st {
+          left: 1240px;
+          top: 680px;
+          font-size: 50px;
+        }
+        #o5-paid {
+          left: 300px;
+          top: 770px;
+          font-size: 40px;
+          text-transform: none;
+          letter-spacing: -0.01em;
+        }
+        #o5-waiting { left: 1240px; top: 120px; font-size: 40px; }
+        #o5-guarantee {
+          left: 250px;
+          top: 770px;
+          font-size: 44px;
+        }
+      </style>
+      <div data-hf-id="hf-3l19" id="root" data-composition-id="nbOrder" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-0vip" class="cam" id="o5-cam"><div data-hf-id="hf-kcyn" id="o5-devwrap"></div><div data-hf-id="hf-au17" class="fx" id="o5-fx"></div></div>
+        <div data-hf-id="hf-gdmr" class="sticker sticker-red" id="o5-draft-st">Draft. Not an order.</div>
+        <div data-hf-id="hf-se0d" class="sticker sticker-paper" id="o5-paid">Payments are recorded, never processed</div>
+        <div class="sticker sticker-paper" id="o5-waiting">Waiting for a person</div>
+        <div data-hf-id="hf-72f4" class="sticker sticker-ink" id="o5-guarantee">Nothing changes the books without a named person</div>
+        <div data-hf-id="hf-jc5q" id="o5-pages"></div>
+      </div>
+      <script>
+        NB.scene("nbOrder", "nbOrder", ({ tl, $, E, L, S }) => {
+          $("o5-devwrap").innerHTML = SC.device("laptop", "o5-dev", [
+            ["o5-card", NB.screen("quotes", "o5c", [["title"], ["status", undefined, 2], ["saving"], ["savingValue", undefined, 2], ["savingChip"], ["recorded"], ["card"]])],
+            ["o5-draft", NB.screen("po", "o5d", [["card"], ["lastPaid"], ["saving"], ["approve"], ["happened"], ["status"]])],
+          ]);
+          $("o5-pages").innerHTML = SC.pages("o5-");
+          const cardPan = Math.round(NB.mark("quotes", "title").y - 70);
+          const draftPan = 380;
+          const cam = $("o5-cam");
+          const fx = $("o5-fx");
+          const M = MK.measure($("o5-dev"), () => {
+            const r = (id, pan) => NB.at($(id), cam, pan);
+            return {
+              title: r("o5c-title", cardPan), status: r("o5c-status", cardPan), saving: r("o5c-saving", cardPan), savingValue: r("o5c-savingValue", cardPan),
+              savingChip: r("o5c-savingChip", cardPan), recorded: r("o5c-recorded", cardPan), lastPaid: r("o5d-lastPaid", draftPan),
+              dsaving: r("o5d-saving", draftPan), approve: r("o5d-approve", draftPan), happened: r("o5d-happened", draftPan),
+            };
+          });
+          gsap.set($("o5c-shot"), { y: -cardPan });
+          gsap.set($("o5d-shot"), { y: -draftPan });
+          SC.wipes(tl, $, "o5-", S, { outAt: E.wipeOut });
+
+          // 8 · The purchase order: its saving against the last price paid, with the source; a draft; recorded only.
+          MK.camera(tl, cam, { at: L(E.camTitle), zoom: 1.3, x: M.title.cx + 120, y: M.title.cy + 120, anchor: [960, 400], dur: 0.9 });
+          MK.camera(tl, cam, { at: L(E.camSaving), zoom: 1.5, x: M.saving.cx - 60, y: M.saving.cy, anchor: [960, 440], dur: 0.8 });
+          MK.highlight(tl, fx, M.savingValue, L(E.hlSaving), { dur: 0.4, padX: 2, padY: 2, until: L(E.toDraft) });
+          MK.encircle(tl, fx, M.savingChip, L(E.circleChip), { dur: 0.45, pad: 10, width: 5, until: L(E.toDraft) });
+          MK.camera(tl, cam, { at: L(E.camDraft), zoom: 1.22, x: M.title.cx + 140, y: (M.status.cy + M.recorded.cy) / 2, anchor: [960, 430], dur: 0.8 });
+          MK.encircle(tl, fx, M.status, L(E.circleStatus), { dur: 0.45, pad: 10, width: 5, until: L(E.toDraft) });
+          MK.sticker(tl, $("o5-draft-st"), L(E.draftSt[0]), L(E.draftSt[1]), { rot: 3 });
+          MK.highlight(tl, fx, M.recorded, L(E.hlRecorded), { dur: 0.5, padX: 4, padY: 2, until: L(E.toDraft) });
+          MK.sticker(tl, $("o5-paid"), L(E.paid[0]), L(E.paid[1]), { rot: -2 });
+
+          // 9 · The proposal is still pending. Show the named approval control without simulating a decision.
+          SC.swap(tl, $("o5-card"), $("o5-draft"), L(E.toDraft), { dur: 0.35, dx: 40 });
+          MK.camera(tl, cam, { at: L(E.toDraft) + 0.1, zoom: 1.35, x: M.lastPaid.x + 380, y: M.lastPaid.cy + 40, anchor: [960, 420], dur: 0.8 });
+          MK.camera(tl, cam, { at: L(E.read), zoom: 1.35, x: M.lastPaid.x + 380, y: M.dsaving.cy + 30, anchor: [960, 420], dur: 0.8, ease: "sine.inOut" });
+          const cur = MK.cursor(tl, fx, { x: M.approve.cx + 260, y: M.approve.cy - 120, hidden: true });
+          cur.show(L(E.read) + 0.8);
+          cur.go({ at: L(E.read) + 0.9, to: [M.approve.cx, M.approve.cy], dur: 0.8, state: "hand" });
+          cur.hide(L(E.read) + 2.0);
+          MK.sticker(tl, $("o5-waiting"), L(E.waiting[0]), L(E.waiting[1]), { rot: -2 });
+          MK.sticker(tl, $("o5-guarantee"), L(E.guarantee[0]), L(E.guarantee[1]), { rot: -1.5 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

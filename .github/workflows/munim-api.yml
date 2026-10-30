@@ -1,0 +1,61 @@
+name: munim-api
+
+# munim-api cannot use Vercel's own Git build: deploy/vercel/build.mjs stages what it uploads. So this workflow deploys it.
+# R73: the live API runs the `falkordb` branch (all of main plus the graph build; graph features stay off until MUNIM_GRAPH
+# is set). It deploys after `ci` succeeds on a push to falkordb, and on demand (Actions > munim-api > Run workflow, from main:
+# it deploys the falkordb head). A workflow_run always reads this file from the default branch (main), so the branch is
+# named here; falkordb's own copy of this file is never used for it.
+# munim-cobnut builds on Vercel itself from falkordb (its production branch) and munim-rho from main (deploy/vercel/README.md).
+# Repository secrets: VERCEL_TOKEN (a Vercel access token, the founder's), VERCEL_ORG_ID and VERCEL_PROJECT_ID (ids, not secret).
+# A workflow_run checkout is pinned to the commit ci passed; a manual run checks out the falkordb head.
+on:
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
+    branches: [falkordb]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: munim-api-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'falkordb')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check the secrets exist
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          for n in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            [ -n "${!n}" ] || { echo "missing GitHub secret $n" >&2; exit 1; }
+          done
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || 'falkordb' }}
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v10.2.0  # no floating major tag exists for setup-uv
+      - run: pnpm install --frozen-lockfile
+      # Staged outside the repo, as deploy.mjs does (gotcha 39). core's node_modules is built here, on linux; intel's requirements come from uv.lock.
+      - run: node deploy/vercel/build.mjs --out "$RUNNER_TEMP/api-out"
+      - name: Deploy to production (Mumbai, bom1)
+        working-directory: ${{ runner.temp }}/api-out
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx --yes vercel@64.2.0 deploy --prod --regions bom1 --yes --token "$VERCEL_TOKEN"

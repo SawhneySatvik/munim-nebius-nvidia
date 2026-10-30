@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Beat 12 of the Nebius cut, the end card: the Munim mark, submission links and honest data/provider disclosures. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #e8-verification {
+          position: relative;
+          display: inline-flex;
+          height: 34px;
+          padding: 0 14px;
+          margin-left: 12px;
+          font-size: 16px;
+          vertical-align: middle;
+        }
+      </style>
+      <div data-hf-id="hf-2zi8" id="root" data-composition-id="nbEnd" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <div data-hf-id="hf-1vd0" class="endcard" id="e8-end"></div>
+        <div data-hf-id="hf-xr0l" id="e8-pages"></div>
+      </div>
+      <script>
+        NB.scene("nbEnd", "nbEnd", ({ tl, $, E, L, S }) => {
+          const c = FIX.endCard.nebius;
+          const esc = UI.esc;
+          $("e8-end").innerHTML = `<div class="logo endlogo">${UI.munimMark(132)}<span class="logo-word" style="font-size: 136px">Munim</span></div>
+            <p class="end-line">${esc(c.line)}</p><p class="end-url fig">${esc(c.repo)}</p><p class="end-url fig">${esc(c.url)}</p>
+            <div class="disclosure" id="e8-disclosure">${esc(c.labels)}<span class="nb-ph-pill" id="e8-verification">Owner verified live inference · Nebius Token Factory</span></div>`;
+          $("e8-pages").innerHTML = SC.pages("e8-");
+          SC.wipes(tl, $, "e8-", S, { skipOut: true });
+          tl.fromTo($("e8-end"), { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: false }, L(E.endcard));
+          const logo = $("e8-end").querySelector(".endlogo");
+          tl.fromTo(logo, { opacity: 0, y: -90, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.8)", immediateRender: true }, L(E.endcard));
+          $("e8-end").querySelectorAll(".end-line, .end-url").forEach((el, i) => SC.reveal(tl, el, L(E.endcard) + 0.35 + i * 0.12, { dur: 0.4 }));
+          SC.reveal(tl, $("e8-disclosure"), L(E.disclosure), { dur: 0.45, dy: 24 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

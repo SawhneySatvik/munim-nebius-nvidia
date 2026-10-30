@@ -1,0 +1,5 @@
+{
+  "extends": "../../services/core-api/tsconfig.json",
+  "compilerOptions": { "noEmit": true, "types": ["node"] },
+  "include": ["*.ts"]
+}

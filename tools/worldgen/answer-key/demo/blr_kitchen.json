@@ -1,0 +1,12 @@
+{
+  "world": "blr_kitchen",
+  "seed": "munim-worldgen-v1",
+  "currency": "INR",
+  "note": "Hand-kept. Synthetic data. A demo world (its own storefront), so this key sits apart from the four evaluation keys and their coverage gate; test/blr_kitchen.test.ts seeds the world with this seed and recomputes every entry. impact_minor is paise; every figure is typed from the worked arithmetic in `what`, never produced by the generator.",
+  "problems": [
+    {"id": "BK-F1", "pack": "finance", "kind": "unapproved_ad_fee", "what": "channel aggregator:zomato ads are not opted in, yet two statements for Kosambari HSR Layout carry ad lines: 25,000 + 30,000 paise", "where": {"payout_refs": ["ZM-BK-C1", "ZM-BK-C2"], "channel": "aggregator:zomato", "outlet": "outlet:2"}, "impact_minor": 55000},
+    {"id": "BK-F3", "pack": "finance", "kind": "short_commission", "what": "channel aggregator:swiggy pays 18 real orders at Kosambari Indiranagar short (dated history bills SW-BK-SH-1..18, each two ghee podi dosas: 32,000 + 5% GST = 33,600, tax 1,600; three a day 7 to 2 days back): commission 10,080 (30%) against the contracted 22% of 33,600 = 7,392. Core's short per line = expected (33,600 - 7,392 - 1,600 = 24,608) - net (33,600 - 10,080 - 1,600 = 21,920) = 2,688, over the line rule max(100, ceil(24,608 x 50 / 10,000) = 124): 18 x 2,688", "where": {"payout_refs": ["SW-BK-SHORT"], "channel": "aggregator:swiggy", "outlet": "outlet:1"}, "impact_minor": 48384},
+    {"id": "BK-I1", "pack": "inventory_purchasing", "kind": "price_creep", "what": "Urad dal invoiced 12,500 then 14,500 paise a kilo (+16%): 3 deliveries x 50 kg x 2,000", "where": {"ingredient": "ing:urad_dal", "pre_invoices": ["inv:urad-pre1", "inv:urad-pre2", "inv:urad-pre3"], "post_invoices": ["inv:urad-post1", "inv:urad-post2", "inv:urad-post3"]}, "impact_minor": 300000},
+    {"id": "BK-P1", "pack": "people", "kind": "overtime_drift", "what": "Whitefield's cook (rostered 11:00-19:00, 12,000 paise an hour, overtime 1.5x) clocks out 60 min late on 18 of his 26 shifts from 26 days back (pack P1: 70% of shifts): 18 x 60 = 1,080 min / 60 x 12,000 paise x 1.5 = 324,000", "where": {"outlet": "outlet:3", "staff": "staff:mahesh", "from_offset": -26, "to_offset": -1}, "impact_minor": 324000, "min_days": 26}
+  ]
+}

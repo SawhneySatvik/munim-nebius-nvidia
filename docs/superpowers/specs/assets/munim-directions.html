@@ -1,0 +1,417 @@
+<title>Munim Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Public+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Archivo:wdth,wght@100..125,400;100..125,700;100..125,900&family=JetBrains+Mono:wght@400;700&family=Zilla+Slab:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&family=DM+Mono:wght@400;500&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Figtree:wght@400;500;700&family=Anybody:wdth,wght@50..150,500;50..150,800;50..150,900&family=Darker+Grotesque:wght@500;700;900&display=swap">
+<style>
+/* Layout: one column of the same real Munim surfaces (hero, promise, product pair, Cares, developer panel, parts),
+   re-skinned by eight directions switched on <html data-dir>. Every direction defines the full token set; each one is a
+   single committed light or dark world, so colours are set explicitly per direction. */
+:root {
+  color-scheme: light;
+  /* A — Bahi-khata (warm neo-brutalism): the munim's red cloth ledger, ruled pages, turmeric */
+  --paper: #f3ead7; --paper-2: #fbf6ea; --ink: #17120e; --muted: #5b4d40; --line: #17120e;
+  --accent: #b4232a; --on-accent: #fff8ef; --accent-2: #e9a41e; --on-accent-2: #17120e; --rule: #9db4c6;
+  --hero-bg: var(--paper-2); --cares-bg: var(--accent); --on-cares: var(--on-accent); --code-bg: #17120e; --on-code: #fbf6ea;
+  --em-bg: var(--accent-2); --em-fg: var(--on-accent-2);
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif; --body: "Public Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --stroke: 2.5px; --shadow: 5px 5px 0 var(--ink); --shadow-sm: 3px 3px 0 var(--ink); --press: translate(3px, 3px);
+  --radius: 4px; --radius-btn: 4px; --display-weight: 800; --display-stretch: normal; --track: -0.02em; --hero-size: 80px;
+}
+:root[data-dir="b"] { /* B — KOT ticket (warm neo-brutalism) */
+  --paper: #f6f2e8; --paper-2: #fffdf7; --ink: #0f0f0e; --muted: #4e4b45; --line: #0f0f0e;
+  --accent: #e0452b; --on-accent: #fffdf7; --accent-2: #ffe14d; --on-accent-2: #0f0f0e; --rule: #c9c2b2;
+  --hero-bg: var(--paper-2); --cares-bg: var(--accent); --on-cares: var(--on-accent); --code-bg: #0f0f0e; --on-code: #fffdf7;
+  --em-bg: var(--accent-2); --em-fg: var(--on-accent-2);
+  --display: "Archivo", "Arial Black", system-ui, sans-serif; --body: "Archivo", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --stroke: 3px; --shadow: 6px 6px 0 var(--ink); --shadow-sm: 3px 3px 0 var(--ink); --press: translate(3px, 3px);
+  --radius: 0; --radius-btn: 0; --display-weight: 900; --display-stretch: 125%; --track: -0.01em; --hero-size: 72px;
+}
+:root[data-dir="c"] { /* C — Stall board (warm neo-brutalism) */
+  --paper: #eee4cf; --paper-2: #f8f2e3; --ink: #1a1915; --muted: #57524a; --line: #1a1915;
+  --accent: #2f45c5; --on-accent: #f8f2e3; --accent-2: #f2c230; --on-accent-2: #1a1915; --rule: #b9ab8d;
+  --hero-bg: var(--paper-2); --cares-bg: var(--accent); --on-cares: var(--on-accent); --code-bg: #1a1915; --on-code: #f8f2e3;
+  --em-bg: var(--accent-2); --em-fg: var(--on-accent-2);
+  --display: "Zilla Slab", Rockwell, Georgia, serif; --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  --stroke: 3px; --shadow: 4px 4px 0 var(--ink); --shadow-sm: 2px 2px 0 var(--ink); --press: translate(2px, 2px);
+  --radius: 12px; --radius-btn: 999px; --display-weight: 700; --display-stretch: normal; --track: -0.01em; --hero-size: 78px;
+}
+:root[data-dir="d"] { /* D — Quiet (minimalist): white, near-black, one green that means "traced" */
+  --paper: #fafaf8; --paper-2: #ffffff; --ink: #141414; --muted: #63635f; --line: #e3e2dd;
+  --accent: #14532d; --on-accent: #ffffff; --accent-2: #eef5f0; --on-accent-2: #14532d; --rule: #ececE8;
+  --hero-bg: var(--paper-2); --cares-bg: #f2f1ec; --on-cares: var(--ink); --code-bg: #f4f4f1; --on-code: #141414;
+  --em-bg: transparent; --em-fg: var(--accent);
+  --display: "Geist", system-ui, sans-serif; --body: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --stroke: 1px; --shadow: none; --shadow-sm: none; --press: none;
+  --radius: 10px; --radius-btn: 8px; --display-weight: 600; --display-stretch: normal; --track: -0.035em; --hero-size: 64px;
+}
+:root[data-dir="e"] { /* E — Clear (modern SaaS): white, deep navy, a colour field behind the hero, soft lift */
+  --paper: #f6f8fc; --paper-2: #ffffff; --ink: #0b1b3a; --muted: #4f5d78; --line: #dde3ee;
+  --accent: #4b3ff2; --on-accent: #ffffff; --accent-2: #e9edff; --on-accent-2: #2a1fb8; --rule: #e7ebf3;
+  --hero-bg: radial-gradient(120% 140% at 100% 0%, #ffd2b8 0%, rgba(255,210,184,0) 45%), radial-gradient(90% 120% at 70% 100%, #b9c4ff 0%, rgba(185,196,255,0) 55%), linear-gradient(180deg, #ffffff, #f2f4ff);
+  --cares-bg: #0b1b3a; --on-cares: #ffffff; --code-bg: #0b1b3a; --on-code: #e9edff;
+  --em-bg: transparent; --em-fg: var(--accent);
+  --display: "Plus Jakarta Sans", system-ui, sans-serif; --body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --stroke: 1px; --shadow: 0 1px 2px rgba(11,27,58,.06), 0 12px 32px -12px rgba(11,27,58,.22); --shadow-sm: 0 1px 2px rgba(11,27,58,.08);
+  --press: translateY(1px); --radius: 16px; --radius-btn: 999px; --display-weight: 800; --display-stretch: normal; --track: -0.03em; --hero-size: 66px;
+}
+:root[data-dir="f"] { /* F — Calm (AI-lab style): warm neutral, a book serif, conversation first, almost no chrome */
+  --paper: #f4f2ee; --paper-2: #fbfaf7; --ink: #1d1c1a; --muted: #6a675f; --line: #dcd8cf;
+  --accent: #1d1c1a; --on-accent: #fbfaf7; --accent-2: #e8e3d8; --on-accent-2: #1d1c1a; --rule: #e6e2d9;
+  --hero-bg: var(--paper); --cares-bg: #e8e3d8; --on-cares: var(--ink); --code-bg: #2a2926; --on-code: #f4f2ee;
+  --em-bg: transparent; --em-fg: var(--ink);
+  --display: "Source Serif 4", Georgia, serif; --body: "Figtree", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  --stroke: 1px; --shadow: none; --shadow-sm: none; --press: none;
+  --radius: 18px; --radius-btn: 999px; --display-weight: 400; --display-stretch: normal; --track: -0.02em; --hero-size: 70px;
+}
+:root[data-dir="g"] { /* G — Bazaar (maximalist): street-signage colour, loud blocks, variable-width type */
+  --paper: #ffe9f3; --paper-2: #fff8e1; --ink: #1b0e2e; --muted: #4a3a5c; --line: #1b0e2e;
+  --accent: #e5197a; --on-accent: #fff8e1; --accent-2: #1fb86a; --on-accent-2: #1b0e2e; --rule: #ffb703;
+  --hero-bg: repeating-linear-gradient(-45deg, #ffb703 0 18px, #ffc93c 18px 36px); --cares-bg: #1f5bff; --on-cares: #fff8e1;
+  --code-bg: #1b0e2e; --on-code: #fff8e1; --em-bg: var(--accent); --em-fg: var(--on-accent);
+  --display: "Anybody", "Arial Black", system-ui, sans-serif; --body: "Figtree", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --stroke: 3px; --shadow: 7px 7px 0 var(--ink); --shadow-sm: 4px 4px 0 var(--ink); --press: translate(4px, 4px);
+  --radius: 22px; --radius-btn: 14px; --display-weight: 900; --display-stretch: 130%; --track: -0.02em; --hero-size: 76px;
+}
+:root[data-dir="h"] { /* H — Receipt printer (developer-first dark): dot-matrix amber on carbon */
+  color-scheme: dark;
+  --paper: #121110; --paper-2: #1b1a18; --ink: #f1ead8; --muted: #a39b88; --line: #3a3732;
+  --accent: #ffb547; --on-accent: #121110; --accent-2: #2b2924; --on-accent-2: #ffb547; --rule: #2b2924;
+  --hero-bg: var(--paper-2); --cares-bg: #1f1d1a; --on-cares: #f1ead8; --code-bg: #0b0a09; --on-code: #f1ead8;
+  --em-bg: transparent; --em-fg: var(--accent);
+  --display: "Darker Grotesque", system-ui, sans-serif; --body: "IBM Plex Mono", ui-monospace, monospace;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --stroke: 1px; --shadow: none; --shadow-sm: none; --press: none;
+  --radius: 2px; --radius-btn: 2px; --display-weight: 900; --display-stretch: normal; --track: -0.01em; --hero-size: 84px;
+}
+
+:root[data-dir="x"] { /* A/C 1 — Ledger, softened: A's ledger red + turmeric on ruled paper, C's rounder shapes and pills */
+  --paper: #f3ead7; --paper-2: #fbf6ea; --ink: #1b1611; --muted: #5b4d40; --line: #1b1611;
+  --accent: #b4232a; --on-accent: #fff8ef; --accent-2: #f0b429; --on-accent-2: #1b1611; --rule: #a9bccb;
+  --hero-bg: var(--paper-2); --cares-bg: var(--accent); --on-cares: var(--on-accent); --code-bg: #1b1611; --on-code: #fbf6ea;
+  --em-bg: var(--accent-2); --em-fg: var(--on-accent-2);
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif; --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --stroke: 2.5px; --shadow: 4px 4px 0 var(--ink); --shadow-sm: 2px 2px 0 var(--ink); --press: translate(2px, 2px);
+  --radius: 12px; --radius-btn: 999px; --display-weight: 800; --display-stretch: normal; --track: -0.02em; --hero-size: 78px;
+}
+:root[data-dir="y"] { /* A/C 2 — Signboard ledger: C's slab headlines on A's ruled ledger paper, red + turmeric */
+  --paper: #f1e7d1; --paper-2: #faf4e6; --ink: #1a1612; --muted: #594c3f; --line: #1a1612;
+  --accent: #a8242b; --on-accent: #fff8ef; --accent-2: #eaa823; --on-accent-2: #1a1612; --rule: #a9bccb;
+  --hero-bg: var(--paper-2); --cares-bg: var(--accent); --on-cares: var(--on-accent); --code-bg: #1a1612; --on-code: #faf4e6;
+  --em-bg: var(--accent-2); --em-fg: var(--on-accent-2);
+  --display: "Zilla Slab", Rockwell, Georgia, serif; --body: "Public Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --stroke: 2.5px; --shadow: 4px 4px 0 var(--ink); --shadow-sm: 2px 2px 0 var(--ink); --press: translate(2px, 2px);
+  --radius: 6px; --radius-btn: 999px; --display-weight: 700; --display-stretch: normal; --track: -0.01em; --hero-size: 80px;
+}
+:root[data-dir="z"] { /* A/C 3 — Two inks: ledger red for actions, C's cobalt as the second ink, turmeric highlights */
+  --paper: #f2e9d6; --paper-2: #fbf6ea; --ink: #18140f; --muted: #5a4d40; --line: #18140f;
+  --accent: #b4232a; --on-accent: #fff8ef; --accent-2: #2f45c5; --on-accent-2: #fbf6ea; --rule: #a9bccb;
+  --hero-bg: var(--paper-2); --cares-bg: #2f45c5; --on-cares: #fbf6ea; --code-bg: #18140f; --on-code: #fbf6ea;
+  --em-bg: #f0b429; --em-fg: #18140f;
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif; --body: "Public Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --stroke: 2.5px; --shadow: 5px 5px 0 var(--ink); --shadow-sm: 3px 3px 0 var(--ink); --press: translate(3px, 3px);
+  --radius: 8px; --radius-btn: 999px; --display-weight: 800; --display-stretch: normal; --track: -0.02em; --hero-size: 80px;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5;
+  padding-inline: 16px; padding-block: 0 48px; transition: background .2s; }
+.wrap { max-width: 1040px; margin-inline: auto; display: grid; gap: 26px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* switcher */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper);
+  border-bottom: max(var(--stroke), 1px) solid var(--line); margin-inline: -16px; padding: 10px 16px; }
+.bar-in { max-width: 1040px; margin-inline: auto; display: grid; gap: 8px; }
+.bar h1 { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0; color: var(--muted); }
+.seg { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.seg button { flex: none; font: 600 13px/1 system-ui, sans-serif; color: var(--ink); background: var(--paper-2);
+  border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 12px; min-height: 40px; cursor: pointer; }
+.seg button small { display: block; font-weight: 500; font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: .04em; text-transform: uppercase; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.seg button[aria-pressed="true"] small { color: var(--paper); opacity: .75; }
+.note { font-size: 15px; color: var(--muted); max-width: 72ch; margin: 18px 0 0; }
+.note b { color: var(--ink); }
+
+/* shared parts */
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.box { background: var(--paper-2); border: var(--stroke) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 700 15px/1 var(--body); min-height: 48px;
+  padding: 0 18px; border: var(--stroke) solid var(--line); border-radius: var(--radius-btn); box-shadow: var(--shadow-sm);
+  cursor: pointer; text-decoration: none; transition: transform .08s, box-shadow .08s; }
+.btn:active { transform: var(--press); box-shadow: none; }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+:root:not([data-dir]) .btn.primary, :root[data-dir="a"] .btn.primary, :root[data-dir="b"] .btn.primary, :root[data-dir="c"] .btn.primary, :root[data-dir="g"] .btn.primary, :root[data-dir="x"] .btn.primary, :root[data-dir="y"] .btn.primary, :root[data-dir="z"] .btn.primary { border-color: var(--ink); }
+.btn.second { background: var(--accent-2); color: var(--on-accent-2); }
+.btn.plain { background: var(--paper-2); color: var(--ink); }
+.tag { display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1 var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
+  border: 1.5px solid var(--line); border-radius: var(--radius-btn); padding: 6px 8px; background: var(--paper); color: var(--ink); }
+.tag.sim { background: var(--accent-2); color: var(--on-accent-2); }
+.tag.cv { background: transparent; border-style: dashed; color: var(--muted); }
+.src { font: 500 12px/1.2 var(--mono); color: var(--ink); background: var(--paper); border: 1.5px solid var(--line);
+  border-radius: var(--radius-btn); padding: 5px 9px; display: inline-flex; gap: 6px; align-items: center; min-height: 32px; }
+.src::before { content: "↳"; color: var(--muted); }
+.display { font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
+  letter-spacing: var(--track); line-height: 1; text-wrap: balance; margin: 0; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* nav + hero */
+.nav { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 14px 18px; }
+.logo { font-family: var(--display); font-weight: var(--display-weight); font-stretch: var(--display-stretch); font-size: 26px; letter-spacing: var(--track); display: flex; align-items: center; gap: 10px; }
+.logo i { width: 24px; height: 24px; display: inline-block; background: var(--accent); border: var(--stroke) solid var(--line); border-radius: var(--radius); }
+.nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; padding: 0; font-weight: 600; font-size: 15px; color: var(--muted); }
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px; align-items: end; padding: 30px 24px 28px; background: var(--hero-bg); }
+.hero h2 { font-size: clamp(38px, 7vw, var(--hero-size)); }
+.hero h2 em { font-style: normal; background: var(--em-bg); color: var(--em-fg); padding: 0 .1em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hero p { margin: 16px 0 20px; font-size: 18px; max-width: 46ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.ask { padding: 18px; display: grid; gap: 10px; }
+
+/* direction-specific furniture */
+:root:not([data-dir]) .ledger, :root[data-dir="a"] .ledger, :root[data-dir="x"] .ledger, :root[data-dir="y"] .ledger, :root[data-dir="z"] .ledger { position: relative; background:
+  repeating-linear-gradient(to bottom, transparent 0 31px, color-mix(in srgb, var(--rule) 55%, transparent) 31px 32px), var(--paper-2); }
+:root:not([data-dir]) .ledger::before, :root[data-dir="a"] .ledger::before, :root[data-dir="x"] .ledger::before, :root[data-dir="y"] .ledger::before, :root[data-dir="z"] .ledger::before { content: ""; position: absolute; top: 0; bottom: 0; left: 12px; border-left: 2px solid var(--accent); opacity: .8; }
+:root[data-dir="b"] .ticket { position: relative; margin-bottom: 12px; }
+:root[data-dir="b"] .ticket::after { content: ""; position: absolute; left: 0; right: 0; bottom: -12px; height: 12px;
+  background: radial-gradient(circle at 8px 0, transparent 7px, var(--paper-2) 7.5px) 0 0 / 16px 12px repeat-x; }
+:root[data-dir="f"] .box { border-color: transparent; }
+:root[data-dir="f"] .nav, :root[data-dir="f"] .hero { background: transparent; }
+:root[data-dir="f"] .hero { padding-inline: 4px; }
+:root[data-dir="f"] .ask { background: var(--paper-2); border: 1px solid var(--line); border-radius: 22px; }
+:root[data-dir="f"] .hero h2 em { font-style: italic; }
+:root[data-dir="e"] .nav { background: rgba(255,255,255,.8); }
+:root[data-dir="e"] .ask { background: #ffffff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+:root[data-dir="g"] .hero h2 { color: var(--ink); text-shadow: 3px 3px 0 #fff8e1; }
+:root[data-dir="g"] .promise b { background: var(--accent); color: var(--on-accent); }
+:root[data-dir="g"] .pair .box:nth-child(2) { background: #c7f2dd; }
+:root[data-dir="h"] .hero h2 { color: var(--accent); text-transform: uppercase; }
+:root[data-dir="h"] .box { background: var(--paper-2); }
+:root[data-dir="h"] .bars span { background: transparent; }
+:root[data-dir="h"] .bars span.hot { background: var(--accent); }
+
+:root[data-dir="z"] .tag.sim { background: #f0b429; color: #18140f; }
+:root[data-dir="z"] .op .m.post { background: #f0b429; color: #18140f; }
+:root[data-dir="z"] .promise b { background: #2f45c5; color: #fbf6ea; }
+
+/* promise strip */
+.promise { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.promise div { padding: 18px 20px; font-size: 18px; font-weight: 700; display: flex; gap: 14px; align-items: flex-start; }
+.promise div + div { border-left: var(--stroke) solid var(--line); }
+.promise b { font-family: var(--mono); font-size: 13px; background: var(--ink); color: var(--paper); padding: 4px 7px; border-radius: var(--radius-btn); flex: none; }
+:root[data-dir="f"] .promise div { font-family: var(--display); font-weight: 500; font-size: 21px; }
+
+/* product pair */
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.card { padding: 18px 20px 20px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.big { font-family: var(--mono); font-size: clamp(34px, 5vw, 46px); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.vs { color: var(--muted); font-size: 15px; }
+.bars { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); align-items: end; gap: 6px; height: 72px; border-bottom: max(var(--stroke), 1.5px) solid var(--ink); }
+.bars span { background: var(--accent-2); border: 1.5px solid var(--line); border-bottom: 0; border-radius: min(var(--radius), 6px) min(var(--radius), 6px) 0 0; }
+.bars span.hot { background: var(--accent); border-color: var(--accent); }
+.rows { display: grid; border: 1.5px solid var(--line); border-radius: min(var(--radius), 12px); overflow: hidden; margin: 0; }
+.rows div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 12px; font-size: 15px; background: var(--paper); }
+.rows div + div { border-top: 1px solid var(--line); }
+.rows dt { color: var(--muted); }
+.rows dd { margin: 0; text-align: right; }
+.decide { display: flex; flex-wrap: wrap; gap: 10px; }
+.who { font-size: 13px; color: var(--muted); }
+
+/* cares */
+.cares { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; }
+.cares .l { padding: 24px 22px; background: var(--cares-bg); color: var(--on-cares); }
+.cares .l .eyebrow { color: inherit; opacity: .8; }
+.cares .l h3 { font-size: clamp(30px, 4.6vw, 48px); }
+.cares .l p { margin: 12px 0 0; max-width: 40ch; }
+.cares .r { padding: 20px 22px; display: grid; gap: 12px; align-content: start; border-left: var(--stroke) solid var(--line); }
+.step { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: start; }
+.step i { font: 700 13px/36px var(--mono); font-style: normal; text-align: center; height: 40px; border: 1.5px solid var(--line); border-radius: var(--radius-btn); background: var(--paper); }
+.step b { display: block; }
+.step span { color: var(--muted); font-size: 14px; }
+
+/* developer panel */
+.dev { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); overflow: hidden; }
+.dev .ops { padding: 16px 0; display: grid; align-content: start; }
+.dev .ops h3 { font-size: 28px; padding: 0 20px 10px; }
+.op { display: flex; gap: 10px; align-items: center; padding: 10px 20px; border-top: 1px solid var(--line); font: 500 14px/1.3 var(--mono); min-width: 0; }
+.op .m { font-weight: 700; min-width: 46px; text-align: center; padding: 3px 6px; border: 1.5px solid var(--line); border-radius: var(--radius-btn); font-size: 12px; }
+.op .m.get { background: var(--paper); }
+.op .m.post { background: var(--accent-2); color: var(--on-accent-2); }
+.op .p { overflow-wrap: anywhere; }
+.op.on { background: var(--ink); color: var(--paper); }
+.op.on .m { border-color: var(--paper); background: transparent; color: var(--paper); }
+.code { background: var(--code-bg); color: var(--on-code); border-left: var(--stroke) solid var(--line); min-width: 0; display: grid; align-content: start; }
+.code .tabs { display: flex; border-bottom: 1px solid color-mix(in srgb, var(--on-code) 25%, transparent); }
+.code .tabs span { font: 600 12px/1 var(--mono); padding: 12px 14px; text-transform: uppercase; letter-spacing: .06em; opacity: .75; }
+.code .tabs span.on { opacity: 1; box-shadow: inset 0 -3px 0 var(--accent); }
+.code pre { margin: 0; padding: 16px; overflow-x: auto; font: 13px/1.6 var(--mono); }
+.code .k { color: var(--accent); font-weight: 700; }
+:root[data-dir="d"] .code .k, :root[data-dir="f"] .code .k { color: inherit; }
+
+/* parts */
+.parts { padding: 18px 20px; display: grid; gap: 14px; }
+.parts .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.field { display: grid; gap: 6px; max-width: 360px; }
+.field label { font-weight: 700; font-size: 14px; }
+.field input { font: 16px var(--body); min-height: 48px; padding: 0 14px; border: var(--stroke) solid var(--line); border-radius: var(--radius-btn);
+  background: var(--paper-2); color: var(--ink); }
+.why { font-size: 15px; color: var(--muted); max-width: 72ch; margin: 0; }
+
+@media (max-width: 760px) {
+  .hero, .pair, .cares, .dev, .promise { grid-template-columns: minmax(0, 1fr); }
+  .promise div + div { border-left: 0; border-top: var(--stroke) solid var(--line); }
+  .cares .r, .code { border-left: 0; border-top: var(--stroke) solid var(--line); }
+  .nav ul { font-size: 14px; }
+}
+</style>
+
+<div class="bar"><div class="bar-in">
+  <h1>Munim site · three A/C blends, then the eight directions</h1>
+  <div class="seg" role="group" aria-label="Direction">
+    <button type="button" id="dir-x" data-dir="x" aria-pressed="true">A/C 1 · Ledger, softened<small>Blend</small></button>
+    <button type="button" id="dir-y" data-dir="y" aria-pressed="false">A/C 2 · Signboard ledger<small>Blend</small></button>
+    <button type="button" id="dir-z" data-dir="z" aria-pressed="false">A/C 3 · Two inks<small>Blend</small></button>
+    <button type="button" id="dir-a" data-dir="a" aria-pressed="false">A · Bahi-khata<small>Warm brutalist</small></button>
+    <button type="button" id="dir-b" data-dir="b" aria-pressed="false">B · KOT ticket<small>Warm brutalist</small></button>
+    <button type="button" id="dir-c" data-dir="c" aria-pressed="false">C · Stall board<small>Warm brutalist</small></button>
+    <button type="button" id="dir-d" data-dir="d" aria-pressed="false">D · Quiet<small>Minimalist</small></button>
+    <button type="button" id="dir-e" data-dir="e" aria-pressed="false">E · Clear<small>Modern SaaS</small></button>
+    <button type="button" id="dir-f" data-dir="f" aria-pressed="false">F · Calm<small>AI-lab style</small></button>
+    <button type="button" id="dir-g" data-dir="g" aria-pressed="false">G · Bazaar<small>Maximalist</small></button>
+    <button type="button" id="dir-h" data-dir="h" aria-pressed="false">H · Receipt printer<small>Developer dark</small></button>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <p class="note" id="why"></p>
+
+  <header class="box nav">
+    <span class="logo"><i aria-hidden="true"></i>munim</span>
+    <ul><li>Product</li><li>Munim Cares</li><li>Developers</li><li>Contact</li></ul>
+  </header>
+
+  <section class="box hero ledger ticket" aria-labelledby="h-hero">
+    <div>
+      <span class="eyebrow">For restaurant groups, cloud kitchens and shops</span>
+      <h2 class="display" id="h-hero">The AI back office that keeps <em>honest books</em>.</h2>
+      <p>One system for the counter, the kitchen and the books. Eight AI specialists explain what happened and draft what to do next. You decide.</p>
+      <div class="actions"><a class="btn primary" href="#">See it on a sample business</a><a class="btn plain" href="#">Read the API</a></div>
+    </div>
+    <div class="box ask" style="box-shadow: var(--shadow-sm)">
+      <div class="card-head"><span class="eyebrow">Ask Munim</span><span class="tag">Sample data</span></div>
+      <p style="margin:0;font-weight:700">How did this week's waste compare with a usual week?</p>
+      <p style="margin:0">Butter written off at Cobnut Hazratganj came to <b class="num">₹4,872</b>, against a usual week of <b class="num">₹1,512</b>.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="src">waste · row 0 · waste_minor</span><span class="src">waste · row 0 · median_minor</span></div>
+    </div>
+  </section>
+
+  <section class="box promise" aria-label="The promise">
+    <div><b>01</b>Nothing changes your books without a named person's approval.</div>
+    <div><b>02</b>Every number shown traces to a row in your records. If it can't, it says "Cannot verify".</div>
+  </section>
+
+  <section class="pair" aria-label="Inside the product">
+    <article class="box card">
+      <div class="card-head"><span class="eyebrow">Waste this week · Hazratganj</span><span class="tag">Sample data</span></div>
+      <div><span class="big">₹4,872</span> <span class="vs">vs usual <span class="num">₹1,512</span></span></div>
+      <div class="bars" aria-hidden="true"><span style="height:28%"></span><span style="height:32%"></span><span style="height:26%"></span><span style="height:30%"></span><span style="height:29%"></span><span style="height:31%"></span><span style="height:27%"></span><span class="hot" style="height:92%"></span></div>
+      <span class="src">snapshot 019a·0c5e · row 0 · waste_minor</span>
+    </article>
+    <article class="box card">
+      <div class="card-head"><span class="eyebrow">Proposal · Purchase order</span><span class="tag sim">Simulated supplier</span></div>
+      <p style="margin:0;font-weight:700;font-size:18px">Roasted hazelnuts for both outlets</p>
+      <dl class="rows">
+        <div><dt>Supplier</dt><dd>Steady (simulated)</dd></div>
+        <div><dt>Quantity</dt><dd class="num">1,000 g</dd></div>
+        <div><dt>Price</dt><dd class="num">₹1,465.20</dd></div>
+        <div><dt>Why</dt><dd>Stock 5.8 kg, below reorder 8.5 kg</dd></div>
+      </dl>
+      <div class="decide"><button class="btn primary" type="button">Approve as Nandini</button><button class="btn plain" type="button">Reject</button></div>
+      <span class="who">Recorded only. Munim does not process payments.</span>
+    </article>
+  </section>
+
+  <section class="box cares" aria-labelledby="h-cares">
+    <div class="l">
+      <span class="eyebrow">Munim Cares</span>
+      <h3 class="display" id="h-cares">Surplus food, shared before it is wasted.</h3>
+      <p>The AI spots food close to its use-by date, the owner approves, a recipient is matched and the hand-over is recorded.</p>
+    </div>
+    <div class="r">
+      <div class="step"><i>AI</i><div><b>Sliced sourdough, Hazratganj</b><span>Use-by in 2 days. Draft listing ready.</span></div></div>
+      <div class="step"><i>OK</i><div><b>Owner approves</b><span>Nothing is published without a named person.</span></div></div>
+      <div class="step"><i>→</i><div><b>Riverside Night Shelter <span class="tag sim">Simulated</span></b><span>Pickup 9:00 – 10:30 pm</span></div></div>
+    </div>
+  </section>
+
+  <section class="box dev" aria-labelledby="h-dev">
+    <div class="ops">
+      <h3 class="display" id="h-dev">Build on Munim</h3>
+      <div class="op on"><span class="m get">GET</span><span class="p">/v1/me</span></div>
+      <div class="op"><span class="m post">POST</span><span class="p">/v1/rfq-requests</span></div>
+      <div class="op"><span class="m get">GET</span><span class="p">/v1/storefront/outlets/{outlet_id}/menu</span></div>
+      <div class="op"><span class="m post">POST</span><span class="p">/v1/drafts/{id}:approve</span></div>
+    </div>
+    <div class="code">
+      <div class="tabs"><span class="on">curl</span><span>SDK</span><span>Response</span></div>
+<pre><span class="k">curl</span> https://munim-api.vercel.app/v1/me \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "X-Munim-Tenant: $TENANT"
+
+{ "name": "Nandini Mehrotra",
+  "role": "owner",
+  "outlet_ids": "*" }</pre>
+    </div>
+  </section>
+
+  <section class="box parts" aria-label="Parts">
+    <span class="eyebrow">Parts</span>
+    <div class="row"><button class="btn primary" type="button">Approve</button><button class="btn second" type="button">Request quotes</button><button class="btn plain" type="button">Cancel</button></div>
+    <div class="row"><span class="tag">Sample data</span><span class="tag sim">Simulated supplier</span><span class="tag cv">Cannot verify</span><span class="src">snapshot · row · column</span></div>
+    <div class="field"><label for="f-email">Work email</label><input id="f-email" type="email" placeholder="you@yourrestaurant.in"></div>
+  </section>
+
+  <p class="why">Same words, figures and layout in every direction; only the direction changes. All figures are synthetic sample data from the Cobnut Bakehouse demo world; suppliers and recipients are simulated. The SaaS and AI-lab looks borrow a general style only, no one's logo, layout or text.</p>
+</div>
+
+<script>
+(() => {
+  const notes = {
+    x: "<b>A/C 1 · Ledger, softened.</b> Bahi-khata's ledger red, turmeric and ruled paper with the red margin line, but Stall board's rounder corners, pill buttons and gentler shadows, and its very readable body face. A's grotesk headlines.",
+    y: "<b>A/C 2 · Signboard ledger.</b> Stall board's sturdy slab serif for headlines, set on Bahi-khata's ruled ledger paper in ledger red and turmeric. Pill buttons, slightly squarer cards. The most 'printed' of the three.",
+    z: "<b>A/C 3 · Two inks.</b> Ledger red for actions and Stall board's cobalt as a second ink (Cares, the promise numbers), turmeric highlights. A's grotesk, C's pill buttons. Ruled paper in the hero only.",
+    a: "<b>A · Bahi-khata · warm brutalist.</b> From the munim's own tool, the red cloth-bound ledger: ruled pages, a red margin line, turmeric highlights, a confident grotesk for headlines and a typewriter-like mono for every figure.",
+    b: "<b>B · KOT ticket · warm brutalist.</b> From the kitchen order ticket: thermal-paper white, perforated edges, square corners, a wide heavy grotesk, tomato red, marker yellow.",
+    c: "<b>C · Stall board · warm brutalist.</b> From hand-lettered market signs: a sturdy slab serif, pill buttons, Munim's own cobalt with mustard, softer shadows. The friendliest brutalist option.",
+    d: "<b>D · Quiet · minimalist.</b> White space does the work: one precise sans, hairline borders, no shadows, and a single green reserved for things that trace to a record. Reads as careful and trustworthy; risks looking like many other products.",
+    e: "<b>E · Clear · modern SaaS.</b> The payments-company school: a soft colour field behind the hero, deep navy text, pill buttons, cards that float on gentle shadows. Instantly credible to investors and developers; the most familiar look of the eight.",
+    f: "<b>F · Calm · AI-lab style.</b> Warm neutral paper, a book serif for headlines, almost no borders, the conversation as the hero. Quiet and thoughtful; makes Ask Munim feel like the centre of the product.",
+    g: "<b>G · Bazaar · maximalist.</b> Indian street-signage colour: pink, yellow, green and blue in loud blocks, a stretched variable-width display face, big offset shadows. Unforgettable in a demo; hardest to keep readable on dense pages.",
+    h: "<b>H · Receipt printer · developer dark.</b> Dot-matrix amber on carbon, mono everywhere, tall condensed headlines. Speaks straight to developers and the API; colder for restaurant owners."
+  };
+  const ids = Object.keys(notes);
+  const root = document.documentElement;
+  const buttons = document.querySelectorAll(".seg button");
+  const set = (d) => {
+    root.setAttribute("data-dir", d);
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.dir === d)));
+    document.getElementById("why").innerHTML = notes[d];
+    try { localStorage.setItem("munim-dir-v3", d); } catch (e) {}
+  };
+  buttons.forEach((b) => b.addEventListener("click", () => set(b.dataset.dir)));
+  let saved = "x";
+  try { saved = localStorage.getItem("munim-dir-v3") || "a"; } catch (e) {}
+  const hash = (location.hash || "").replace("#", "");
+  set(ids.includes(hash) ? hash : (ids.includes(saved) ? saved : "x"));
+})();
+</script>

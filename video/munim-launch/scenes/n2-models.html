@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <!-- Beat 4 of the Nebius cut: the model-role map and provider verification. The screen captures below are from earlier
+         NVIDIA-endpoint runs and are labelled as such. The project owner separately verified live application inference
+         through Nebius Token Factory. No Token Factory performance metric is inferred from these captures. -->
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+        }
+        #m2-title {
+          left: 230px;
+          top: 92px;
+        }
+        #m2-kick {
+          position: absolute;
+          left: 234px;
+          top: 186px;
+          opacity: 0;
+        }
+        .m2-card {
+          top: 262px;
+          width: 452px;
+          padding: 24px 24px 22px;
+          display: grid;
+          gap: 16px;
+        }
+        .m2-card .nb-crop {
+          border: 2.5px solid var(--m-ink);
+          border-radius: 10px;
+        }
+        .m2-role {
+          font-family: var(--f-m-display);
+          font-weight: 800;
+          font-size: 34px;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+        .m2-slot {
+          position: relative;
+          height: 40px;
+        }
+        .m2-slot .nb-ph-pill {
+          left: 0;
+          top: 0;
+          height: 40px;
+          padding: 0 18px;
+          font-size: 18px;
+        }
+        #m2-c1 {
+          left: 230px;
+        }
+        #m2-c2 {
+          left: 734px;
+        }
+        #m2-c3 {
+          left: 1238px;
+        }
+        #m2-ph {
+          left: 230px;
+          top: 742px;
+          font-size: 22px;
+        }
+        #m2-sticker {
+          left: auto;
+          right: 72px;
+          top: 92px;
+          font-size: 52px;
+        }
+      </style>
+      <div data-hf-id="hf-7lu9" id="root" data-composition-id="nbModels" data-width="1920" data-height="1080">
+        <div data-hf-id="hf-lltq" class="stage stage-ledger"><div data-hf-id="hf-h60x" class="grain"></div></div>
+        <h2 data-hf-id="hf-cfcp" class="nb-title" id="m2-title">Who does what</h2>
+        <p data-hf-id="hf-1a1p" class="nb-kicker" id="m2-kick">NVIDIA Nemotron · configured roles, live Token Factory integration verified</p>
+        <div data-hf-id="hf-sl9i" id="m2-cards"></div>
+        <div data-hf-id="hf-to4j" class="nb-ph" id="m2-ph"><span data-hf-id="hf-b6pk" style="display:block">Live application inference test verified</span><b data-hf-id="hf-2q9s">Nebius Token Factory · NVIDIA Nemotron</b><small data-hf-id="hf-gnnx">Captured answer and invoice screens are labelled with their NVIDIA endpoint source.</small></div>
+        <div data-hf-id="hf-ahfx" class="sticker sticker-turmeric" id="m2-sticker">Code checks every number</div>
+        <div data-hf-id="hf-e78r" id="m2-pages"></div>
+      </div>
+      <script>
+        NB.scene("nbModels", "nbModels", ({ tl, $, E, L, S }) => {
+          const table = NB.mark("quotes", "table");
+          const photo = NB_SHOTS.photo;
+          const slot = '<div class="m2-slot"><span class="nb-ph-pill">NVIDIA endpoint · captured run</span></div>';
+          const cards = [
+            ["m2-c1", NB.crop("thread", { x: 384, y: 300, w: 700, h: 385 }, 404 / 700), "Routes the question"],
+            ["m2-c2", NB.crop("quotes", { x: table.x, y: table.y, w: 742, h: 410 }, 404 / 742), "Reasons and negotiates"],
+            ["m2-c3", `<div class="nb-crop" style="width:404px;height:222px"><img src="${NB.dir}${photo.file}" alt="" style="left:-30px;top:-22px;width:${photo.w * 0.505}px;height:${photo.h * 0.505}px" /></div>`, "Reads the invoice photo"],
+          ];
+          $("m2-cards").innerHTML = cards.map(([id, crop, role]) => `<div class="nb-card m2-card" id="${id}">${crop}<p class="m2-role">${role}</p>${slot}</div>`).join("");
+          $("m2-pages").innerHTML = SC.pages("m2-");
+          SC.wipes(tl, $, "m2-", S, { outAt: E.wipeOut });
+          SC.reveal(tl, $("m2-title"), L(E.title), { dur: 0.4 });
+          SC.reveal(tl, $("m2-kick"), L(E.kick), { dur: 0.4 });
+          [["m2-c1", E.c1], ["m2-c2", E.c2], ["m2-c3", E.c3]].forEach(([id, at]) => {
+            tl.fromTo($(id), { opacity: 0, y: 40, rotation: -1.5 }, { opacity: 1, y: 0, rotation: 0, duration: 0.45, ease: "back.out(1.6)", immediateRender: true }, L(at));
+          });
+          MK.stamp(tl, $("m2-ph"), L(E.ph), { rot: -1.5 });
+          MK.sticker(tl, $("m2-sticker"), L(E.sticker[0]), L(E.sticker[1]), { rot: 2 });
+        });
+      </script>
+    </template>
+  </body>
+</html>

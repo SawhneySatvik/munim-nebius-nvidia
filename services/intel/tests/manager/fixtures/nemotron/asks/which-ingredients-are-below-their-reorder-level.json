@@ -1,0 +1,97 @@
+{
+ "world": "cobnut",
+ "question": "Which ingredients are below their reorder level?",
+ "intent": "lookup",
+ "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+ "recorded_on": "2026-10-24",
+ "frame": {
+  "pack": {
+   "code": "IN",
+   "version": 3
+  },
+  "currency": "INR",
+  "severity_ladder": {
+   "critical_minor_gte": 5000000,
+   "high_minor_gte": 1000000,
+   "medium_minor_gte": 100000
+  },
+  "detectors": {},
+  "outlets": [
+   {
+    "id": "a4b9f55a-dd58-7f83-b977-d13c10d67597",
+    "name": "Cobnut Hazratganj",
+    "kind": "restaurant",
+    "tz": "Asia/Kolkata",
+    "business_date": "2026-10-24",
+    "cares_active": false
+   },
+   {
+    "id": "9588198d-bb6e-7e2e-b405-366438ec9f0d",
+    "name": "Cobnut Gomti Nagar",
+    "kind": "restaurant",
+    "tz": "Asia/Kolkata",
+    "business_date": "2026-10-24",
+    "cares_active": false
+   }
+  ],
+  "budget": null,
+  "narration": "model",
+  "ai_enabled": false,
+  "negotiation": {
+   "target_bp": 9500,
+   "walkaway_bp": 11000
+  },
+  "licence_kinds": [],
+  "payroll_scope": "drafts"
+ },
+ "snapshots": [
+  {
+   "template_id": "inventory.below_reorder",
+   "params": {},
+   "columns": [
+    {
+     "name": "outlet_id",
+     "type": "uuid"
+    },
+    {
+     "name": "ingredient_id",
+     "type": "uuid"
+    },
+    {
+     "name": "ingredient_name",
+     "type": "text"
+    },
+    {
+     "name": "on_hand_milli",
+     "type": "integer",
+     "numeric_source": "core.stock_movement.qty_milli"
+    },
+    {
+     "name": "min_qty_milli",
+     "type": "integer",
+     "numeric_source": "core.reorder_level.min_qty_milli"
+    },
+    {
+     "name": "par_qty_milli",
+     "type": "integer",
+     "numeric_source": "core.reorder_level.par_qty_milli"
+    }
+   ],
+   "rows": [
+    {
+     "outlet_id": "a4b9f55a-dd58-7f83-b977-d13c10d67597",
+     "ingredient_id": "88bb3957-a192-721b-a576-04fd8b5f98ad",
+     "ingredient_name": "Roasted hazelnuts (synthetic)",
+     "on_hand_milli": 154,
+     "min_qty_milli": 1361,
+     "par_qty_milli": 9361
+    }
+   ]
+  }
+ ],
+ "stored": {
+  "abstained": false,
+  "reason_code": null,
+  "segments": 1
+ }
+}

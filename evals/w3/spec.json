@@ -1,0 +1,30 @@
+{
+  "_about": "Hand-kept (11 Oct 2026, lane b-85). The 8 x 4 grid of `make eval-w3`: the specialists are ledger F8's list (Menu & Pricing, Kitchen, Inventory & Purchasing, Finance, People, Customers & Growth, Compliance & Assets, Market & Strategy) in the F8 registry ids; the worlds are worldgen's four. Forecast is a shared service (F8), not a row: its key plants are listed apart. The key's `pack` names are not the F8 ids, so the mapping is typed here; a finding's own `pack` label is the code under test and is only cross-checked, never the denominator.",
+  "specialists": ["catalogue", "kitchen", "inventory_purchasing", "finance", "people", "customers", "compliance", "market"],
+  "worlds": ["restaurant_group", "cloud_kitchen", "store", "au_outlet"],
+  "not_applicable": [
+    {"specialist": "kitchen", "world": "store", "why": "packs/kitchen.md section 1: kitchen is off for shops; a shop-only scope answers not_applicable without a model call"}
+  ],
+  "key_pack_to_specialist": {
+    "catalogue": "catalogue",
+    "kitchen": "kitchen",
+    "inventory_purchasing": "inventory_purchasing",
+    "finance": "finance",
+    "people": "people",
+    "customers_growth": "customers",
+    "compliance_assets": "compliance",
+    "market_strategy": "market"
+  },
+  "service_packs": ["forecast"],
+  "detector_prefix_to_specialist": {
+    "catalogue": "catalogue",
+    "kitchen": "kitchen",
+    "inventory": "inventory_purchasing",
+    "purchasing": "inventory_purchasing",
+    "finance": "finance",
+    "people": "people",
+    "customers": "customers",
+    "compliance": "compliance",
+    "market": "market"
+  }
+}

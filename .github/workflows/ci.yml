@@ -1,0 +1,64 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+# `make check` runs the gates in the Makefile's CHECK_GATES one after another (75-100 min in a single job). Here every gate is
+# its own job, so the run takes as long as the slowest (`test`, ~40 min) and one red gate no longer hides the others. The list is
+# read from the Makefile, so a gate added there runs here without an edit; `check` is the one verdict (munim-api deploys on it).
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      gates: ${{ steps.gates.outputs.gates }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: gates
+        run: |
+          line=$(sed -n 's/^CHECK_GATES := //p' Makefile)
+          [ -n "$line" ] && [ "$(printf '%s\n' "$line" | wc -l)" -eq 1 ] || { echo "ci: expected exactly one CHECK_GATES line in the Makefile" >&2; exit 1; }
+          echo "gates=$(jq -cn '$ARGS.positional' --args $line)" >> "$GITHUB_OUTPUT"
+
+  gate:
+    name: gate (${{ matrix.gate }})
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        gate: ${{ fromJSON(needs.plan.outputs.gates) }}
+    env:
+      MUNIM_MODEL_MODE: recorded
+      CI_GATE: ${{ matrix.gate }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      # The uv cache is on by default on GitHub-hosted runners (keyed on the pyproject.toml and uv.lock files). Like the pnpm
+      # store it is saved only by a job that succeeds; with one gate per job the quick gates save both even while `test` is red.
+      - uses: astral-sh/setup-uv@v10.2.0  # no floating major tag exists for setup-uv
+      - run: pnpm install --frozen-lockfile
+      # No secrets and no database here: make check excludes DB-touching targets (db-ping, test-db, seed).
+      - run: make check CHECK_GATES="$CI_GATE"
+
+  check:
+    needs: [plan, gate]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PLAN: ${{ needs.plan.result }}
+      GATES: ${{ needs.gate.result }}
+    steps:
+      - run: |
+          echo "plan: $PLAN; gates: $GATES"
+          [ "$PLAN" = success ] && [ "$GATES" = success ]

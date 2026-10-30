@@ -1,0 +1,292 @@
+{
+ "world": "cobnut",
+ "question": "What was labour as a share of sales last week?",
+ "intent": "lookup",
+ "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+ "recorded_on": "2026-10-24",
+ "frame": {
+  "pack": {
+   "code": "IN",
+   "version": 3
+  },
+  "currency": "INR",
+  "severity_ladder": {
+   "critical_minor_gte": 5000000,
+   "high_minor_gte": 1000000,
+   "medium_minor_gte": 100000
+  },
+  "detectors": {},
+  "outlets": [
+   {
+    "id": "a4b9f55a-dd58-7f83-b977-d13c10d67597",
+    "name": "Cobnut Hazratganj",
+    "kind": "restaurant",
+    "tz": "Asia/Kolkata",
+    "business_date": "2026-10-24",
+    "cares_active": false
+   },
+   {
+    "id": "9588198d-bb6e-7e2e-b405-366438ec9f0d",
+    "name": "Cobnut Gomti Nagar",
+    "kind": "restaurant",
+    "tz": "Asia/Kolkata",
+    "business_date": "2026-10-24",
+    "cares_active": false
+   }
+  ],
+  "budget": null,
+  "narration": "model",
+  "ai_enabled": false,
+  "negotiation": {
+   "target_bp": 9500,
+   "walkaway_bp": 11000
+  },
+  "licence_kinds": [],
+  "payroll_scope": "drafts"
+ },
+ "snapshots": [
+  {
+   "template_id": "people.attendance_coverage",
+   "params": {
+    "from": "2026-10-12",
+    "to": "2026-10-18",
+    "outlet_id": "a4b9f55a-dd58-7f83-b977-d13c10d67597"
+   },
+   "columns": [
+    {
+     "name": "rostered_shifts",
+     "type": "integer",
+     "numeric_source": "count:core.roster_shift"
+    },
+    {
+     "name": "attended_shifts",
+     "type": "integer",
+     "numeric_source": [
+      "count:core.roster_shift",
+      "count:core.attendance"
+     ]
+    },
+    {
+     "name": "coverage_bp",
+     "type": "integer",
+     "numeric_source": [
+      "count:core.roster_shift",
+      "count:core.attendance"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "rostered_shifts": 14,
+     "attended_shifts": 14,
+     "coverage_bp": 10000
+    }
+   ]
+  },
+  {
+   "template_id": "people.attendance_coverage",
+   "params": {
+    "outlet_id": "9588198d-bb6e-7e2e-b405-366438ec9f0d",
+    "from": "2026-10-12",
+    "to": "2026-10-18"
+   },
+   "columns": [
+    {
+     "name": "rostered_shifts",
+     "type": "integer",
+     "numeric_source": "count:core.roster_shift"
+    },
+    {
+     "name": "attended_shifts",
+     "type": "integer",
+     "numeric_source": [
+      "count:core.roster_shift",
+      "count:core.attendance"
+     ]
+    },
+    {
+     "name": "coverage_bp",
+     "type": "integer",
+     "numeric_source": [
+      "count:core.roster_shift",
+      "count:core.attendance"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "rostered_shifts": 14,
+     "attended_shifts": 14,
+     "coverage_bp": 10000
+    }
+   ]
+  },
+  {
+   "template_id": "people.labour_pct",
+   "params": {
+    "from": "2026-10-12",
+    "to": "2026-10-18",
+    "outlet_id": "a4b9f55a-dd58-7f83-b977-d13c10d67597"
+   },
+   "columns": [
+    {
+     "name": "iso_week",
+     "type": "text"
+    },
+    {
+     "name": "labour_minor",
+     "type": "integer",
+     "numeric_source": [
+      "core.attendance.clock_in_at",
+      "core.attendance.clock_out_at",
+      "core.staff.wage_rate_minor",
+      "core.staff.monthly_salary_minor",
+      "core.staff.contract_min_per_month"
+     ]
+    },
+    {
+     "name": "net_sales_minor",
+     "type": "integer",
+     "numeric_source": [
+      "core.order_line.qty_milli",
+      "core.order_line.unit_price_minor",
+      "core.order_line.line_discount_minor",
+      "core.order_line.tax_minor"
+     ]
+    },
+    {
+     "name": "labour_bp",
+     "type": "integer",
+     "numeric_source": [
+      "core.attendance.clock_in_at",
+      "core.attendance.clock_out_at",
+      "core.order_line.qty_milli",
+      "core.order_line.unit_price_minor",
+      "core.order_line.line_discount_minor",
+      "core.order_line.tax_minor",
+      "core.staff.wage_rate_minor",
+      "core.staff.monthly_salary_minor",
+      "core.staff.contract_min_per_month"
+     ]
+    },
+    {
+     "name": "target_bp",
+     "type": "integer",
+     "numeric_source": "core.business_policy.labour_target_bp"
+    },
+    {
+     "name": "excess_labour_minor",
+     "type": "integer",
+     "numeric_source": [
+      "core.attendance.clock_in_at",
+      "core.attendance.clock_out_at",
+      "core.order_line.qty_milli",
+      "core.order_line.unit_price_minor",
+      "core.order_line.line_discount_minor",
+      "core.order_line.tax_minor",
+      "core.business_policy.labour_target_bp",
+      "core.staff.wage_rate_minor",
+      "core.staff.monthly_salary_minor",
+      "core.staff.contract_min_per_month"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "iso_week": "2026-W42",
+     "labour_minor": 1344000,
+     "net_sales_minor": 5994600,
+     "labour_bp": 2242,
+     "target_bp": 3000,
+     "excess_labour_minor": 0
+    }
+   ]
+  },
+  {
+   "template_id": "people.labour_pct",
+   "params": {
+    "from": "2026-10-12",
+    "to": "2026-10-18",
+    "outlet_id": "9588198d-bb6e-7e2e-b405-366438ec9f0d"
+   },
+   "columns": [
+    {
+     "name": "iso_week",
+     "type": "text"
+    },
+    {
+     "name": "labour_minor",
+     "type": "integer",
+     "numeric_source": [
+      "core.attendance.clock_in_at",
+      "core.attendance.clock_out_at",
+      "core.staff.wage_rate_minor",
+      "core.staff.monthly_salary_minor",
+      "core.staff.contract_min_per_month"
+     ]
+    },
+    {
+     "name": "net_sales_minor",
+     "type": "integer",
+     "numeric_source": [
+      "core.order_line.qty_milli",
+      "core.order_line.unit_price_minor",
+      "core.order_line.line_discount_minor",
+      "core.order_line.tax_minor"
+     ]
+    },
+    {
+     "name": "labour_bp",
+     "type": "integer",
+     "numeric_source": [
+      "core.attendance.clock_in_at",
+      "core.attendance.clock_out_at",
+      "core.order_line.qty_milli",
+      "core.order_line.unit_price_minor",
+      "core.order_line.line_discount_minor",
+      "core.order_line.tax_minor",
+      "core.staff.wage_rate_minor",
+      "core.staff.monthly_salary_minor",
+      "core.staff.contract_min_per_month"
+     ]
+    },
+    {
+     "name": "target_bp",
+     "type": "integer",
+     "numeric_source": "core.business_policy.labour_target_bp"
+    },
+    {
+     "name": "excess_labour_minor",
+     "type": "integer",
+     "numeric_source": [
+      "core.attendance.clock_in_at",
+      "core.attendance.clock_out_at",
+      "core.order_line.qty_milli",
+      "core.order_line.unit_price_minor",
+      "core.order_line.line_discount_minor",
+      "core.order_line.tax_minor",
+      "core.business_policy.labour_target_bp",
+      "core.staff.wage_rate_minor",
+      "core.staff.monthly_salary_minor",
+      "core.staff.contract_min_per_month"
+     ]
+    }
+   ],
+   "rows": [
+    {
+     "iso_week": "2026-W42",
+     "labour_minor": 1344000,
+     "net_sales_minor": 4440500,
+     "labour_bp": 3027,
+     "target_bp": 3000,
+     "excess_labour_minor": 11850
+    }
+   ]
+  }
+ ],
+ "stored": {
+  "abstained": false,
+  "reason_code": null,
+  "segments": 2
+ }
+}

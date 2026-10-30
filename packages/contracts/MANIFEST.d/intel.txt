@@ -1,0 +1,11 @@
+v1.finding
+v1.findings.response
+v1.inbox.response
+v1.run.response
+v1.runs.response
+v1.traces.response
+v1.snapshots.request
+intel.specialists.registry
+v1.wiki.pages
+v1.wiki.page
+v1.wiki.versions

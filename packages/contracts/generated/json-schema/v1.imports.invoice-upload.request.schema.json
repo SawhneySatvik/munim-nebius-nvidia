@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v1.imports.invoice-upload.request",
+  "title": "V1ImportsInvoiceUploadRequest",
+  "x-munim-module": "imports",
+  "type": "object",
+  "properties": {
+    "filename": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "application/pdf"
+      ]
+    },
+    "content_base64": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 7000000
+    }
+  },
+  "required": [
+    "filename",
+    "media_type",
+    "content_base64"
+  ],
+  "additionalProperties": false
+}

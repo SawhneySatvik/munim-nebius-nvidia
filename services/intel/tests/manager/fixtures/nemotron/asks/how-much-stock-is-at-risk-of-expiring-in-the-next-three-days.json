@@ -1,0 +1,239 @@
+{
+ "world": "cobnut",
+ "question": "How much stock is at risk of expiring in the next three days?",
+ "intent": "lookup",
+ "model_id": "nvidia/nemotron-3-ultra-550b-a55b",
+ "recorded_on": "2026-10-24",
+ "frame": {
+  "pack": {
+   "code": "IN",
+   "version": 3
+  },
+  "currency": "INR",
+  "severity_ladder": {
+   "critical_minor_gte": 5000000,
+   "high_minor_gte": 1000000,
+   "medium_minor_gte": 100000
+  },
+  "detectors": {},
+  "outlets": [
+   {
+    "id": "a4b9f55a-dd58-7f83-b977-d13c10d67597",
+    "name": "Cobnut Hazratganj",
+    "kind": "restaurant",
+    "tz": "Asia/Kolkata",
+    "business_date": "2026-10-24",
+    "cares_active": false
+   },
+   {
+    "id": "9588198d-bb6e-7e2e-b405-366438ec9f0d",
+    "name": "Cobnut Gomti Nagar",
+    "kind": "restaurant",
+    "tz": "Asia/Kolkata",
+    "business_date": "2026-10-24",
+    "cares_active": false
+   }
+  ],
+  "budget": null,
+  "narration": "model",
+  "ai_enabled": false,
+  "negotiation": {
+   "target_bp": 9500,
+   "walkaway_bp": 11000
+  },
+  "licence_kinds": [],
+  "payroll_scope": "drafts"
+ },
+ "snapshots": [
+  {
+   "template_id": "inventory.expiry_risk",
+   "params": {
+    "as_of": "2026-10-24",
+    "days": 3,
+    "outlet_id": "a4b9f55a-dd58-7f83-b977-d13c10d67597"
+   },
+   "columns": [
+    {
+     "name": "batch_id",
+     "type": "uuid"
+    },
+    {
+     "name": "expiry_on",
+     "type": "date"
+    },
+    {
+     "name": "days_to_expiry",
+     "type": "integer",
+     "numeric_source": "core.batch.expires_on"
+    },
+    {
+     "name": "is_sku",
+     "type": "boolean"
+    },
+    {
+     "name": "remaining_qty_milli",
+     "type": "integer",
+     "numeric_source": "core.stock_movement.qty_milli"
+    },
+    {
+     "name": "use_before_expiry_qty_milli",
+     "type": "integer",
+     "numeric_source": [
+      "intel.forecast_point.qty_milli",
+      "core.recipe_line.qty_milli",
+      "core.recipe_line.waste_pct_bp",
+      "core.recipe_version.yield_qty_milli",
+      "core.stock_movement.qty_milli"
+     ]
+    },
+    {
+     "name": "at_risk_qty_milli",
+     "type": "integer",
+     "numeric_source": [
+      "intel.forecast_point.qty_milli",
+      "core.recipe_line.qty_milli",
+      "core.recipe_line.waste_pct_bp",
+      "core.recipe_version.yield_qty_milli",
+      "core.stock_movement.qty_milli"
+     ]
+    },
+    {
+     "name": "at_risk_minor",
+     "type": "integer",
+     "numeric_source": [
+      "intel.forecast_point.qty_milli",
+      "core.recipe_line.qty_milli",
+      "core.recipe_line.waste_pct_bp",
+      "core.recipe_version.yield_qty_milli",
+      "core.stock_movement.qty_milli",
+      "core.stock_movement.unit_cost_per_1000_minor"
+     ]
+    },
+    {
+     "name": "ingredient_id",
+     "type": "uuid"
+    },
+    {
+     "name": "unit",
+     "type": "text"
+    },
+    {
+     "name": "supplier_id",
+     "type": "uuid"
+    }
+   ],
+   "rows": [
+    {
+     "batch_id": "210d3542-0407-7662-9032-32347cb4e076",
+     "expiry_on": "2026-10-25",
+     "days_to_expiry": 1,
+     "is_sku": false,
+     "remaining_qty_milli": 12000,
+     "use_before_expiry_qty_milli": 0,
+     "at_risk_qty_milli": 12000,
+     "at_risk_minor": 24000,
+     "ingredient_id": "15e48f4a-26fd-7f1f-8212-15e711b5c794",
+     "unit": "pc",
+     "supplier_id": null
+    },
+    {
+     "batch_id": "55645bbc-7abf-7cf3-962d-95a855f676c6",
+     "expiry_on": "2026-10-25",
+     "days_to_expiry": 1,
+     "is_sku": false,
+     "remaining_qty_milli": 20000,
+     "use_before_expiry_qty_milli": 0,
+     "at_risk_qty_milli": 20000,
+     "at_risk_minor": 110000,
+     "ingredient_id": "86437649-abc3-71b3-8cfa-c9b53d8ca6e0",
+     "unit": "pc",
+     "supplier_id": null
+    }
+   ]
+  },
+  {
+   "template_id": "inventory.expiry_risk",
+   "params": {
+    "outlet_id": "9588198d-bb6e-7e2e-b405-366438ec9f0d",
+    "as_of": "2026-10-24",
+    "days": 3
+   },
+   "columns": [
+    {
+     "name": "batch_id",
+     "type": "uuid"
+    },
+    {
+     "name": "expiry_on",
+     "type": "date"
+    },
+    {
+     "name": "days_to_expiry",
+     "type": "integer",
+     "numeric_source": "core.batch.expires_on"
+    },
+    {
+     "name": "is_sku",
+     "type": "boolean"
+    },
+    {
+     "name": "remaining_qty_milli",
+     "type": "integer",
+     "numeric_source": "core.stock_movement.qty_milli"
+    },
+    {
+     "name": "use_before_expiry_qty_milli",
+     "type": "integer",
+     "numeric_source": [
+      "intel.forecast_point.qty_milli",
+      "core.recipe_line.qty_milli",
+      "core.recipe_line.waste_pct_bp",
+      "core.recipe_version.yield_qty_milli",
+      "core.stock_movement.qty_milli"
+     ]
+    },
+    {
+     "name": "at_risk_qty_milli",
+     "type": "integer",
+     "numeric_source": [
+      "intel.forecast_point.qty_milli",
+      "core.recipe_line.qty_milli",
+      "core.recipe_line.waste_pct_bp",
+      "core.recipe_version.yield_qty_milli",
+      "core.stock_movement.qty_milli"
+     ]
+    },
+    {
+     "name": "at_risk_minor",
+     "type": "integer",
+     "numeric_source": [
+      "intel.forecast_point.qty_milli",
+      "core.recipe_line.qty_milli",
+      "core.recipe_line.waste_pct_bp",
+      "core.recipe_version.yield_qty_milli",
+      "core.stock_movement.qty_milli",
+      "core.stock_movement.unit_cost_per_1000_minor"
+     ]
+    },
+    {
+     "name": "ingredient_id",
+     "type": "uuid"
+    },
+    {
+     "name": "unit",
+     "type": "text"
+    },
+    {
+     "name": "supplier_id",
+     "type": "uuid"
+    }
+   ],
+   "rows": []
+  }
+ ],
+ "stored": {
+  "abstained": false,
+  "reason_code": null,
+  "segments": 1
+ }
+}
