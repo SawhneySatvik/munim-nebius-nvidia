@@ -48,3 +48,12 @@ Do not commit `.env` files, private keys, database service-role secrets or Token
 ## Vercel decision point
 
 Vercel is a natural fit for the Next.js website. The site package itself has a small dependency footprint. The whole system is not a single Next.js app: the Python Intelligence service, worker, PostgreSQL and A2A supplier simulator require separate runtimes or managed equivalents. Before selecting Vercel for Core API, check the actual API/worker entrypoints for runtime compatibility, streaming/long-lived connection requirements and background processing. Deploying only `apps/site` will not make AI inference or business API operations work by itself.
+
+The Next.js projects each carry their own Vercel config at [`apps/site/vercel.json`](../../apps/site/vercel.json) and
+[`apps/web/vercel.json`](../../apps/web/vercel.json). Set the Vercel Root Directory to the matching app (`apps/site` or `apps/web`),
+allow source files outside the Root Directory, and set `ENABLE_EXPERIMENTAL_COREPACK=1` for Production and Preview so Vercel
+uses the workspace's pinned pnpm version. The config installs from the workspace root, runs the app's build script and places
+serverless functions in Mumbai (`bom1`). The API's separate service map remains at [`deploy/vercel/vercel.json`](../../deploy/vercel/vercel.json).
+
+The repository is licensed under Apache-2.0. The root `LICENSE` contains the full license text and the root `package.json` declares
+the SPDX identifier.
