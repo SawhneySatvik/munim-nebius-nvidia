@@ -27,9 +27,10 @@ Checked against the [official rules](https://nebiusglobalaihackathon.devpost.com
 - **Source and license:** the intended repository URL is `https://github.com/SawhneySatvik/munim-nebius-nvidia`. The repository
   currently remains private; make it public and confirm Apache-2.0 appears in its GitHub About/license metadata before judging.
   The source tree includes the Apache-2.0 `LICENSE`, setup/model guidance and the website-rendered README source.
-- **Video:** the previous 178-second draft is superseded. The revised 169-second cut is scripted to include the AI office, role routing,
-  Nebius Token Factory model path and a 35-second graph sequence. Re-render and inspect the final MP4 before uploading it publicly;
-  the YouTube URL is the only video placeholder.
+- **Video:** the previous 178-second draft is superseded. The revised 169-second cut includes the AI office, role routing, Nebius
+  Token Factory model path and a 35-second graph sequence. The 1920×1080 H.264/AAC MP4 was rendered and checked locally at
+  `video/munim-launch/renders/munim-nebius-final.mp4`. Upload it publicly or unlisted without a password, then replace the
+  YouTube URL placeholder.
 - **Feedback:** `FEEDBACK-DRAFT.md` is supporting material. Submit only observations that retain their source attribution; the
   numeric experiments in that draft are from NVIDIA's separate endpoint.
 - **Project timeline:** rules require a significant-update explanation only if the project existed before 26 August 2026. The
@@ -198,7 +199,7 @@ TypeScript, Hono, Next.js, PostgreSQL, Supabase (hosted Postgres only), A2A.
 - Product site: https://munim-rho.vercel.app/ (existing public site)
 - Interactive demo: https://munim-cobnut.vercel.app/staff/sign-in (existing Cobnut demo; synthetic data, simulated suppliers and payments are recorded, not processed)
 - Dedicated Nebius-hosted demo: [NEBIUS_DEMO_URL] (deployment pending; see `docs/nebius/DEPLOY.md`)
-- Video: [YOUTUBE_VIDEO_URL] (public YouTube upload pending; final cut must be under 3:00)
+- Video: [YOUTUBE_VIDEO_URL] (public or unlisted YouTube upload pending; final cut is 2:49)
 
 [Judge access to the current demo: open the interactive demo URL, choose the synthetic owner, Nandini Mehrotra. The dedicated
 Nebius deployment needs a separate live URL and its own model-role verification before it can replace this link.]

@@ -51,15 +51,16 @@ npx hyperframes@0.8.163 preview --port 4560 --no-open
 npx hyperframes@0.8.163 render --quality delivery --workers 1 -o renders/nebius-picture.mp4
 ```
 
-The storyboard and audio for the Nebius cut are ready for final preview approval. The current MP4 was rendered from the
-superseded script and must be replaced after checking the preview. The delivery render also needs visual and duration inspection
-before uploading to YouTube. The end card intentionally leaves only the demo URL for deployment.
+The final Nebius delivery render is `renders/munim-nebius-final.mp4`: 1920×1080 H.264 video, AAC audio, 30 fps, 169 seconds.
+It was rendered from the approved preview and checked for duration and representative frames. The end card intentionally leaves
+the demo URL for deployment. Rendered MP4s stay local because this project ignores `renders/`; upload the final file to YouTube or
+Vimeo after replacing the demo URL if you want the deployed link on the end card.
 
 Spec: `docs/superpowers/specs/2026-10-16-munim-launch-film-design.md`. Plan: `docs/superpowers/plans/2026-10-16-munim-launch-film.md`. Ledger: R65.
 
 **Current submission status:** The 169-second Nebius cut has a revised storyboard, timed narration, music/SFX mix, and passes the
-HyperFrames composition check. A phone-size snapshot review was captured. The final delivery MP4 is not yet rendered; the MP4 in
-`renders/` is superseded. Historical cut records below are retained as project history only.
+HyperFrames composition check. Its approved preview and final MP4 were reviewed at phone size and in representative encoded
+frames. The delivery render is `renders/munim-nebius-final.mp4`. Historical cut records below are retained as project history only.
 
 The style frames are in `snapshots/style-frames/` (git-ignored; `1-cold-open.png`, `2-owner-home.png`, `3-ai-office.png`, `4-negotiation.png`), taken from `roots/frames.html`. They passed these checks:
 
