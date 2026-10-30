@@ -55,6 +55,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  ...(process.env.MUNIM_WEB_BASE_PATH ? { basePath: process.env.MUNIM_WEB_BASE_PATH } : {}),
   // A second local dev server (another business on another port, scripts/dev/restart-svc.sh) needs its own build
   // directory: Next refuses two dev servers on one, and NEXT_PUBLIC_* values are inlined per build.
   ...(process.env.MUNIM_WEB_DIST_DIR ? { distDir: process.env.MUNIM_WEB_DIST_DIR } : {}),

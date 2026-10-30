@@ -1,0 +1,56 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "site": {
+      "root": "apps/site",
+      "framework": "nextjs",
+      "installCommand": "cd ../.. && pnpm install --frozen-lockfile"
+    },
+    "web": {
+      "root": "apps/web",
+      "framework": "nextjs",
+      "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+      "buildCommand": "NEXT_PUBLIC_MUNIM_API=/v1 MUNIM_WEB_BASE_PATH=/app pnpm build"
+    },
+    "core-api": {
+      "root": "services/core-api",
+      "framework": "hono",
+      "entrypoint": "api/index.ts",
+      "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+      "bindings": [
+        { "type": "service", "service": "intel", "format": "url", "env": "MUNIM_INTEL_URL" }
+      ],
+      "functions": {
+        "api/index.ts": { "maxDuration": 300 }
+      }
+    },
+    "intel": {
+      "root": "services/intel",
+      "framework": "fastapi",
+      "entrypoint": "munim_intel.asgi:app",
+      "functions": {
+        "munim_intel/asgi.py": { "maxDuration": 300 }
+      }
+    },
+    "suppliers-sim": {
+      "root": "services/suppliers-sim",
+      "runtime": "python",
+      "entrypoint": "suppliers_sim.asgi:app",
+      "functions": {
+        "suppliers_sim/asgi.py": { "maxDuration": 60 }
+      }
+    }
+  },
+  "rewrites": [
+    { "source": "/suppliers-sim/(.*)", "destination": { "service": "suppliers-sim" } },
+    { "source": "/suppliers-sim", "destination": { "service": "suppliers-sim" } },
+    { "source": "/v1/(.*)", "destination": { "service": "core-api" } },
+    { "source": "/health", "destination": { "service": "core-api" } },
+    { "source": "/staff/demo-session", "destination": { "service": "core-api" } },
+    { "source": "/internal/(.*)", "destination": { "service": "core-api" } },
+    { "source": "/app/(.*)", "destination": { "service": "web" } },
+    { "source": "/app", "destination": { "service": "web" } },
+    { "source": "/(.*)", "destination": { "service": "site" } }
+  ],
+  "crons": [{ "path": "/internal/cron/v1/tick", "schedule": "0 1 * * *" }]
+}
